@@ -9,6 +9,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
 	}
 }
 
@@ -17,15 +18,19 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
+apply plugin: 'application'
+apply plugin: 'docker'
+
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
+mainClassName = "org.springframework.boot.loader.JarLauncher"
 
 repositories {
 	mavenCentral()
 	maven { url "https://repo.spring.io/snapshot" }
 	maven { url "https://repo.spring.io/milestone" }
 }
-
 
 ext {
 	springCloudVersion = 'Finchley.BUILD-SNAPSHOT'
@@ -59,3 +64,12 @@ dependencyManagement {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
+
+docker {
+    baseImage "openjdk:8-jre-alpine"
+    maintainer 'CYOSP "cyosp@cyosp.com"'
+}
+
+/*distDocker {
+    exposePort 8080
+}*/
