@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
  * Created by CYOSP on 2017-06-27.
  */
 @Service
-public class MpaServiceImpl implements MpaService {
+public class MpaServiceV1 implements MpaService {
 
     @Override
     public String getAccounts() {

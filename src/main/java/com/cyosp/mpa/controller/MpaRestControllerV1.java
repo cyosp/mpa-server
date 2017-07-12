@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by CYOSP on 2017-06-27.
  */
 @RestController
-@RequestMapping("/mpa")
-public class MpaController {
+@RequestMapping("/mpa/api/rest/v1")
+public class MpaRestControllerV1 {
 
     @Autowired
     @Getter
