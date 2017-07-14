@@ -1,5 +1,6 @@
 package com.cyosp.mpa.controller;
 
+import com.cyosp.mpa.model.Account;
 import com.cyosp.mpa.service.MpaService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class MpaRestControllerV1 {
 
     @GetMapping("/accounts")
     public String getAccounts() {
-        return getMpaService().getAccounts();
+        StringBuffer ret = new StringBuffer();
+
+        for (Account account : getMpaService().getAccounts())
+            ret.append(account.toString()+"</br>");
+
+        return ret.toString();
     }
 }
