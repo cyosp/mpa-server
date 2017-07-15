@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 public class MpaObject {
 
-    private String id;
+    private long id;
 
-    private int version;
+    private long version;
 }
