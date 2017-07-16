@@ -1,6 +1,5 @@
-drop table if exists account;
-
-create table account (id int primary key auto_increment, name varchar);
-
-insert into account (name) values ('My Personal Account');
-insert into account (name) values ('My secondary account');
+CREATE TABLE IF NOT EXISTS account (
+  id      INT PRIMARY KEY AUTO_INCREMENT,
+  name    VARCHAR UNIQUE,
+  balance DECIMAL
+);

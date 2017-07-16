@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 public class AddAccountResponse {
 
     public static final long ID_NOT_INITIALIZED = -1;
+    public static final long ID_DUPLICATED_NAME = -2;
+
     public static final long VERSION_NOT_INITIALIZED = -1;
 
     private long id = ID_NOT_INITIALIZED;

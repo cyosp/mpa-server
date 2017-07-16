@@ -1,5 +1,6 @@
 package com.cyosp.mpa.controller;
 
+import com.cyosp.mpa.exception.DuplicatedNameException;
 import com.cyosp.mpa.model.Account;
 import com.cyosp.mpa.request.AddAccountRequest;
 import com.cyosp.mpa.response.AddAccountResponse;
@@ -21,7 +22,15 @@ public class MpaRestControllerV1 {
 
     @PostMapping("/accounts/add")
     public AddAccountResponse addAccount(@RequestBody AddAccountRequest addAccountRequest) {
-        return getMpaService().addAccount(addAccountRequest);
+        AddAccountResponse ret = new AddAccountResponse();
+
+        try {
+            ret = getMpaService().addAccount(addAccountRequest);
+        } catch (DuplicatedNameException e) {
+            ret.setId(AddAccountResponse.ID_DUPLICATED_NAME);
+        }
+
+        return ret;
     }
 
     @GetMapping("/accounts")
