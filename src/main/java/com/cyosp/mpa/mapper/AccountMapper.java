@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface AccountMapper {
 
-    @Insert("insert into account ( name ) VALUES( #{name} )")
+    @Insert("insert into account(name, balance) VALUES( #{name}, #{balance} )")
     @Options(useGeneratedKeys = true)
     void addAccount(Account account);
 

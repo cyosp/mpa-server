@@ -8,6 +8,7 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -23,11 +24,13 @@ public class MpaServiceV1 implements MpaService {
     public AddAccountResponse addAccount(AddAccountRequest addAccountRequest) {
         Account account = new Account();
         account.setName(addAccountRequest.getName());
+        account.setBalance(new BigDecimal(0));
 
         getAccountMapper().addAccount(account);
 
         AddAccountResponse addAccountResponse = new AddAccountResponse();
         addAccountResponse.setId(account.getId());
+        addAccountResponse.setBalance(account.getBalance());
 
         return addAccountResponse;
     }
