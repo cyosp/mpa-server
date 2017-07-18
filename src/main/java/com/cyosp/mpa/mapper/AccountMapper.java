@@ -3,7 +3,6 @@ package com.cyosp.mpa.mapper;
 import com.cyosp.mpa.model.Account;
 import org.apache.ibatis.annotations.*;
 
-import java.util.Date;
 import java.util.List;
 
 /**

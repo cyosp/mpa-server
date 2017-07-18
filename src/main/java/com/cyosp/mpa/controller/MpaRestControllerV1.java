@@ -41,4 +41,10 @@ public class MpaRestControllerV1 {
     public List<AccountResponse> getAccounts() {
         return getMpaService().getAccounts();
     }
+
+    @GetMapping("/accounts/{id}")
+    public AccountResponse getAccount(@PathVariable
+                                              long id) {
+        return getMpaService().getAccountById(id);
+    }
 }

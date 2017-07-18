@@ -67,4 +67,17 @@ public class MpaServiceV1 implements MpaService {
 
         return ret;
     }
+
+    @Override
+    public AccountResponse getAccountById(long id) {
+        AccountResponse ret = new AccountResponse();
+
+        Account account = getAccountMapper().getAccountById(id);
+        if (account != null)
+            BeanUtils.copyProperties(account, ret);
+        else
+            ret.setId(AccountResponse.ID_NOT_FOUND);
+
+        return ret;
+    }
 }

@@ -15,4 +15,6 @@ public interface MpaService {
     public AccountResponse addAccount(AddAccountRequest addAccountRequest) throws LineNotInsertedException, DuplicatedNameException;
 
     public List<AccountResponse> getAccounts();
+
+    public AccountResponse getAccountById(long id);
 }
