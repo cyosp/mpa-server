@@ -1,13 +1,15 @@
 package com.cyosp.mpa.controller;
 
 import com.cyosp.mpa.exception.DuplicatedNameException;
-import com.cyosp.mpa.model.Account;
+import com.cyosp.mpa.exception.LineNotInsertedException;
 import com.cyosp.mpa.request.AddAccountRequest;
-import com.cyosp.mpa.response.AddAccountResponse;
+import com.cyosp.mpa.response.AccountResponse;
 import com.cyosp.mpa.service.MpaService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by CYOSP on 2017-06-27.
@@ -21,25 +23,22 @@ public class MpaRestControllerV1 {
     private MpaService mpaService;
 
     @PostMapping("/accounts/add")
-    public AddAccountResponse addAccount(@RequestBody AddAccountRequest addAccountRequest) {
-        AddAccountResponse ret = new AddAccountResponse();
+    public AccountResponse addAccount(@RequestBody AddAccountRequest addAccountRequest) {
+        AccountResponse ret = new AccountResponse();
 
         try {
             ret = getMpaService().addAccount(addAccountRequest);
+        } catch (LineNotInsertedException e) {
+            ret.setId(AccountResponse.ID_LINE_NOT_INSERTED);
         } catch (DuplicatedNameException e) {
-            ret.setId(AddAccountResponse.ID_DUPLICATED_NAME);
+            ret.setId(AccountResponse.ID_DUPLICATED_NAME);
         }
 
         return ret;
     }
 
     @GetMapping("/accounts")
-    public String getAccounts() {
-        StringBuffer ret = new StringBuffer();
-
-        for (Account account : getMpaService().getAccounts())
-            ret.append(account.toString() + "</br>");
-
-        return ret.toString();
+    public List<AccountResponse> getAccounts() {
+        return getMpaService().getAccounts();
     }
 }

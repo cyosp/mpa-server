@@ -1,9 +1,9 @@
 package com.cyosp.mpa.service;
 
 import com.cyosp.mpa.exception.DuplicatedNameException;
-import com.cyosp.mpa.model.Account;
+import com.cyosp.mpa.exception.LineNotInsertedException;
 import com.cyosp.mpa.request.AddAccountRequest;
-import com.cyosp.mpa.response.AddAccountResponse;
+import com.cyosp.mpa.response.AccountResponse;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface MpaService {
 
-    public AddAccountResponse addAccount(AddAccountRequest addAccountRequest) throws DuplicatedNameException;
+    public AccountResponse addAccount(AddAccountRequest addAccountRequest) throws LineNotInsertedException, DuplicatedNameException;
 
-    public List<Account> getAccounts();
+    public List<AccountResponse> getAccounts();
 }

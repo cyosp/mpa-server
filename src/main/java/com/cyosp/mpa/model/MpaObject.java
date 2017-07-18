@@ -3,8 +3,8 @@ package com.cyosp.mpa.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
+
 
 /**
  * Created by CYOSP on 2017-07-12.
@@ -15,5 +15,5 @@ public class MpaObject {
 
     private long id;
 
-    private long version;
+    private Date ts;
 }
