@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  */
 @Getter
 @Setter
-public class AddAccountRequest {
+public class AccountRequest {
 
     @NotNull(message = "error.v1.account.name.null")
     @Size(min = 1, max = 30, message = "error.v1.account.name.size")

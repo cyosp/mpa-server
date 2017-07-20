@@ -2,9 +2,10 @@ package com.cyosp.mpa.v1.service;
 
 import com.cyosp.mpa.v1.exception.DuplicatedNameException;
 import com.cyosp.mpa.v1.exception.LineNotInsertedException;
+import com.cyosp.mpa.v1.exception.LineNotUpdatedException;
 import com.cyosp.mpa.v1.mapper.AccountMapper;
 import com.cyosp.mpa.v1.model.Account;
-import com.cyosp.mpa.v1.request.AddAccountRequest;
+import com.cyosp.mpa.v1.request.AccountRequest;
 import com.cyosp.mpa.v1.response.AccountResponse;
 import lombok.Getter;
 import org.springframework.beans.BeanUtils;
@@ -28,7 +29,7 @@ public class MpaServiceImpl implements MpaService {
     private AccountMapper accountMapper;
 
     @Transactional
-    private Account addAcount(Account account) throws LineNotInsertedException, DuplicatedNameException {
+    public Account addAcount(Account account) throws LineNotInsertedException, DuplicatedNameException {
         try {
             if (getAccountMapper().addAccount(account) != 1)
                 throw new LineNotInsertedException();
@@ -41,9 +42,9 @@ public class MpaServiceImpl implements MpaService {
     }
 
     @Override
-    public AccountResponse addAccount(AddAccountRequest addAccountRequest) throws DuplicatedNameException, LineNotInsertedException {
+    public AccountResponse addAccount(AccountRequest accountRequest) throws DuplicatedNameException, LineNotInsertedException {
         Account account = new Account();
-        account.setName(addAccountRequest.getName());
+        account.setName(accountRequest.getName());
         account.setBalance(new BigDecimal(0));
 
         account = addAcount(account);
@@ -79,5 +80,32 @@ public class MpaServiceImpl implements MpaService {
             ret.setId(AccountResponse.ID_NOT_FOUND);
 
         return ret;
+    }
+
+    @Transactional
+    public Account updateAcount(Account account) throws LineNotUpdatedException, DuplicatedNameException {
+        try {
+            if (getAccountMapper().updateAccount(account) != 1)
+                throw new LineNotUpdatedException();
+            account = getAccountMapper().getAccountById(account.getId());
+        } catch (DuplicateKeyException e) {
+            throw new DuplicatedNameException();
+        }
+
+        return account;
+    }
+
+    @Override
+    public AccountResponse updateAccount(long id, AccountRequest accountRequest) throws LineNotUpdatedException, DuplicatedNameException {
+        Account account = new Account();
+        account.setId(id);
+        account.setName(accountRequest.getName());
+
+        account = updateAcount(account);
+
+        AccountResponse accountResponse = new AccountResponse();
+        BeanUtils.copyProperties(account, accountResponse);
+
+        return accountResponse;
     }
 }

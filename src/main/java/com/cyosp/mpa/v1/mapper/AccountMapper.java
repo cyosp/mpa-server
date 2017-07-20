@@ -20,4 +20,7 @@ public interface AccountMapper {
 
     @Select("select * from account")
     List<Account> getAccounts();
+
+    @Update("update account set name=#{name} where id=#{id}")
+    int updateAccount(Account account);
 }
