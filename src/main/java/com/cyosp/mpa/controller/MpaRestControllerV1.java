@@ -7,6 +7,7 @@ import com.cyosp.mpa.response.AccountResponse;
 import com.cyosp.mpa.service.MpaService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class MpaRestControllerV1 {
     private MpaService mpaService;
 
     @PostMapping("/accounts/add")
-    public AccountResponse addAccount(@RequestBody AddAccountRequest addAccountRequest) {
+    public AccountResponse addAccount(@Validated @RequestBody AddAccountRequest addAccountRequest) {
         AccountResponse ret = new AccountResponse();
 
         try {
