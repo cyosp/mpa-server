@@ -22,7 +22,7 @@ import java.util.Locale;
  */
 @ControllerAdvice
 @Getter
-public class ValidationControllerHandler {
+public class ControllerValidationHandler {
     @Autowired
     private MessageSource messageSource;
 
@@ -41,6 +41,7 @@ public class ValidationControllerHandler {
         if (error != null) {
             Locale currentLocale = LocaleContextHolder.getLocale();
             String msg = getMessageSource().getMessage(error.getDefaultMessage(), null, currentLocale);
+            message = new Message();
             message.setType(MessageType.ERROR);
             message.setMessage(msg);
         }
