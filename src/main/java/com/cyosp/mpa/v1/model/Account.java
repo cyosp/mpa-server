@@ -1,11 +1,9 @@
-package com.cyosp.mpa.model;
+package com.cyosp.mpa.v1.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 /**
  * Created by CYOSP on 2017-07-12.

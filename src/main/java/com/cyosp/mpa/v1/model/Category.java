@@ -1,4 +1,4 @@
-package com.cyosp.mpa.model;
+package com.cyosp.mpa.v1.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class Payee {
+public class Category {
 
     private String name;
 }

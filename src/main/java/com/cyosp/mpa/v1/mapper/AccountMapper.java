@@ -1,6 +1,6 @@
-package com.cyosp.mpa.mapper;
+package com.cyosp.mpa.v1.mapper;
 
-import com.cyosp.mpa.model.Account;
+import com.cyosp.mpa.v1.model.Account;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

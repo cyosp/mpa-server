@@ -1,4 +1,4 @@
-package com.cyosp.mpa.messages;
+package com.cyosp.mpa.v1.messages;
 
 import lombok.Getter;
 import lombok.Setter;

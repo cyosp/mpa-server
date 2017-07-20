@@ -1,11 +1,11 @@
-package com.cyosp.mpa.service;
+package com.cyosp.mpa.v1.service;
 
-import com.cyosp.mpa.exception.DuplicatedNameException;
-import com.cyosp.mpa.exception.LineNotInsertedException;
-import com.cyosp.mpa.mapper.AccountMapper;
-import com.cyosp.mpa.model.Account;
-import com.cyosp.mpa.request.AddAccountRequest;
-import com.cyosp.mpa.response.AccountResponse;
+import com.cyosp.mpa.v1.exception.DuplicatedNameException;
+import com.cyosp.mpa.v1.exception.LineNotInsertedException;
+import com.cyosp.mpa.v1.mapper.AccountMapper;
+import com.cyosp.mpa.v1.model.Account;
+import com.cyosp.mpa.v1.request.AddAccountRequest;
+import com.cyosp.mpa.v1.response.AccountResponse;
 import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Service
 @Getter
-public class MpaServiceV1 implements MpaService {
+public class MpaServiceImpl implements MpaService {
 
     @Autowired
     private AccountMapper accountMapper;

@@ -1,4 +1,4 @@
-package com.cyosp.mpa.model;
+package com.cyosp.mpa.v1.model;
 
 import lombok.Getter;
 import lombok.Setter;

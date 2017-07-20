@@ -1,10 +1,10 @@
-package com.cyosp.mpa.controller;
+package com.cyosp.mpa.v1.controller;
 
-import com.cyosp.mpa.exception.DuplicatedNameException;
-import com.cyosp.mpa.exception.LineNotInsertedException;
-import com.cyosp.mpa.request.AddAccountRequest;
-import com.cyosp.mpa.response.AccountResponse;
-import com.cyosp.mpa.service.MpaService;
+import com.cyosp.mpa.v1.exception.DuplicatedNameException;
+import com.cyosp.mpa.v1.exception.LineNotInsertedException;
+import com.cyosp.mpa.v1.request.AddAccountRequest;
+import com.cyosp.mpa.v1.response.AccountResponse;
+import com.cyosp.mpa.v1.service.MpaService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/mpa/api/rest/v1")
-public class MpaRestControllerV1 {
+public class MpaRestController {
 
     @Autowired
     @Getter

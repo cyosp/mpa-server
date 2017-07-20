@@ -1,4 +1,4 @@
-package com.cyosp.mpa.response;
+package com.cyosp.mpa.v1.response;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,9 +1,9 @@
-package com.cyosp.mpa.service;
+package com.cyosp.mpa.v1.service;
 
-import com.cyosp.mpa.exception.DuplicatedNameException;
-import com.cyosp.mpa.exception.LineNotInsertedException;
-import com.cyosp.mpa.request.AddAccountRequest;
-import com.cyosp.mpa.response.AccountResponse;
+import com.cyosp.mpa.v1.exception.DuplicatedNameException;
+import com.cyosp.mpa.v1.exception.LineNotInsertedException;
+import com.cyosp.mpa.v1.request.AddAccountRequest;
+import com.cyosp.mpa.v1.response.AccountResponse;
 
 import java.util.List;
 
