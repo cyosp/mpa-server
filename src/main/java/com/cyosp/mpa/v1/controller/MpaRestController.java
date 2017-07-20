@@ -1,6 +1,7 @@
 package com.cyosp.mpa.v1.controller;
 
 import com.cyosp.mpa.v1.exception.DuplicatedNameException;
+import com.cyosp.mpa.v1.exception.LineNotDeletedException;
 import com.cyosp.mpa.v1.exception.LineNotInsertedException;
 import com.cyosp.mpa.v1.exception.LineNotUpdatedException;
 import com.cyosp.mpa.v1.request.AccountRequest;
@@ -61,6 +62,20 @@ public class MpaRestController {
             ret.setId(AccountResponse.ID_LINE_NOT_UPDATED);
         } catch (DuplicatedNameException e) {
             ret.setId(AccountResponse.ID_DUPLICATED_NAME);
+        }
+
+        return ret;
+    }
+
+    @PostMapping("/accounts/del/{id}")
+    public AccountResponse deleteAccount(@PathVariable
+                                                 long id) {
+        AccountResponse ret = new AccountResponse();
+
+        try {
+            ret = getMpaService().deleteAccount(id);
+        } catch (LineNotDeletedException e) {
+            ret.setId(AccountResponse.ID_LINE_NOT_DELETED);
         }
 
         return ret;

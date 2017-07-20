@@ -1,6 +1,7 @@
 package com.cyosp.mpa.v1.service;
 
 import com.cyosp.mpa.v1.exception.DuplicatedNameException;
+import com.cyosp.mpa.v1.exception.LineNotDeletedException;
 import com.cyosp.mpa.v1.exception.LineNotInsertedException;
 import com.cyosp.mpa.v1.exception.LineNotUpdatedException;
 import com.cyosp.mpa.v1.mapper.AccountMapper;
@@ -105,6 +106,18 @@ public class MpaServiceImpl implements MpaService {
 
         AccountResponse accountResponse = new AccountResponse();
         BeanUtils.copyProperties(account, accountResponse);
+
+        return accountResponse;
+    }
+
+    @Override
+    public AccountResponse deleteAccount(long id) throws LineNotDeletedException {
+
+        if (getAccountMapper().deleteAccount(id) != 1)
+            throw new LineNotDeletedException();
+
+        AccountResponse accountResponse = new AccountResponse();
+        accountResponse.setId(id);
 
         return accountResponse;
     }

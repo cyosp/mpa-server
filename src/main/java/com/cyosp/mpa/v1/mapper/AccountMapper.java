@@ -23,4 +23,7 @@ public interface AccountMapper {
 
     @Update("update account set name=#{name} where id=#{id}")
     int updateAccount(Account account);
+
+    @Delete("delete account where id=#{id}")
+    int deleteAccount(long id);
 }
