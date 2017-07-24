@@ -1,13 +1,13 @@
-package com.cyosp.mpa.v1.service;
+package com.cyosp.mpa.api.rest.core.v1.service;
 
-import com.cyosp.mpa.v1.exception.DuplicatedNameException;
-import com.cyosp.mpa.v1.exception.LineNotDeletedException;
-import com.cyosp.mpa.v1.exception.LineNotInsertedException;
-import com.cyosp.mpa.v1.exception.LineNotUpdatedException;
-import com.cyosp.mpa.v1.mapper.AccountMapper;
-import com.cyosp.mpa.v1.model.Account;
-import com.cyosp.mpa.v1.request.AccountRequest;
-import com.cyosp.mpa.v1.response.AccountResponse;
+import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
+import com.cyosp.mpa.api.rest.common.exception.LineNotDeletedException;
+import com.cyosp.mpa.api.rest.common.exception.LineNotInsertedException;
+import com.cyosp.mpa.api.rest.common.exception.LineNotUpdatedException;
+import com.cyosp.mpa.api.rest.core.v1.mapper.AccountMapper;
+import com.cyosp.mpa.api.rest.core.v1.model.Account;
+import com.cyosp.mpa.api.rest.core.v1.request.AccountRequest;
+import com.cyosp.mpa.api.rest.core.v1.response.AccountResponse;
 import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

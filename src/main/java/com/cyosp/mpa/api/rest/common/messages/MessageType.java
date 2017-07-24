@@ -1,4 +1,4 @@
-package com.cyosp.mpa.v1.messages;
+package com.cyosp.mpa.api.rest.common.messages;
 
 /**
  * Created by CYOSP on 2017-07-19.

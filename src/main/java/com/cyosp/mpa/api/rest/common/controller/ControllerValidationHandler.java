@@ -1,7 +1,7 @@
-package com.cyosp.mpa.v1.controller;
+package com.cyosp.mpa.api.rest.common.controller;
 
-import com.cyosp.mpa.v1.messages.Message;
-import com.cyosp.mpa.v1.messages.MessageType;
+import com.cyosp.mpa.api.rest.common.messages.Message;
+import com.cyosp.mpa.api.rest.common.messages.MessageType;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

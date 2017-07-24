@@ -1,4 +1,4 @@
-package com.cyosp.mpa.v1.exception;
+package com.cyosp.mpa.api.rest.common.exception;
 
 /**
  * Created by CYOSP on 2017-07-16.

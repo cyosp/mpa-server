@@ -1,4 +1,4 @@
-package com.cyosp.mpa.v1.model;
+package com.cyosp.mpa.api.rest.core.v1.model;
 
 import lombok.Getter;
 import lombok.Setter;
