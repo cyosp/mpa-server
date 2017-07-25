@@ -68,11 +68,18 @@ public class HomeBank {
     @XStreamOmitField
     private Map<Integer, Payee> payeeMap;
 
+    @XStreamOmitField
+    private int nextCategoryKey = -1;
+
+    @XStreamOmitField
+    private Map<Integer, Category> categoryMap;
+
     public void addMissingValues() {
 
         // Init
         accountMap = new HashMap<>();
         payeeMap = new HashMap<>();
+        categoryMap = new HashMap<>();
 
         for (Account account : getAccounts()) {
             // Init
@@ -92,6 +99,15 @@ public class HomeBank {
             if (payee.getKey() > nextPayeeKey) setNextPayeeKey(payee.getKey());
         }
 
+        for (Category category : getCategories()) {
+            // Init
+            category.setBalance(new BigDecimal(0));
+            // Add to map
+            getCategoryMap().put(category.getKey(), category);
+            // Update next key
+            if (category.getKey() > nextCategoryKey) setNextCategoryKey(category.getKey());
+        }
+
         for (Operation operation : getOperations()) {
 
             // Update account balance
@@ -106,6 +122,12 @@ public class HomeBank {
                 Payee payee = getPayeeMap().get(payeeRef);
                 payee.setBalance(payee.getBalance().add(operation.getAmount()));
             }
+            // Update category balance
+            int categoryRef = operation.getCategoryRef();
+            if (categoryRef > 0) {
+                Category category = getCategoryMap().get(categoryRef);
+                category.setBalance(category.getBalance().add(operation.getAmount()));
+            }
         }
 
         // DEBUG
@@ -114,6 +136,9 @@ public class HomeBank {
         }*/
         /*for (Payee payee : getPayees()) {
             System.out.println("Payee: " + payee.getName() + " <=> " + payee.getBalance());
+        }*/
+        /*for (Category category : getCategories()) {
+            System.out.println("Category: " + category.getName() + " <=> " + category.getBalance());
         }*/
     }
 
