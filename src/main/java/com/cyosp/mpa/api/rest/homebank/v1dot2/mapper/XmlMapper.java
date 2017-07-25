@@ -34,6 +34,10 @@ public class XmlMapper {
     private static XStream xstream;
 
     static {
+
+        // Allow to manage attributes with _ in their names
+        //xstream = new XStream(new StaxDriver(new NoNameCoder()));
+
         // Allow to:
         // * ignore XML elements/attributes not mapped
         // * manage attributes with _ in it's name
@@ -68,7 +72,7 @@ public class XmlMapper {
 
         // FOR DEBUG
         String xmlContent = getXstream().toXML(getHomeBank());
-        xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|fav|ope)>", "/>");
+        xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|tag|fav|ope)>", "/>");
         String xmlContentIndent = xmlContent.replaceAll("><", ">\n<");
         System.out.println(xmlContentIndent);
     }

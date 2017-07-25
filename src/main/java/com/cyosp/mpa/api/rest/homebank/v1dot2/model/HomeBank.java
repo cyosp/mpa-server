@@ -45,6 +45,9 @@ public class HomeBank {
     @XStreamImplicit(itemFieldName = "cat")
     private List<Category> categories = new ArrayList<>();
 
+    @XStreamImplicit(itemFieldName = "tag")
+    private List<Tag> tags = new ArrayList<>();
+
     @XStreamImplicit(itemFieldName = "fav")
     private List<Favorite> favorites = new ArrayList<>();
 
