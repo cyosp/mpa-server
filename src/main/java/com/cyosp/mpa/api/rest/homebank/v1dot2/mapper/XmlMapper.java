@@ -5,6 +5,7 @@ import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Account;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.HomeBank;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 import com.thoughtworks.xstream.mapper.MapperWrapper;
 import lombok.Getter;
@@ -33,8 +34,10 @@ public class XmlMapper {
     private static XStream xstream;
 
     static {
-        // Allow to ignore XML elements/attributes not mapped
-        xstream = new XStream(new StaxDriver()) {
+        // Allow to:
+        // * ignore XML elements/attributes not mapped
+        // * manage attributes with _ in it's name
+        xstream = new XStream(new StaxDriver(new NoNameCoder())) {
             @Override
             protected MapperWrapper wrapMapper(MapperWrapper next) {
                 return new MapperWrapper(next) {
@@ -51,6 +54,7 @@ public class XmlMapper {
         };
         // XStream must be using different class loader
         // Solution: set same class loader than current thread
+        // It allows to recognize object in loading
         xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
 
         xstream.processAnnotations(HomeBank.class);
@@ -61,13 +65,17 @@ public class XmlMapper {
     public void loadXmlFile() {
         homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
         getHomeBank().initKeys();
+
+        // FOR DEBUG
+        String xmlContent = getXstream().toXML(getHomeBank());
+        String xmlContentIndent = xmlContent.replaceAll("><", ">\n<");
+        System.out.println(xmlContentIndent);
     }
 
     public void saveXmlFile() throws DataNotSavedException {
 
         try {
             FileOutputStream outputStream = new FileOutputStream(getHomebankFilePath());
-            //Writer writer = new OutputStreamWriter(outputStream, Charset.forName("UTF-8"));
             getXstream().toXML(getHomeBank(), outputStream);
         } catch (Exception e1) {
             throw new DataNotSavedException();

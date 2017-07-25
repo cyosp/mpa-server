@@ -30,6 +30,12 @@ public class HomeBank {
     @XStreamAsAttribute
     private String d;
 
+    @XStreamAlias("properties")
+    private Properties properties;
+
+    @XStreamAlias("cur")
+    private Currency currency;
+
     @XStreamImplicit(itemFieldName = "account")
     private List<Account> accounts = new ArrayList<>();
 
@@ -39,14 +45,12 @@ public class HomeBank {
         }
     }
 
-    public int getNextAccountKey()
-    {
+    public int getNextAccountKey() {
         nextAccountKey++;
         return nextAccountKey;
     }
 
-    public void addAccount(Account account) throws DuplicatedNameException
-    {
+    public void addAccount(Account account) throws DuplicatedNameException {
         for (Account accountFromList : getAccounts()) {
             if (accountFromList.getName().equals(account.getName())) throw new DuplicatedNameException();
         }
