@@ -8,6 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +21,6 @@ import java.util.Map;
 @Setter
 @XStreamAlias("homebank")
 public class HomeBank {
-
-    @XStreamOmitField
-    private int nextAccountKey = -1;
 
     @XStreamAlias("v")
     @XStreamAsAttribute
@@ -56,36 +54,66 @@ public class HomeBank {
     @XStreamImplicit(itemFieldName = "ope")
     private List<Operation> operations = new ArrayList<>();
 
+    //---------------------------------------------------------
+
+    @XStreamOmitField
+    private int nextAccountKey = -1;
+
     @XStreamOmitField
     private Map<Integer, Account> accountMap;
+
+    @XStreamOmitField
+    private int nextPayeeKey = -1;
+
+    @XStreamOmitField
+    private Map<Integer, Payee> payeeMap;
 
     public void addMissingValues() {
 
         // Init
         accountMap = new HashMap<>();
+        payeeMap = new HashMap<>();
 
         for (Account account : getAccounts()) {
-
             // Init
             account.setBalance(account.getInitialBalance());
-
+            // Add to map
             getAccountMap().put(account.getKey(), account);
-
+            // Update next key
             if (account.getKey() > nextAccountKey) setNextAccountKey(account.getKey());
+        }
+
+        for (Payee payee : getPayees()) {
+            // Init
+            payee.setBalance(new BigDecimal(0));
+            // Add to map
+            getPayeeMap().put(payee.getKey(), payee);
+            // Update next key
+            if (payee.getKey() > nextPayeeKey) setNextPayeeKey(payee.getKey());
         }
 
         for (Operation operation : getOperations()) {
 
+            // Update account balance
             int accountRef = operation.getAccountRef();
             if (accountRef > 0) {
                 Account account = getAccountMap().get(accountRef);
                 account.setBalance(account.getBalance().add(operation.getAmount()));
+            }
+            // Update payee balance
+            int payeeRef = operation.getPayeeRef();
+            if (payeeRef > 0) {
+                Payee payee = getPayeeMap().get(payeeRef);
+                payee.setBalance(payee.getBalance().add(operation.getAmount()));
             }
         }
 
         // DEBUG
         /*for (Account account : getAccounts()) {
             System.out.println("Account: " + account.getName() + " <=> " + account.getBalance());
+        }*/
+        /*for (Payee payee : getPayees()) {
+            System.out.println("Payee: " + payee.getName() + " <=> " + payee.getBalance());
         }*/
     }
 

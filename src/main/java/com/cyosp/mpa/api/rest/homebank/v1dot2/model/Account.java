@@ -55,6 +55,8 @@ public class Account {
     @XStreamAlias("cheque2")
     private long cheque2;
 
+    //----------------------------------
+
     @XStreamOmitField
     private BigDecimal balance;
 }
