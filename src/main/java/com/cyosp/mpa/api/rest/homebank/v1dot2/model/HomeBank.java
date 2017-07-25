@@ -9,7 +9,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by CYOSP on 2017-07-23.
@@ -54,10 +56,37 @@ public class HomeBank {
     @XStreamImplicit(itemFieldName = "ope")
     private List<Operation> operations = new ArrayList<>();
 
-    public void initKeys() {
+    @XStreamOmitField
+    private Map<Integer, Account> accountMap;
+
+    public void addMissingValues() {
+
+        // Init
+        accountMap = new HashMap<>();
+
         for (Account account : getAccounts()) {
+
+            // Init
+            account.setBalance(account.getInitialBalance());
+
+            getAccountMap().put(account.getKey(), account);
+
             if (account.getKey() > nextAccountKey) setNextAccountKey(account.getKey());
         }
+
+        for (Operation operation : getOperations()) {
+
+            int accountRef = operation.getAccountRef();
+            if (accountRef > 0) {
+                Account account = getAccountMap().get(accountRef);
+                account.setBalance(account.getBalance().add(operation.getAmount()));
+            }
+        }
+
+        // DEBUG
+        /*for (Account account : getAccounts()) {
+            System.out.println("Account: " + account.getName() + " <=> " + account.getBalance());
+        }*/
     }
 
     public int getNextAccountKey() {

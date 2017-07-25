@@ -7,7 +7,6 @@ import com.cyosp.mpa.api.rest.homebank.v1dot2.model.HomeBank;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
-import com.thoughtworks.xstream.mapper.MapperWrapper;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -68,13 +67,13 @@ public class XmlMapper {
     @PostConstruct
     public void loadXmlFile() {
         homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
-        getHomeBank().initKeys();
+        getHomeBank().addMissingValues();
 
         // FOR DEBUG
-        String xmlContent = getXstream().toXML(getHomeBank());
+        /*String xmlContent = getXstream().toXML(getHomeBank());
         xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|tag|fav|ope)>", "/>");
         String xmlContentIndent = xmlContent.replaceAll("><", ">\n<");
-        System.out.println(xmlContentIndent);
+        System.out.println(xmlContentIndent);*/
     }
 
     public void saveXmlFile() throws DataNotSavedException {
