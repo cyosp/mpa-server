@@ -39,6 +39,10 @@ public class HomeBank {
     @XStreamImplicit(itemFieldName = "account")
     private List<Account> accounts = new ArrayList<>();
 
+    @XStreamImplicit(itemFieldName = "pay")
+    private List<Payee> payees = new ArrayList<>();
+
+
     public void initKeys() {
         for (Account account : getAccounts()) {
             if (account.getKey() > nextAccountKey) setNextAccountKey(account.getKey());
