@@ -48,6 +48,9 @@ public class HomeBank {
     @XStreamImplicit(itemFieldName = "fav")
     private List<Favorite> favorites = new ArrayList<>();
 
+    @XStreamImplicit(itemFieldName = "ope")
+    private List<Operation> operations = new ArrayList<>();
+
     public void initKeys() {
         for (Account account : getAccounts()) {
             if (account.getKey() > nextAccountKey) setNextAccountKey(account.getKey());
