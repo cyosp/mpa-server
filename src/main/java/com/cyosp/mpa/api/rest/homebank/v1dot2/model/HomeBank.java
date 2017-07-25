@@ -42,6 +42,9 @@ public class HomeBank {
     @XStreamImplicit(itemFieldName = "pay")
     private List<Payee> payees = new ArrayList<>();
 
+    @XStreamImplicit(itemFieldName = "cat")
+    private List<Category> categories = new ArrayList<>();
+
 
     public void initKeys() {
         for (Account account : getAccounts()) {
