@@ -110,6 +110,9 @@ public class HomeBank {
 
         for (Operation operation : getOperations()) {
 
+            // Init
+            operation.convertJulianToDate();
+
             // Update account balance
             int accountRef = operation.getAccountRef();
             if (accountRef > 0) {
@@ -139,6 +142,9 @@ public class HomeBank {
         }*/
         /*for (Category category : getCategories()) {
             System.out.println("Category: " + category.getName() + " <=> " + category.getBalance());
+        }*/
+        /*for (Operation operation : getOperations()) {
+            System.out.println("Operation: " + operation.getDate());
         }*/
     }
 
