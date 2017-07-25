@@ -36,12 +36,12 @@ public class XmlMapper {
     static {
 
         // Allow to manage attributes with _ in their names
-        //xstream = new XStream(new StaxDriver(new NoNameCoder()));
+        xstream = new XStream(new StaxDriver(new NoNameCoder()));
 
         // Allow to:
         // * ignore XML elements/attributes not mapped
         // * manage attributes with _ in it's name
-        xstream = new XStream(new StaxDriver(new NoNameCoder())) {
+        /*xstream = new XStream(new StaxDriver(new NoNameCoder())) {
             @Override
             protected MapperWrapper wrapMapper(MapperWrapper next) {
                 return new MapperWrapper(next) {
@@ -55,14 +55,14 @@ public class XmlMapper {
                     }
                 };
             }
-        };
+        };*/
+
         // XStream must be using different class loader
         // Solution: set same class loader than current thread
         // It allows to recognize object in loading
-        xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
+        getXstream().setClassLoader(Thread.currentThread().getContextClassLoader());
 
-        xstream.processAnnotations(HomeBank.class);
-
+        getXstream().processAnnotations(HomeBank.class);
     }
 
     @PostConstruct
