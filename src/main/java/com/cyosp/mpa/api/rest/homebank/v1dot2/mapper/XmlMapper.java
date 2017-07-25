@@ -68,7 +68,7 @@ public class XmlMapper {
 
         // FOR DEBUG
         String xmlContent = getXstream().toXML(getHomeBank());
-        xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat)>", "/>");
+        xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|fav)>", "/>");
         String xmlContentIndent = xmlContent.replaceAll("><", ">\n<");
         System.out.println(xmlContentIndent);
     }
