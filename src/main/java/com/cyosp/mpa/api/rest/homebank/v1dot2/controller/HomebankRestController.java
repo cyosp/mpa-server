@@ -4,6 +4,7 @@ import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CategoryResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.service.HomebankService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,11 @@ public class HomebankRestController {
     @GetMapping("/accounts")
     public List<AccountResponse> getAccounts() {
         return getHomebankService().getAccounts();
+    }
+
+    @GetMapping("/categories")
+    public List<CategoryResponse> getCategories() {
+        return getHomebankService().getCategories();
     }
 
     @GetMapping("/reload")

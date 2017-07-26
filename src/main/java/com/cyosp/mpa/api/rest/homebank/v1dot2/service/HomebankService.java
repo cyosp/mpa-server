@@ -3,6 +3,7 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.service;
 import com.cyosp.mpa.api.rest.common.exception.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CategoryResponse;
 
 import java.util.List;
 
@@ -13,6 +14,10 @@ public interface HomebankService {
 
     public void reload();
 
+    //
+    // Accounts
+    //
+
     public AccountResponse addAccount(AccountRequest accountRequest) throws DataNotSavedException, DuplicatedNameException;
 
     public List<AccountResponse> getAccounts();
@@ -22,4 +27,10 @@ public interface HomebankService {
     public AccountResponse updateAccount(long id, AccountRequest accountRequest) throws LineNotUpdatedException, DuplicatedNameException;
 
     public AccountResponse deleteAccount(long id) throws LineNotDeletedException;
+
+    //
+    // Categories
+    //
+
+    public List<CategoryResponse> getCategories();
 }

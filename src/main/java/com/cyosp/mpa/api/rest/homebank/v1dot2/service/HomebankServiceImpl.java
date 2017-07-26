@@ -3,8 +3,10 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.service;
 import com.cyosp.mpa.api.rest.common.exception.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.mapper.XmlMapper;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Account;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Category;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CategoryResponse;
 import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,10 @@ public class HomebankServiceImpl implements HomebankService {
     {
         getXmlMapper().loadXmlFile();
     }
+
+    //
+    // Accounts
+    //
 
     @Override
     public AccountResponse addAccount(AccountRequest accountRequest) throws DataNotSavedException, DuplicatedNameException {
@@ -55,8 +61,6 @@ public class HomebankServiceImpl implements HomebankService {
         }
 
         return ret;
-
-
     }
 
     @Override
@@ -72,5 +76,22 @@ public class HomebankServiceImpl implements HomebankService {
     @Override
     public AccountResponse deleteAccount(long id) throws LineNotDeletedException {
         return null;
+    }
+
+    //
+    // Categories
+    //
+
+    @Override
+    public List<CategoryResponse> getCategories() {
+        List<CategoryResponse> ret = new ArrayList<>();
+
+        for (Category category : getXmlMapper().getCategories()) {
+            CategoryResponse categoryResponse = new CategoryResponse();
+            BeanUtils.copyProperties(category, categoryResponse);
+            ret.add(categoryResponse);
+        }
+
+        return ret;
     }
 }
