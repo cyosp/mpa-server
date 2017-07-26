@@ -18,7 +18,7 @@ public class Currency {
 
     @XStreamAsAttribute
     @XStreamAlias("iso")
-    private String isoValue;
+    private String iso;
 
     @XStreamAsAttribute
     @XStreamAlias("name")
@@ -26,7 +26,7 @@ public class Currency {
 
     @XStreamAsAttribute
     @XStreamAlias("symb")
-    private char symbol;
+    private char symb;
 
     @XStreamAsAttribute
     @XStreamAlias("syprf")
@@ -34,7 +34,7 @@ public class Currency {
 
     @XStreamAsAttribute
     @XStreamAlias("dchar")
-    private char decimalCharacter;
+    private char dchar;
 
     @XStreamAsAttribute
     @XStreamAlias("gchar")
@@ -42,7 +42,7 @@ public class Currency {
 
     @XStreamAsAttribute
     @XStreamAlias("frac")
-    private int fractionLength;
+    private int frac;
 
     @XStreamAsAttribute
     @XStreamAlias("rate")

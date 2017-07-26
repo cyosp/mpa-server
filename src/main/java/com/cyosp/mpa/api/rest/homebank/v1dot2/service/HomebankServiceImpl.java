@@ -4,9 +4,11 @@ import com.cyosp.mpa.api.rest.common.exception.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.mapper.XmlMapper;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Account;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Category;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Currency;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CategoryResponse;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CurrencyResponse;
 import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +92,23 @@ public class HomebankServiceImpl implements HomebankService {
             CategoryResponse categoryResponse = new CategoryResponse();
             BeanUtils.copyProperties(category, categoryResponse);
             ret.add(categoryResponse);
+        }
+
+        return ret;
+    }
+
+    //
+    // Currencies
+    //
+
+    @Override
+    public List<CurrencyResponse> getCurrencies() {
+        List<CurrencyResponse> ret = new ArrayList<>();
+
+        for (Currency currency : getXmlMapper().getCurrencies()) {
+            CurrencyResponse currencyResponse = new CurrencyResponse();
+            BeanUtils.copyProperties(currency, currencyResponse);
+            ret.add(currencyResponse);
         }
 
         return ret;

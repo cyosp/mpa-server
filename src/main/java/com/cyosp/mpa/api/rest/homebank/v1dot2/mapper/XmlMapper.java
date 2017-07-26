@@ -4,6 +4,7 @@ import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Account;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Category;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Currency;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.HomeBank;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
@@ -110,7 +111,16 @@ public class XmlMapper {
     //
     // Categories
     //
+
     public List<Category> getCategories() {
         return getHomeBank().getCategories();
+    }
+
+    //
+    // Currencies
+    //
+
+    public List<Currency> getCurrencies() {
+        return getHomeBank().getCurrencies();
     }
 }

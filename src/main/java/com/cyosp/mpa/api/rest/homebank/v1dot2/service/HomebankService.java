@@ -4,6 +4,7 @@ import com.cyosp.mpa.api.rest.common.exception.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CategoryResponse;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CurrencyResponse;
 
 import java.util.List;
 
@@ -33,4 +34,9 @@ public interface HomebankService {
     //
 
     public List<CategoryResponse> getCategories();
+
+    //
+    // Currencies
+
+    public List<CurrencyResponse> getCurrencies();
 }

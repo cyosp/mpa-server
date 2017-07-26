@@ -33,8 +33,8 @@ public class HomeBank {
     @XStreamAlias("properties")
     private Properties properties;
 
-    @XStreamAlias("cur")
-    private Currency currency;
+    @XStreamImplicit(itemFieldName = "cur")
+    private List<Currency> currencies = new ArrayList<>();
 
     @XStreamImplicit(itemFieldName = "account")
     private List<Account> accounts = new ArrayList<>();
@@ -61,6 +61,12 @@ public class HomeBank {
 
     @XStreamOmitField
     private Map<Integer, Account> accountMap;
+
+    @XStreamOmitField
+    private int nextCurrencyKey = -1;
+
+    @XStreamOmitField
+    private Map<Integer, Currency> currencyMap;
 
     @XStreamOmitField
     private int nextPayeeKey = -1;
