@@ -24,7 +24,7 @@ public class HomeBank {
 
     @XStreamAlias("v")
     @XStreamAsAttribute
-    private String version = "1.2";
+    private String v;
 
     @XStreamAlias("d")
     @XStreamAsAttribute

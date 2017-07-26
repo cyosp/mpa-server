@@ -3,10 +3,7 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.controller;
 import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CategoryResponse;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CurrencyResponse;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.response.FavoriteResponse;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.service.HomebankService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +26,11 @@ public class HomebankRestController {
     @GetMapping("/reload")
     public void reload() {
         getHomebankService().reload();
+    }
+
+    @GetMapping("/infos")
+    public InfosResponse getInfos() {
+        return getHomebankService().getInfos();
     }
 
     //

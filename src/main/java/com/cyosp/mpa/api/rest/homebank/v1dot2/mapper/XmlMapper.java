@@ -86,6 +86,10 @@ public class XmlMapper {
 
     }
 
+    public HomeBank getInfos() {
+        return getHomeBank();
+    }
+
     //
     // Accounts
     //

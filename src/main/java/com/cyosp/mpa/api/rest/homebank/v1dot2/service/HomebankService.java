@@ -2,10 +2,7 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.service;
 
 import com.cyosp.mpa.api.rest.common.exception.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CategoryResponse;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CurrencyResponse;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.response.FavoriteResponse;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.*;
 
 import java.util.List;
 
@@ -15,6 +12,8 @@ import java.util.List;
 public interface HomebankService {
 
     public void reload();
+
+    public InfosResponse getInfos();
 
     //
     // Accounts
