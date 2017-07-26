@@ -51,4 +51,10 @@ public interface HomebankService {
     //
 
     public List<OperationResponse> getOperations();
+
+    //
+    // Operations
+    //
+
+    public List<PayeeResponse> getPayees();
 }

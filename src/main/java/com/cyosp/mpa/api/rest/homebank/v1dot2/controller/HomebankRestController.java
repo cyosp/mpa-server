@@ -92,4 +92,13 @@ public class HomebankRestController {
     public List<OperationResponse> getOperations() {
         return getHomebankService().getOperations();
     }
+
+    //
+    // Payees
+    //
+
+    @GetMapping("/payees")
+    public List<PayeeResponse> getPayees() {
+        return getHomebankService().getPayees();
+    }
 }

@@ -140,4 +140,12 @@ public class XmlMapper {
     public List<Operation> getOperations() {
         return getHomeBank().getOperations();
     }
+
+    //
+    // Payees
+    //
+
+    public List<Payee> getPayees() {
+        return getHomeBank().getPayees();
+    }
 }
