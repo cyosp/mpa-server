@@ -6,6 +6,7 @@ import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CategoryResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CurrencyResponse;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.FavoriteResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.service.HomebankService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,10 +67,18 @@ public class HomebankRestController {
     //
     // Currencies
     //
+
     @GetMapping("/currencies")
     public List<CurrencyResponse> getCurrencies() {
         return getHomebankService().getCurrencies();
     }
 
+    //
+    // Favorites
+    //
 
+    @GetMapping("/favorites")
+    public List<FavoriteResponse> getFavorites() {
+        return getHomebankService().getFavorites();
+    }
 }

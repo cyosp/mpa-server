@@ -5,10 +5,12 @@ import com.cyosp.mpa.api.rest.homebank.v1dot2.mapper.XmlMapper;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Account;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Category;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Currency;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Favorite;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CategoryResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CurrencyResponse;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.FavoriteResponse;
 import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +111,23 @@ public class HomebankServiceImpl implements HomebankService {
             CurrencyResponse currencyResponse = new CurrencyResponse();
             BeanUtils.copyProperties(currency, currencyResponse);
             ret.add(currencyResponse);
+        }
+
+        return ret;
+    }
+
+    //
+    // Favorites
+    //
+
+    @Override
+    public List<FavoriteResponse> getFavorites() {
+        List<FavoriteResponse> ret = new ArrayList<>();
+
+        for (Favorite favorite : getXmlMapper().getFavorites()) {
+            FavoriteResponse favoriteResponse = new FavoriteResponse();
+            BeanUtils.copyProperties(favorite, favoriteResponse);
+            ret.add(favoriteResponse);
         }
 
         return ret;

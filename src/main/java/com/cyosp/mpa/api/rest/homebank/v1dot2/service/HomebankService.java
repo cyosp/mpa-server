@@ -5,6 +5,7 @@ import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CategoryResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.CurrencyResponse;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.FavoriteResponse;
 
 import java.util.List;
 
@@ -39,4 +40,10 @@ public interface HomebankService {
     // Currencies
 
     public List<CurrencyResponse> getCurrencies();
+
+    //
+    // Favorites
+    //
+
+    public List<FavoriteResponse> getFavorites();
 }

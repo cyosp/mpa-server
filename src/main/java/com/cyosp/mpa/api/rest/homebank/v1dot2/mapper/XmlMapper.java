@@ -2,10 +2,7 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.mapper;
 
 import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Account;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Category;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Currency;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.model.HomeBank;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.model.*;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
@@ -122,5 +119,13 @@ public class XmlMapper {
 
     public List<Currency> getCurrencies() {
         return getHomeBank().getCurrencies();
+    }
+
+    //
+    // Favorites
+    //
+
+    public List<Favorite> getFavorites() {
+        return getHomeBank().getFavorites();
     }
 }

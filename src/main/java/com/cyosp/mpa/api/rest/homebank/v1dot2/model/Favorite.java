@@ -20,11 +20,11 @@ public class Favorite {
 
     @XStreamAsAttribute
     @XStreamAlias("account")
-    private int accountRef;
+    private int account;
 
     @XStreamAsAttribute
     @XStreamAlias("paymode")
-    private int paymentMode;
+    private int paymode;
 
     @XStreamAsAttribute
     @XStreamAlias("flags")
@@ -32,11 +32,11 @@ public class Favorite {
 
     @XStreamAsAttribute
     @XStreamAlias("payee")
-    private int payeeRef;
+    private int payee;
 
     @XStreamAsAttribute
     @XStreamAlias("category")
-    private int categoryRef;
+    private int category;
 
     @XStreamAsAttribute
     @XStreamAlias("wording")
