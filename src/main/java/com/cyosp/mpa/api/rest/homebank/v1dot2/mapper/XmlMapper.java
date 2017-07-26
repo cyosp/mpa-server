@@ -90,6 +90,10 @@ public class XmlMapper {
         return getHomeBank();
     }
 
+    public Properties getProperties() {
+        return getHomeBank().getProperties();
+    }
+
     //
     // Accounts
     //

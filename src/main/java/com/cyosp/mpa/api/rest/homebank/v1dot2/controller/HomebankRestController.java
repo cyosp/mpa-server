@@ -33,6 +33,11 @@ public class HomebankRestController {
         return getHomebankService().getInfos();
     }
 
+    @GetMapping("/properties")
+    public PropertiesResponse getProperties() {
+        return getHomebankService().getProperties();
+    }
+
     //
     // Accounts
     //

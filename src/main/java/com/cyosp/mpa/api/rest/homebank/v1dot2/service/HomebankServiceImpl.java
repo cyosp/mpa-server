@@ -1,6 +1,9 @@
 package com.cyosp.mpa.api.rest.homebank.v1dot2.service;
 
-import com.cyosp.mpa.api.rest.common.exception.*;
+import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
+import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
+import com.cyosp.mpa.api.rest.common.exception.LineNotDeletedException;
+import com.cyosp.mpa.api.rest.common.exception.LineNotUpdatedException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.mapper.XmlMapper;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
@@ -10,7 +13,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +27,7 @@ public class HomebankServiceImpl implements HomebankService {
     private XmlMapper xmlMapper;
 
     @Override
-    public void reload()
-    {
+    public void reload() {
         getXmlMapper().loadXmlFile();
     }
 
@@ -38,6 +39,16 @@ public class HomebankServiceImpl implements HomebankService {
         HomeBank homeBank = getXmlMapper().getInfos();
         ret.setV(homeBank.getV());
         ret.setD(homeBank.getD());
+
+        return ret;
+    }
+
+    @Override
+    public PropertiesResponse getProperties() {
+        PropertiesResponse ret = new PropertiesResponse();
+
+        Properties properties = getXmlMapper().getProperties();
+        BeanUtils.copyProperties(properties, ret);
 
         return ret;
     }

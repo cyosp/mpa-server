@@ -18,7 +18,7 @@ public class Properties {
 
     @XStreamAsAttribute
     @XStreamAlias("curr")
-    private int currencyRef;
+    private int curr;
 
     @XStreamAsAttribute
     @XStreamAlias("auto_smode")

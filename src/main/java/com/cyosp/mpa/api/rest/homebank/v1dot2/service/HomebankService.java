@@ -15,6 +15,8 @@ public interface HomebankService {
 
     public InfosResponse getInfos();
 
+    public PropertiesResponse getProperties();
+
     //
     // Accounts
     //
