@@ -106,4 +106,14 @@ public class HomebankRestController {
     public List<PayeeResponse> getPayees() {
         return getHomebankService().getPayees();
     }
+
+
+    //
+    // Tags
+    //
+
+    @GetMapping("/tags")
+    public List<TagResponse> getTags() {
+        return getHomebankService().getTags();
+    }
 }

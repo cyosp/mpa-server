@@ -152,4 +152,12 @@ public class XmlMapper {
     public List<Payee> getPayees() {
         return getHomeBank().getPayees();
     }
+
+    //
+    // Tags
+    //
+
+    public List<Tag> getTags() {
+        return getHomeBank().getTags();
+    }
 }

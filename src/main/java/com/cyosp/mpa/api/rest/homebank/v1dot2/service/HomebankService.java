@@ -59,4 +59,10 @@ public interface HomebankService {
     //
 
     public List<PayeeResponse> getPayees();
+
+    //
+    // Tags
+    //
+
+    public List<TagResponse> getTags();
 }

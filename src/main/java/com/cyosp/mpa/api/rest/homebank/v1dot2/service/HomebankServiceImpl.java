@@ -183,4 +183,21 @@ public class HomebankServiceImpl implements HomebankService {
 
         return ret;
     }
+
+    //
+    // Tags
+    //
+
+    @Override
+    public List<TagResponse> getTags() {
+        List<TagResponse> ret = new ArrayList<>();
+
+        for (Tag tag : getXmlMapper().getTags()) {
+            TagResponse tagResponse = new TagResponse();
+            BeanUtils.copyProperties(tag, tagResponse);
+            ret.add(tagResponse);
+        }
+
+        return ret;
+    }
 }
