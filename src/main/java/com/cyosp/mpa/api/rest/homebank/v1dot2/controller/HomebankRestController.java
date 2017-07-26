@@ -83,4 +83,13 @@ public class HomebankRestController {
     public List<FavoriteResponse> getFavorites() {
         return getHomebankService().getFavorites();
     }
+
+    //
+    // Operations
+    //
+
+    @GetMapping("/operations")
+    public List<OperationResponse> getOperations() {
+        return getHomebankService().getOperations();
+    }
 }

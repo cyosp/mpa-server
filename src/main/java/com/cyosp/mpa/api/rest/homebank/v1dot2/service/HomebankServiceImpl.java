@@ -138,4 +138,21 @@ public class HomebankServiceImpl implements HomebankService {
 
         return ret;
     }
+
+    //
+    // Operations
+    //
+
+    @Override
+    public List<OperationResponse> getOperations() {
+        List<OperationResponse> ret = new ArrayList<>();
+
+        for (Operation operation : getXmlMapper().getOperations()) {
+            OperationResponse operationResponse = new OperationResponse();
+            BeanUtils.copyProperties(operation, operationResponse);
+            ret.add(operationResponse);
+        }
+
+        return ret;
+    }
 }

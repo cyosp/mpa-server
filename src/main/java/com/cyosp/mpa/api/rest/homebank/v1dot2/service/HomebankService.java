@@ -45,4 +45,10 @@ public interface HomebankService {
     //
 
     public List<FavoriteResponse> getFavorites();
+
+    //
+    // Operations
+    //
+
+    public List<OperationResponse> getOperations();
 }

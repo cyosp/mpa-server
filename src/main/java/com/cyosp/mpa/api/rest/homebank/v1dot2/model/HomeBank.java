@@ -120,19 +120,19 @@ public class HomeBank {
             operation.convertJulianToDate();
 
             // Update account balance
-            int accountRef = operation.getAccountRef();
+            int accountRef = operation.getAccount();
             if (accountRef > 0) {
                 Account account = getAccountMap().get(accountRef);
                 account.setBalance(account.getBalance().add(operation.getAmount()));
             }
             // Update payee balance
-            int payeeRef = operation.getPayeeRef();
+            int payeeRef = operation.getPayee();
             if (payeeRef > 0) {
                 Payee payee = getPayeeMap().get(payeeRef);
                 payee.setBalance(payee.getBalance().add(operation.getAmount()));
             }
             // Update category balance
-            int categoryRef = operation.getCategoryRef();
+            int categoryRef = operation.getCategory();
             if (categoryRef > 0) {
                 Category category = getCategoryMap().get(categoryRef);
                 category.setBalance(category.getBalance().add(operation.getAmount()));

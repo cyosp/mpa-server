@@ -20,7 +20,7 @@ public class Operation {
 
     @XStreamAsAttribute
     @XStreamAlias("date")
-    private long julianDate;
+    private long date;
 
     @XStreamAsAttribute
     @XStreamAlias("amount")
@@ -28,11 +28,11 @@ public class Operation {
 
     @XStreamAsAttribute
     @XStreamAlias("account")
-    private int accountRef;
+    private int account;
 
     @XStreamAsAttribute
     @XStreamAlias("paymode")
-    private int paymentMode;
+    private int paymode;
 
     @XStreamAsAttribute
     @XStreamAlias("flags")
@@ -40,7 +40,7 @@ public class Operation {
 
     @XStreamAsAttribute
     @XStreamAlias("payee")
-    private int payeeRef;
+    private int payee;
 
     @XStreamAsAttribute
     @XStreamAlias("wording")
@@ -48,27 +48,27 @@ public class Operation {
 
     @XStreamAsAttribute
     @XStreamAlias("category")
-    private int categoryRef;
+    private int category;
 
     //--------------------------
 
     @XStreamOmitField
-    private Date date;
+    private Date javaDate;
 
     public void convertDateToJulian() {
 
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.setTime(getDate());
+        gregorianCalendar.setTime(getJavaDate());
 
         Calendar calendar = new GregorianCalendar(1, GregorianCalendar.JANUARY, 1);
         long diffInMs = gregorianCalendar.getTimeInMillis() - calendar.getTimeInMillis();
 
-        setJulianDate(diffInMs / (24 * 60 * 60 * 1000) - 1);
+        setDate(diffInMs / (24 * 60 * 60 * 1000) - 1);
     }
 
     public void convertJulianToDate() {
 
-        long diffInMs = getJulianDate() * (24 * 60 * 60 * 1000);
+        long diffInMs = getDate() * (24 * 60 * 60 * 1000);
 
         GregorianCalendar gregorianCalendar = new GregorianCalendar(1, GregorianCalendar.JANUARY, 1);
         long dateInMs = diffInMs + gregorianCalendar.getTimeInMillis();
@@ -78,6 +78,6 @@ public class Operation {
         newGregorianCalendar.setTimeInMillis(0);
         newGregorianCalendar.add(GregorianCalendar.DAY_OF_MONTH, dayNbr + 2);
 
-        setDate(newGregorianCalendar.getTime());
+        setJavaDate(newGregorianCalendar.getTime());
     }
 }

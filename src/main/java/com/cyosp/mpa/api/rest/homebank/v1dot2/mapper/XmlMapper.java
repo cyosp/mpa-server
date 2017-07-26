@@ -132,4 +132,12 @@ public class XmlMapper {
     public List<Favorite> getFavorites() {
         return getHomeBank().getFavorites();
     }
+
+    //
+    // Operations
+    //
+
+    public List<Operation> getOperations() {
+        return getHomeBank().getOperations();
+    }
 }
