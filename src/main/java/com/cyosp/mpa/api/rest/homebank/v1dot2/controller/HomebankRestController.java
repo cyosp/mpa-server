@@ -2,7 +2,6 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.controller;
 
 import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
-import com.cyosp.mpa.api.rest.common.exception.LineNotInsertedException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.AccountResponse;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.service.HomebankService;
@@ -31,9 +30,9 @@ public class HomebankRestController {
         try {
             ret = getHomebankService().addAccount(accountRequest);
         } catch (DataNotSavedException e) {
-            ret.setId(AccountResponse.ID_DATA_NOT_SAVED);
+            ret.setKey(AccountResponse.KEY_DATA_NOT_SAVED);
         } catch (DuplicatedNameException e) {
-            ret.setId(AccountResponse.ID_DUPLICATED_NAME);
+            ret.setKey(AccountResponse.KEY_DUPLICATED_NAME);
         }
 
         return ret;

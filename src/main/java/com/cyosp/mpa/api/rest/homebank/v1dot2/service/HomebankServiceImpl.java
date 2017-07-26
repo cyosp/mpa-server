@@ -51,7 +51,6 @@ public class HomebankServiceImpl implements HomebankService {
         for (Account account : getXmlMapper().getAccounts()) {
             AccountResponse accountResponse = new AccountResponse();
             BeanUtils.copyProperties(account, accountResponse);
-            accountResponse.setId(account.getKey());
             ret.add(accountResponse);
         }
 
