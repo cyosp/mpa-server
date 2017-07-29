@@ -33,7 +33,7 @@ public class Account {
 
     @XStreamAsAttribute
     @XStreamAlias("curr")
-    private int currencyRef;
+    private int curr;
 
     @XStreamAsAttribute
     @XStreamAlias("name")
@@ -41,11 +41,11 @@ public class Account {
 
     @XStreamAsAttribute
     @XStreamAlias("initial")
-    private BigDecimal initialBalance;
+    private BigDecimal initial;
 
     @XStreamAsAttribute
     @XStreamAlias("minimum")
-    private BigDecimal minimumBalance;
+    private BigDecimal minimum;
 
     @XStreamAsAttribute
     @XStreamAlias("cheque1")

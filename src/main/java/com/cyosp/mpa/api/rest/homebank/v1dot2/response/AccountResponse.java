@@ -18,13 +18,13 @@ public class AccountResponse extends RootResponse {
 
     private int type;
 
-    private int currencyRef;
+    private int curr;
 
     private String name;
 
-    private BigDecimal initialBalance;
+    private BigDecimal initial;
 
-    private BigDecimal minimumBalance;
+    private BigDecimal minimum;
 
     private long cheque1;
 

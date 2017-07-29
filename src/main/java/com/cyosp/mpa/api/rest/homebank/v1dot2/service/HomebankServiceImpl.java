@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +79,11 @@ public class HomebankServiceImpl implements HomebankService {
         for (Account account : getXmlMapper().getAccounts()) {
             AccountResponse accountResponse = new AccountResponse();
             BeanUtils.copyProperties(account, accountResponse);
+
+            int fractionLengthConfigured = XmlMapper.getHomeBank().getCurrencyMap().get(account.getCurr()).getFrac();
+            BigDecimal balanceRounded = accountResponse.getBalance().setScale(fractionLengthConfigured, BigDecimal.ROUND_HALF_UP);
+            accountResponse.setBalance(balanceRounded);
+
             ret.add(accountResponse);
         }
 

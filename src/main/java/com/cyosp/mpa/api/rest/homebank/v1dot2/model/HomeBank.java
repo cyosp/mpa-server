@@ -84,12 +84,19 @@ public class HomeBank {
 
         // Init
         accountMap = new HashMap<>();
+        currencyMap = new HashMap<>();
         payeeMap = new HashMap<>();
         categoryMap = new HashMap<>();
 
+        for (Currency currency : getCurrencies())
+        {
+            // Add to map
+            getCurrencyMap().put(currency.getKey(),currency);
+        }
+
         for (Account account : getAccounts()) {
             // Init
-            account.setBalance(account.getInitialBalance());
+            account.setBalance(account.getInitial());
             // Add to map
             getAccountMap().put(account.getKey(), account);
             // Update next key
