@@ -22,7 +22,7 @@ import java.util.List;
 @Getter
 public class XmlMapper {
 
-    @Value("${homebank.repository.v1dot2.file}")
+    @Value("${repository.homebank.v1dot2.file}")
     private File homebankFilePath;
 
     @Getter
@@ -65,14 +65,19 @@ public class XmlMapper {
 
     @PostConstruct
     public void loadXmlFile() {
-        homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
-        getHomeBank().addMissingValues();
+        try {
+            homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
+            getHomeBank().addMissingValues();
 
-        // FOR DEBUG
-        /*String xmlContent = getXstream().toXML(getHomeBank());
-        xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|tag|fav|ope)>", "/>");
-        String xmlContentIndent = xmlContent.replaceAll("><", ">\n<");
-        System.out.println(xmlContentIndent);*/
+            // FOR DEBUG
+            /*String xmlContent = getXstream().toXML(getHomeBank());
+            xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|tag|fav|ope)>", "/>");
+            String xmlContentIndent = xmlContent.replaceAll("><", ">\n<");
+            System.out.println(xmlContentIndent);*/
+
+        } catch (Exception e) {
+            // MPA must not manage HomeBank 1.2
+        }
     }
 
     public void saveXmlFile() throws DataNotSavedException {
