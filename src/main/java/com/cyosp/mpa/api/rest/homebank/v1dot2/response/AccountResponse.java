@@ -12,11 +12,13 @@ import java.math.BigDecimal;
 @Setter
 public class AccountResponse extends RootResponse {
 
+    private OptionsResponse options;
+
     private int pos;
 
     private int type;
 
-    private int curr;
+    private CurrencyResponse currency;
 
     private String name;
 
@@ -29,6 +31,4 @@ public class AccountResponse extends RootResponse {
     private long cheque2;
 
     private BigDecimal balance;
-
-    private OptionsResponse options;
 }

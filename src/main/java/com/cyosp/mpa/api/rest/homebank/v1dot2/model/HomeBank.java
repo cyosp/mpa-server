@@ -88,10 +88,9 @@ public class HomeBank {
         payeeMap = new HashMap<>();
         categoryMap = new HashMap<>();
 
-        for (Currency currency : getCurrencies())
-        {
+        for (Currency currency : getCurrencies()) {
             // Add to map
-            getCurrencyMap().put(currency.getKey(),currency);
+            getCurrencyMap().put(currency.getKey(), currency);
         }
 
         for (Account account : getAccounts()) {
@@ -101,6 +100,9 @@ public class HomeBank {
             Options options = new Options();
             options.setOptions(account.getFlags());
             account.setOptions(options);
+
+            Currency currency = getCurrencyMap().get(account.getCurr());
+            account.setCurrency(currency);
 
             // Add to map
             getAccountMap().put(account.getKey(), account);

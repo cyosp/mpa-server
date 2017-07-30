@@ -62,4 +62,7 @@ public class Account {
 
     @XStreamOmitField
     private Options options;
+
+    @XStreamOmitField
+    private Currency currency;
 }

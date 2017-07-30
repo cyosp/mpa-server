@@ -82,6 +82,9 @@ public class HomebankServiceImpl implements HomebankService {
             OptionsResponse optionsResponse = new OptionsResponse();
             BeanUtils.copyProperties(account.getOptions(), optionsResponse);
             accountResponse.setOptions(optionsResponse);
+            CurrencyResponse currencyResponse = new CurrencyResponse();
+            BeanUtils.copyProperties(account.getCurrency(),currencyResponse);
+            accountResponse.setCurrency(currencyResponse);
 
             int fractionLengthConfigured = XmlMapper.getHomeBank().getCurrencyMap().get(account.getCurr()).getFrac();
             BigDecimal balanceRounded = accountResponse.getBalance().setScale(fractionLengthConfigured, BigDecimal.ROUND_HALF_UP);
