@@ -25,7 +25,7 @@ public class Account {
 
     @XStreamAsAttribute
     @XStreamAlias("pos")
-    private int position;
+    private int pos;
 
     @XStreamAsAttribute
     @XStreamAlias("type")
@@ -59,4 +59,7 @@ public class Account {
 
     @XStreamOmitField
     private BigDecimal balance;
+
+    @XStreamOmitField
+    private Options options;
 }

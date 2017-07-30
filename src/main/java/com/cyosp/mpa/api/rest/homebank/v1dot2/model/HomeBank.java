@@ -97,6 +97,11 @@ public class HomeBank {
         for (Account account : getAccounts()) {
             // Init
             account.setBalance(account.getInitial());
+
+            Options options = new Options();
+            options.setOptions(account.getFlags());
+            account.setOptions(options);
+
             // Add to map
             getAccountMap().put(account.getKey(), account);
             // Update next key

@@ -12,9 +12,7 @@ import java.math.BigDecimal;
 @Setter
 public class AccountResponse extends RootResponse {
 
-    private int flags;
-
-    private int position;
+    private int pos;
 
     private int type;
 
@@ -31,4 +29,6 @@ public class AccountResponse extends RootResponse {
     private long cheque2;
 
     private BigDecimal balance;
+
+    private OptionsResponse options;
 }
