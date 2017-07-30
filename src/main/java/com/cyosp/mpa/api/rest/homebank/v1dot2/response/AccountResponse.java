@@ -30,5 +30,5 @@ public class AccountResponse extends RootResponse {
 
     private long cheque2;
 
-    private BigDecimal balance;
+    private String balance;
 }

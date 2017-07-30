@@ -13,7 +13,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,12 +84,24 @@ public class HomebankServiceImpl implements HomebankService {
             BeanUtils.copyProperties(account.getOptions(), optionsResponse);
             accountResponse.setOptions(optionsResponse);
             CurrencyResponse currencyResponse = new CurrencyResponse();
-            BeanUtils.copyProperties(account.getCurrency(),currencyResponse);
+            BeanUtils.copyProperties(account.getCurrency(), currencyResponse);
             accountResponse.setCurrency(currencyResponse);
 
-            int fractionLengthConfigured = XmlMapper.getHomeBank().getCurrencyMap().get(account.getCurr()).getFrac();
-            BigDecimal balanceRounded = accountResponse.getBalance().setScale(fractionLengthConfigured, BigDecimal.ROUND_HALF_UP);
-            accountResponse.setBalance(balanceRounded);
+            //
+            // Format balance
+            //
+            String pattern = "#,##0.";
+            for (int i = 0; i < XmlMapper.getHomeBank().getCurrencyMap().get(account.getCurr()).getFrac(); i++) {
+                pattern += "0";
+            }
+            DecimalFormat df = new DecimalFormat(pattern);
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+            symbols.setGroupingSeparator(account.getCurrency().getGchar());
+            symbols.setDecimalSeparator(account.getCurrency().getDchar());
+            df.setDecimalFormatSymbols(symbols);
+            // TODO : Change how symbol is defined and placed
+            // https://stackoverflow.com/questions/29215163/currency-symbol-with-another-number-format
+            accountResponse.setBalance(df.format(account.getBalance()) + " " + account.getCurrency().getSymb());
 
             ret.add(accountResponse);
         }
