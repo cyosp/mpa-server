@@ -78,6 +78,7 @@ public class XmlMapper {
 
         } catch (Exception e) {
             // MPA must not manage HomeBank 1.2
+            homeBank = null;
         }
     }
 
