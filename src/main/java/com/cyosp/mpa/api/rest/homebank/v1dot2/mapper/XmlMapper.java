@@ -67,6 +67,7 @@ public class XmlMapper {
     public void loadXmlFile() {
         try {
             homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
+            getHomeBank().checkVersion();
             getHomeBank().addMissingValues();
 
             // FOR DEBUG

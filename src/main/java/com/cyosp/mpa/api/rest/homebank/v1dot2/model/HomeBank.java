@@ -1,6 +1,7 @@
 package com.cyosp.mpa.api.rest.homebank.v1dot2.model;
 
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
+import com.cyosp.mpa.api.rest.common.exception.VersionNotSupportedException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
@@ -79,6 +80,10 @@ public class HomeBank {
 
     @XStreamOmitField
     private Map<Integer, Category> categoryMap;
+
+    public void checkVersion() throws VersionNotSupportedException {
+        if (!"1.2".equals(getV())) throw new VersionNotSupportedException();
+    }
 
     public void addMissingValues() {
 
