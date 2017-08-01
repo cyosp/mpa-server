@@ -1,5 +1,6 @@
 package com.cyosp.mpa.api.rest.core.v1.controller;
 
+import com.cyosp.mpa.api.rest.common.controller.CommonController;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
 import com.cyosp.mpa.api.rest.common.exception.LineNotDeletedException;
 import com.cyosp.mpa.api.rest.common.exception.LineNotInsertedException;
@@ -18,9 +19,11 @@ import java.util.List;
  * Created by CYOSP on 2017-06-27.
  */
 @RestController
-@RequestMapping("/mpa/api/rest/core/v1")
+@RequestMapping(CommonController.COMMON_API_PATH + MpaRestController.SUB_PATH)
 @Getter
 public class MpaRestController {
+
+    public static final String SUB_PATH = "/core/v1";
 
     @Autowired
     private MpaService mpaService;

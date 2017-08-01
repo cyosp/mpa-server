@@ -1,5 +1,6 @@
 package com.cyosp.mpa.api.rest.homebank.v1dot2.controller;
 
+import com.cyosp.mpa.api.rest.common.controller.CommonController;
 import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
@@ -16,9 +17,11 @@ import java.util.List;
  * Created by CYOSP on 2017-07-24.
  */
 @RestController
-@RequestMapping("/mpa/api/rest/homebank/v1.2")
+@RequestMapping(CommonController.COMMON_API_PATH + HomebankRestController.SUB_PATH)
 @Getter
 public class HomebankRestController {
+
+    public static final String SUB_PATH = "/homebank/v1.2";
 
     @Autowired
     private HomebankService homebankService;

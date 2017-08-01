@@ -1,5 +1,6 @@
 package com.cyosp.mpa.api.rest.common.controller;
 
+import com.cyosp.mpa.api.rest.homebank.v1dot2.controller.HomebankRestController;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.mapper.XmlMapper;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -9,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.File;
-import java.net.URLClassLoader;
 
 /**
  * Created by CYOSP on 2017-07-24.
@@ -28,7 +28,7 @@ public class StaticFilesController implements WebMvcConfigurer {
         String staticDir = "/static";
         String personalAccountingManaged = null;
 
-        if (XmlMapper.getHomeBank() != null) personalAccountingManaged = "/homebank/v1.2/";
+        if (XmlMapper.getHomeBank() != null) personalAccountingManaged = HomebankRestController.SUB_PATH + "/";
 
         if (personalAccountingManaged != null) {
 
