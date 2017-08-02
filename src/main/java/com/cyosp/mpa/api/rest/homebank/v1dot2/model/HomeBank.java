@@ -93,11 +93,13 @@ public class HomeBank {
         payeeMap = new HashMap<>();
         categoryMap = new HashMap<>();
 
+        if (getCurrencies() == null) currencies = new ArrayList<>();
         for (Currency currency : getCurrencies()) {
             // Add to map
             getCurrencyMap().put(currency.getKey(), currency);
         }
 
+        if (getAccounts() == null) accounts = new ArrayList<>();
         for (Account account : getAccounts()) {
             // Init
             account.setBalance(account.getInitial());
@@ -115,6 +117,7 @@ public class HomeBank {
             if (account.getKey() > nextAccountKey) setNextAccountKey(account.getKey());
         }
 
+        if (getPayees() == null) payees = new ArrayList<>();
         for (Payee payee : getPayees()) {
             // Init
             payee.setBalance(new BigDecimal(0));
@@ -124,6 +127,7 @@ public class HomeBank {
             if (payee.getKey() > nextPayeeKey) setNextPayeeKey(payee.getKey());
         }
 
+        if (getCategories() == null) categories = new ArrayList<>();
         for (Category category : getCategories()) {
             // Init
             category.setBalance(new BigDecimal(0));
@@ -133,6 +137,7 @@ public class HomeBank {
             if (category.getKey() > nextCategoryKey) setNextCategoryKey(category.getKey());
         }
 
+        if (getOperations() == null) operations = new ArrayList<>();
         for (Operation operation : getOperations()) {
 
             // Init
