@@ -7,6 +7,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +31,9 @@ public class XmlMapper {
 
     @Getter
     private static XStream xstream;
+
+    @Autowired
+    DbMapper dbMapper;
 
     static {
 
@@ -69,6 +73,11 @@ public class XmlMapper {
             homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
             getHomeBank().checkVersion();
             getHomeBank().addMissingValues();
+
+            getDbMapper().init();
+            for (Account account : getAccounts()) {
+                getDbMapper().addAccount(account);
+            }
 
             // FOR DEBUG
             /*String xmlContent = getXstream().toXML(getHomeBank());

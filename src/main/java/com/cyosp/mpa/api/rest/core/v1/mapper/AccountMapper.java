@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by CYOSP on 2017-07-14.
  */
-@Mapper
+@UseCoreDatasource
 public interface AccountMapper {
 
     @Insert("insert into account(name, balance) VALUES( #{name}, #{balance} )")
