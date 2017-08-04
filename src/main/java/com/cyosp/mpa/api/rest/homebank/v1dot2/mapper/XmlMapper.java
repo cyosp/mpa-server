@@ -75,6 +75,7 @@ public class XmlMapper {
             getHomeBank().addMissingValues();
 
             getDbMapper().init();
+            getDbMapper().addHomebank(getHomeBank());
             for (Account account : getAccounts()) {
                 getDbMapper().addAccount(account);
             }
@@ -103,7 +104,7 @@ public class XmlMapper {
     }
 
     public HomeBank getInfos() {
-        return getHomeBank();
+        return getDbMapper().getHomebank();
     }
 
     public Properties getProperties() {
