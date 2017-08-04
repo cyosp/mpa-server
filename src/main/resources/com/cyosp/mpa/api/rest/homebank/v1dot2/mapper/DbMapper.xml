@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyosp.mpa.api.rest.homebank.v1dot2.mapper.DbMapper">
+    <insert id="init">
+        DROP TABLE HOMEBANK IF EXISTS;
+        DROP TABLE ACCOUNT IF EXISTS;
+        CREATE TABLE IF NOT EXISTS HOMEBANK (
+            key INT PRIMARY KEY AUTO_INCREMENT,
+            v   VARCHAR,
+            d   VARCHAR
+        );
+        CREATE TABLE IF NOT EXISTS ACCOUNT (
+            key  INT PRIMARY KEY,
+            name VARCHAR UNIQUE
+        );
+    </insert>
+</mapper>

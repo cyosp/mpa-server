@@ -41,7 +41,6 @@ public class CoreDatasourceConfig {
     public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
 
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        //sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("/mybatis/mybatis-conf.xml"));
         sqlSessionFactoryBean.setDataSource(coreDataSource());
         return sqlSessionFactoryBean.getObject();
     }

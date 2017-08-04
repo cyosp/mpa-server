@@ -37,7 +37,6 @@ public class HomebankDatasourceConfig {
     public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
 
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        //sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("/mybatis/mybatis-conf.xml"));
         sqlSessionFactoryBean.setDataSource(homebankDataSource());
         return sqlSessionFactoryBean.getObject();
     }

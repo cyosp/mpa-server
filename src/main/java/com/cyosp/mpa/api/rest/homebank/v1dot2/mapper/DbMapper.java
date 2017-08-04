@@ -13,14 +13,6 @@ import java.util.List;
 @UseHomebankDatasource
 public interface DbMapper {
 
-    public static final String
-            SQL_INIT = "DROP TABLE HOMEBANK IF EXISTS;" +
-            "DROP TABLE ACCOUNT IF EXISTS;" +
-            "CREATE TABLE IF NOT EXISTS HOMEBANK(key INT PRIMARY KEY AUTO_INCREMENT, v VARCHAR, d VARCHAR);"+
-            "CREATE TABLE IF NOT EXISTS ACCOUNT(key INT PRIMARY KEY, name VARCHAR UNIQUE);";
-
-
-    @Insert({SQL_INIT})
     void init();
 
     @Insert({"INSERT INTO HOMEBANK(v, d) VALUES( #{v}, #{d} )"})
