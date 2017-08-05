@@ -5,15 +5,166 @@
 <mapper namespace="com.cyosp.mpa.api.rest.homebank.v1dot2.mapper.DbMapper">
     <insert id="init">
         DROP TABLE HOMEBANK IF EXISTS;
+        DROP TABLE OPERATION IF EXISTS;
+        DROP TABLE FAVORITE IF EXISTS;
+        DROP TABLE TAG IF EXISTS;
+        DROP TABLE CATEGORY IF EXISTS;
+        DROP TABLE PAYEE IF EXISTS;
+        DROP TABLE PROPERTIES IF EXISTS;
+        DROP TABLE CURRENCY IF EXISTS;
         DROP TABLE ACCOUNT IF EXISTS;
+
         CREATE TABLE IF NOT EXISTS HOMEBANK (
             key INT PRIMARY KEY AUTO_INCREMENT,
             v   VARCHAR,
             d   VARCHAR
         );
-        CREATE TABLE IF NOT EXISTS ACCOUNT (
-            key  INT PRIMARY KEY,
-            name VARCHAR UNIQUE
+
+        CREATE TABLE IF NOT EXISTS CURRENCY (
+            key   INT PRIMARY KEY AUTO_INCREMENT,
+            iso   VARCHAR,
+            name  VARCHAR,
+            symb  CHAR,
+            syprf INT,
+            dchar CHAR,
+            gchar CHAR,
+            frac  INT,
+            rate  INT,
+            mdate INT
         );
+
+        CREATE TABLE IF NOT EXISTS PROPERTIES (
+            key         INT PRIMARY KEY AUTO_INCREMENT,
+            title       VARCHAR,
+            curr        INT,
+            autoSmode   INT,
+            autoWeekday INT,
+            FOREIGN KEY (curr) REFERENCES CURRENCY (key)
+        );
+
+        CREATE TABLE IF NOT EXISTS ACCOUNT (
+            key     INT PRIMARY KEY AUTO_INCREMENT,
+            flags   INT,
+            pos     INT,
+            type    INT,
+            curr    INT,
+            name    VARCHAR UNIQUE,
+            initial FLOAT,
+            minimum FLOAT,
+            cheque1 INT,
+            cheque2 INT,
+            FOREIGN KEY (curr) REFERENCES CURRENCY (key)
+        );
+
+        CREATE TABLE IF NOT EXISTS PAYEE (
+            key  INT PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR
+        );
+
+        CREATE TABLE IF NOT EXISTS CATEGORY (
+            key    INT PRIMARY KEY AUTO_INCREMENT,
+            parent INT,
+            flags  INT,
+            name   VARCHAR
+        );
+
+        CREATE TABLE IF NOT EXISTS TAG (
+            key  INT PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR
+        );
+
+        CREATE TABLE IF NOT EXISTS FAVORITE (
+            key       INT PRIMARY KEY AUTO_INCREMENT,
+            amount    FLOAT,
+            account   INT,
+            paymode   INT,
+            flags     INT,
+            payee     INT,
+            category  INT,
+            wording   VARCHAR,
+            nextdate  INT,
+            every     INT,
+            unit      INT,
+            fav_limit INT,
+            FOREIGN KEY (account) REFERENCES ACCOUNT (key),
+            FOREIGN KEY (category) REFERENCES CATEGORY (key)
+        );
+
+        CREATE TABLE IF NOT EXISTS OPERATION (
+            key      INT PRIMARY KEY AUTO_INCREMENT,
+            date     INT,
+            amount   FLOAT,
+            account  INT,
+            paymode  INT,
+            flags    INT,
+            payee    INT,
+            wording  VARCHAR,
+            category INT,
+            FOREIGN KEY (account) REFERENCES ACCOUNT (key),
+            FOREIGN KEY (payee) REFERENCES PAYEE (key),
+            FOREIGN KEY (category) REFERENCES CATEGORY (key)
+        );
+    </insert>
+
+    <insert id="addAccounts" parameterType="java.util.List">
+        INSERT INTO ACCOUNT (key, flags, pos, type, curr, name, initial, minimum, cheque1, cheque2)
+        VALUES
+        <foreach item="element" index="index" collection="list" open="(" separator="),(" close=")">
+            #{element.key}, #{element.flags}, #{element.pos}, #{element.type}, #{element.curr}, #{element.name},
+            #{element.initial}, #{element.minimum}, #{element.cheque1}, #{element.cheque2}
+        </foreach>
+    </insert>
+
+    <insert id="addCategories" parameterType="java.util.List">
+        INSERT INTO CATEGORY (key, parent, flags, name)
+        VALUES
+        <foreach item="element" index="index" collection="list" open="(" separator="),(" close=")">
+            #{element.key}, #{element.parent}, #{element.flags}, #{element.name}
+        </foreach>
+    </insert>
+
+    <insert id="addPayees" parameterType="java.util.List">
+        INSERT INTO PAYEE (key, name)
+        VALUES
+        <foreach item="element" index="index" collection="list" open="(" separator="),(" close=")">
+            #{element.key}, #{element.name}
+        </foreach>
+    </insert>
+
+    <insert id="addCurrencies" parameterType="java.util.List">
+        INSERT INTO CURRENCY (key, iso, name, symb, syprf, dchar, gchar, frac, rate, mdate)
+        VALUES
+        <foreach item="element" index="index" collection="list" open="(" separator="),(" close=")">
+            #{element.key}, #{element.iso}, #{element.name}, #{element.symb}, #{element.syprf}, #{element.dchar},
+            #{element.gchar}, #{element.frac}, #{element.rate}, #{element.mdate}
+        </foreach>
+    </insert>
+
+    <insert id="addFavorites" parameterType="java.util.List">
+        INSERT INTO FAVORITE (amount, account, paymode, flags, payee, category, wording, nextdate, every, unit,
+        fav_limit)
+        VALUES
+        <foreach item="element" index="index" collection="list" open="(" separator="),(" close=")">
+            #{element.amount}, #{element.account}, #{element.paymode}, #{element.flags}, #{element.payee},
+            #{element.category}, #{element.wording}, #{element.nextdate}, #{element.every}, #{element.unit},
+            #{element.limit}
+        </foreach>
+    </insert>
+
+    <insert id="addTags" parameterType="java.util.List">
+        INSERT INTO TAG (key, name)
+        VALUES
+        <foreach item="element" index="index" collection="list" open="(" separator="),(" close=")">
+            #{element.key}, #{element.name}
+        </foreach>
+    </insert>
+
+    <insert id="addOperations" parameterType="java.util.List">
+        INSERT INTO OPERATION (date, amount, account, paymode, flags, payee, wording, category)
+        VALUES
+        <foreach item="element" index="index" collection="list" open="(" separator="),(" close=")">
+            #{element.date}, #{element.amount}, #{element.account}, #{element.paymode}, #{element.flags},
+            #{element.payee}, #{element.wording}, #{element.category}
+        </foreach>
     </insert>
 </mapper>

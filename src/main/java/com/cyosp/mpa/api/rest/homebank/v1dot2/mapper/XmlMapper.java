@@ -75,10 +75,26 @@ public class XmlMapper {
             getHomeBank().addMissingValues();
 
             getDbMapper().init();
+
+            // Add default
+            Category category = new Category();
+            category.setKey(0);
+            category.setName("__##MPA##__##DEFAUT##__CATEGORY");
+            getDbMapper().addCategory(category);
+            Payee payee = new Payee();
+            payee.setKey(0);
+            payee.setName("__##MPA##__##DEFAUT##__CATEGORY");
+            getDbMapper().addPayee(payee);
+
             getDbMapper().addHomebank(getHomeBank());
-            for (Account account : getAccounts()) {
-                getDbMapper().addAccount(account);
-            }
+            getDbMapper().addCurrencies(getHomeBank().getCurrencies());
+            getDbMapper().addProperties(getHomeBank().getProperties());
+            getDbMapper().addAccounts(getHomeBank().getAccounts());
+            getDbMapper().addCategories(getHomeBank().getCategories());
+            getDbMapper().addPayees(getHomeBank().getPayees());
+            getDbMapper().addFavorites(getHomeBank().getFavorites());
+            getDbMapper().addTags(getHomeBank().getTags());
+            getDbMapper().addOperations(getHomeBank().getOperations());
 
             // FOR DEBUG
             /*String xmlContent = getXstream().toXML(getHomeBank());
@@ -96,6 +112,7 @@ public class XmlMapper {
 
         try {
             FileOutputStream outputStream = new FileOutputStream(getHomebankFilePath());
+            // TODO remove default values like default category and payee
             getXstream().toXML(getHomeBank(), outputStream);
         } catch (Exception e1) {
             throw new DataNotSavedException();
@@ -108,7 +125,7 @@ public class XmlMapper {
     }
 
     public Properties getProperties() {
-        return getHomeBank().getProperties();
+        return getDbMapper().getProperties();
     }
 
     //
@@ -116,7 +133,7 @@ public class XmlMapper {
     //
 
     public List<Account> getAccounts() {
-        return getHomeBank().getAccounts();
+        return getDbMapper().getAccounts();
     }
 
     public int addAccount(Account account) throws DuplicatedNameException, DataNotSavedException {
@@ -135,7 +152,7 @@ public class XmlMapper {
     //
 
     public List<Category> getCategories() {
-        return getHomeBank().getCategories();
+        return getDbMapper().getCategories();
     }
 
     //
@@ -143,7 +160,7 @@ public class XmlMapper {
     //
 
     public List<Currency> getCurrencies() {
-        return getHomeBank().getCurrencies();
+        return getDbMapper().getCurrencies();
     }
 
     //
@@ -151,7 +168,7 @@ public class XmlMapper {
     //
 
     public List<Favorite> getFavorites() {
-        return getHomeBank().getFavorites();
+        return getDbMapper().getFavorites();
     }
 
     //
@@ -159,7 +176,7 @@ public class XmlMapper {
     //
 
     public List<Operation> getOperations() {
-        return getHomeBank().getOperations();
+        return getDbMapper().getOperations();
     }
 
     //
@@ -167,7 +184,7 @@ public class XmlMapper {
     //
 
     public List<Payee> getPayees() {
-        return getHomeBank().getPayees();
+        return getDbMapper().getPayees();
     }
 
     //
@@ -175,6 +192,6 @@ public class XmlMapper {
     //
 
     public List<Tag> getTags() {
-        return getHomeBank().getTags();
+        return getDbMapper().getTags();
     }
 }
