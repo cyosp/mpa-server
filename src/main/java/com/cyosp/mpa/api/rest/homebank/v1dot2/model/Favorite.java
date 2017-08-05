@@ -2,6 +2,7 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,11 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class Favorite {
+
+    @XStreamOmitField
+    private int key;
+
+    //-----------------------------
 
     @XStreamAsAttribute
     @XStreamAlias("amount")
