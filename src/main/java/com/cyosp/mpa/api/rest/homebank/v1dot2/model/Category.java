@@ -21,7 +21,7 @@ public class Category {
 
     @XStreamAsAttribute
     @XStreamAlias("parent")
-    private int parentCategoryRef;
+    private int parent;
 
     @XStreamAsAttribute
     @XStreamAlias("flags")
