@@ -167,4 +167,13 @@
             #{element.payee}, #{element.wording}, #{element.category}
         </foreach>
     </insert>
+
+    <select id="getAccounts" resultType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Account">
+        SELECT
+            ACCOUNT.*,
+            SUM(AMOUNT) AS BALANCE
+        FROM ACCOUNT
+            JOIN OPERATION ON OPERATION.ACCOUNT = ACCOUNT.KEY
+        GROUP BY ACCOUNT.KEY
+    </select>
 </mapper>

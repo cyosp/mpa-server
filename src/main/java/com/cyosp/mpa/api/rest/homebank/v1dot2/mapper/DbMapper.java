@@ -34,7 +34,6 @@ public interface DbMapper {
     @Insert({"INSERT INTO PAYEE(key, name) VALUES( #{key}, #{name} )"})
     int addPayee(Payee payee);
 
-    @Select("SELECT * FROM ACCOUNT")
     List<Account> getAccounts();
     @Select("SELECT * FROM CATEGORY")
     List<Category> getCategories();

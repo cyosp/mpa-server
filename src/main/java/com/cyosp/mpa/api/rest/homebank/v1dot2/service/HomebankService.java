@@ -75,13 +75,15 @@ public class HomebankService {
         for (Account account : getXmlMapper().getAccounts()) {
             AccountResponse accountResponse = new AccountResponse();
             BeanUtils.copyProperties(account, accountResponse);
+            accountResponse.setBalance(""+account.getBalance());
             OptionsResponse optionsResponse = new OptionsResponse();
-            BeanUtils.copyProperties(account.getOptions(), optionsResponse);
+            //BeanUtils.copyProperties(account.getOptions(), optionsResponse);
             accountResponse.setOptions(optionsResponse);
             CurrencyResponse currencyResponse = new CurrencyResponse();
-            BeanUtils.copyProperties(account.getCurrency(), currencyResponse);
+            //BeanUtils.copyProperties(account.getCurrency(), currencyResponse);
             accountResponse.setCurrency(currencyResponse);
 
+/*
             //
             // Format balance
             //
@@ -97,6 +99,7 @@ public class HomebankService {
             // TODO : Change how symbol is defined and placed
             // https://stackoverflow.com/questions/29215163/currency-symbol-with-another-number-format
             accountResponse.setBalance(df.format(account.getBalance()) + " " + account.getCurrency().getSymb());
+*/
 
             ret.add(accountResponse);
         }
