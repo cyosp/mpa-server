@@ -168,12 +168,31 @@
         </foreach>
     </insert>
 
-    <select id="getAccounts" resultType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Account">
+    <resultMap id="accountResultMap" type="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Account" autoMapping="true">
+        <association property="currency"
+                     javaType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Currency" autoMapping="true"
+                     columnPrefix="cur_">
+        </association>
+    </resultMap>
+
+    <select id="getAccounts" resultType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Account"
+            resultMap="accountResultMap">
         SELECT
             ACCOUNT.*,
-            SUM(AMOUNT) AS BALANCE
+            SUM(AMOUNT)   AS BALANCE,
+            CURRENCY.KEY  AS CUR_KEY,
+            CURRENCY.ISO  AS CUR_ISO,
+            CURRENCY.NAME AS CUR_NAME,
+            CURRENCY.SYMB AS CUR_SYMB,
+            CURRENCY.SYPRF AS CUR_SYPRF,
+            CURRENCY.DCHAR AS CUR_DCHAR,
+            CURRENCY.GCHAR AS CUR_GCHAR,
+            CURRENCY.FRAC AS CUR_FRAC,
+            CURRENCY.RATE AS CUR_RATE,
+            CURRENCY.MDATE AS CUR_MDATE
         FROM ACCOUNT
             JOIN OPERATION ON OPERATION.ACCOUNT = ACCOUNT.KEY
+            JOIN CURRENCY ON CURRENCY.KEY = ACCOUNT.CURR
         GROUP BY ACCOUNT.KEY
     </select>
 </mapper>

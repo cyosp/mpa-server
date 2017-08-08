@@ -73,24 +73,24 @@ public class HomebankService {
         List<AccountResponse> ret = new ArrayList<>();
 
         for (Account account : getXmlMapper().getAccounts()) {
+            Options options = new Options();
+            options.setOptions(account.getFlags());
+
             AccountResponse accountResponse = new AccountResponse();
             BeanUtils.copyProperties(account, accountResponse);
-            accountResponse.setBalance(""+account.getBalance());
             OptionsResponse optionsResponse = new OptionsResponse();
-            //BeanUtils.copyProperties(account.getOptions(), optionsResponse);
+            BeanUtils.copyProperties(options, optionsResponse);
             accountResponse.setOptions(optionsResponse);
             CurrencyResponse currencyResponse = new CurrencyResponse();
-            //BeanUtils.copyProperties(account.getCurrency(), currencyResponse);
+            BeanUtils.copyProperties(account.getCurrency(), currencyResponse);
             accountResponse.setCurrency(currencyResponse);
 
-/*
             //
             // Format balance
             //
             String pattern = "#,##0.";
-            for (int i = 0; i < XmlMapper.getHomeBank().getCurrencyMap().get(account.getCurr()).getFrac(); i++) {
+            for (int i = 0; i < account.getCurrency().getFrac(); i++)
                 pattern += "0";
-            }
             DecimalFormat df = new DecimalFormat(pattern);
             DecimalFormatSymbols symbols = new DecimalFormatSymbols();
             symbols.setGroupingSeparator(account.getCurrency().getGchar());
@@ -99,7 +99,7 @@ public class HomebankService {
             // TODO : Change how symbol is defined and placed
             // https://stackoverflow.com/questions/29215163/currency-symbol-with-another-number-format
             accountResponse.setBalance(df.format(account.getBalance()) + " " + account.getCurrency().getSymb());
-*/
+
 
             ret.add(accountResponse);
         }
