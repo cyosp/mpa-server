@@ -2,6 +2,7 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.mapper;
 
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.*;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -27,7 +28,9 @@ public interface DbMapper {
     int addCurrency(Currency currency);
     @Insert({"INSERT INTO FAVORITE(key, amount, account, paymode, flags, payee, category, wording, nextdate, every, unit, limit) VALUES( #{key}, #{amount}, #{account}, #{paymode}, #{flags}, #{payee}, #{category}, #{wording}, #{nextdate}, #{every}, #{unit}, #{limit} )"})
     int addFavorite(Favorite favorite);
-    @Insert({"INSERT INTO ACCOUNT(key, name) VALUES( #{key}, #{name} )"})
+    @Insert({"INSERT INTO ACCOUNT(flags, pos, type, curr, name, initial, minimum, cheque1, cheque2) " +
+            "VALUES( #{flags}, #{pos}, #{type}, #{curr}, #{name}, #{initial}, #{minimum}, #{cheque1}, #{cheque2} )"})
+    @Options(useGeneratedKeys = true, keyProperty = "key")
     int addAccount(Account account);
     @Insert({"INSERT INTO CATEGORY(key, parent, flags, name) VALUES( #{key}, #{parent}, #{flags}, #{name} )"})
     int addCategory(Category category);
@@ -35,6 +38,7 @@ public interface DbMapper {
     int addPayee(Payee payee);
 
     List<Account> getAccounts();
+
     @Select("SELECT * FROM CATEGORY")
     List<Category> getCategories();
     @Select("SELECT * FROM CURRENCY")

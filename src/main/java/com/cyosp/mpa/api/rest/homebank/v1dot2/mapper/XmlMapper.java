@@ -10,10 +10,14 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DuplicateKeyException;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -22,6 +26,10 @@ import java.util.List;
 @Configuration
 @Getter
 public class XmlMapper {
+
+    private static final int DEFAULT_KEY = 0;
+    private static final int DEFAULT_CURRENCY_KEY = 1;
+    private static final String DEFAULT_NAME = "Default";
 
     @Value("${repository.homebank.v1dot2.file}")
     private File homebankFilePath;
@@ -72,35 +80,32 @@ public class XmlMapper {
         try {
             homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
             getHomeBank().checkVersion();
-            getHomeBank().addMissingValues();
 
-            getDbMapper().init();
+            try {
+                getDbMapper().init();
 
-            // Add default
-            Category category = new Category();
-            category.setKey(0);
-            category.setName("__##MPA##__##DEFAUT##__CATEGORY");
-            getDbMapper().addCategory(category);
-            Payee payee = new Payee();
-            payee.setKey(0);
-            payee.setName("__##MPA##__##DEFAUT##__CATEGORY");
-            getDbMapper().addPayee(payee);
+                // Add default
+                Category category = new Category();
+                category.setKey(DEFAULT_KEY);
+                category.setName(DEFAULT_NAME);
+                getDbMapper().addCategory(category);
+                Payee payee = new Payee();
+                payee.setKey(DEFAULT_KEY);
+                payee.setName(DEFAULT_NAME);
+                getDbMapper().addPayee(payee);
 
-            getDbMapper().addHomebank(getHomeBank());
-            getDbMapper().addCurrencies(getHomeBank().getCurrencies());
-            getDbMapper().addProperties(getHomeBank().getProperties());
-            getDbMapper().addAccounts(getHomeBank().getAccounts());
-            getDbMapper().addCategories(getHomeBank().getCategories());
-            getDbMapper().addPayees(getHomeBank().getPayees());
-            getDbMapper().addFavorites(getHomeBank().getFavorites());
-            getDbMapper().addTags(getHomeBank().getTags());
-            getDbMapper().addOperations(getHomeBank().getOperations());
-
-            // FOR DEBUG
-            /*String xmlContent = getXstream().toXML(getHomeBank());
-            xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|tag|fav|ope)>", "/>");
-            String xmlContentIndent = xmlContent.replaceAll("><", ">\n<");
-            System.out.println(xmlContentIndent);*/
+                getDbMapper().addHomebank(getHomeBank());
+                getDbMapper().addCurrencies(getHomeBank().getCurrencies());
+                getDbMapper().addProperties(getHomeBank().getProperties());
+                getDbMapper().addAccounts(getHomeBank().getAccounts());
+                getDbMapper().addCategories(getHomeBank().getCategories());
+                getDbMapper().addPayees(getHomeBank().getPayees());
+                getDbMapper().addFavorites(getHomeBank().getFavorites());
+                getDbMapper().addTags(getHomeBank().getTags());
+                getDbMapper().addOperations(getHomeBank().getOperations());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         } catch (Exception e) {
             // MPA must not manage HomeBank 1.2
@@ -111,13 +116,36 @@ public class XmlMapper {
     public void saveXmlFile() throws DataNotSavedException {
 
         try {
-            FileOutputStream outputStream = new FileOutputStream(getHomebankFilePath());
-            // TODO remove default values like default category and payee
-            getXstream().toXML(getHomeBank(), outputStream);
-        } catch (Exception e1) {
+            homeBank = getDbMapper().getHomebank();
+            getHomeBank().setProperties(getDbMapper().getProperties());
+            getHomeBank().setCurrencies(getDbMapper().getCurrencies());
+            getHomeBank().setAccounts(getDbMapper().getAccounts());
+
+            List<Payee> payees = getDbMapper().getPayees();
+            payees.remove(DEFAULT_KEY);
+            getHomeBank().setPayees(payees);
+
+            List<Category> categories = getDbMapper().getCategories();
+            categories.remove(DEFAULT_KEY);
+            getHomeBank().setCategories(categories);
+
+            getHomeBank().setTags(getDbMapper().getTags());
+            getHomeBank().setFavorites(getDbMapper().getFavorites());
+            getHomeBank().setOperations(getDbMapper().getOperations());
+
+
+            String xmlContent = getXstream().toXML(getHomeBank());
+            // Format content like HomeBank
+            xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|tag|fav|ope)>", "/>");
+            String xmlContentIndent = xmlContent.replaceAll("><", ">\n<");
+
+            Path path = Paths.get(getHomebankFilePath().toURI());
+            try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+                writer.write(xmlContentIndent);
+            }
+        } catch (Exception e) {
             throw new DataNotSavedException();
         }
-
     }
 
     public HomeBank getInfos() {
@@ -137,12 +165,19 @@ public class XmlMapper {
     }
 
     public int addAccount(Account account) throws DuplicatedNameException, DataNotSavedException {
-        int ret = 0;
+        int ret = -1;
 
-        getHomeBank().addAccount(account);
-        saveXmlFile();
+        // Set currency to default if needed
+        if (account.getCurr() == DEFAULT_KEY) account.setCurr(DEFAULT_CURRENCY_KEY);
 
-        ret++;
+        try {
+            ret = getDbMapper().addAccount(account);
+            saveXmlFile();
+        } catch (DuplicateKeyException dke) {
+            throw new DuplicatedNameException();
+        } catch (Exception e) {
+            throw new DataNotSavedException();
+        }
 
         return ret;
     }

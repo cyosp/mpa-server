@@ -179,19 +179,19 @@
             resultMap="accountResultMap">
         SELECT
             ACCOUNT.*,
-            SUM(AMOUNT)   AS BALANCE,
-            CURRENCY.KEY  AS CUR_KEY,
-            CURRENCY.ISO  AS CUR_ISO,
-            CURRENCY.NAME AS CUR_NAME,
-            CURRENCY.SYMB AS CUR_SYMB,
-            CURRENCY.SYPRF AS CUR_SYPRF,
-            CURRENCY.DCHAR AS CUR_DCHAR,
-            CURRENCY.GCHAR AS CUR_GCHAR,
-            CURRENCY.FRAC AS CUR_FRAC,
-            CURRENCY.RATE AS CUR_RATE,
-            CURRENCY.MDATE AS CUR_MDATE
+            ISNULL(SUM(AMOUNT), 0) AS BALANCE,
+            CURRENCY.KEY           AS CUR_KEY,
+            CURRENCY.ISO           AS CUR_ISO,
+            CURRENCY.NAME          AS CUR_NAME,
+            CURRENCY.SYMB          AS CUR_SYMB,
+            CURRENCY.SYPRF         AS CUR_SYPRF,
+            CURRENCY.DCHAR         AS CUR_DCHAR,
+            CURRENCY.GCHAR         AS CUR_GCHAR,
+            CURRENCY.FRAC          AS CUR_FRAC,
+            CURRENCY.RATE          AS CUR_RATE,
+            CURRENCY.MDATE         AS CUR_MDATE
         FROM ACCOUNT
-            JOIN OPERATION ON OPERATION.ACCOUNT = ACCOUNT.KEY
+            LEFT JOIN OPERATION ON OPERATION.ACCOUNT = ACCOUNT.KEY
             JOIN CURRENCY ON CURRENCY.KEY = ACCOUNT.CURR
         GROUP BY ACCOUNT.KEY
     </select>
