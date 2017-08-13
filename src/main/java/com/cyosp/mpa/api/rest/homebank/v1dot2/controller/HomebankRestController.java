@@ -65,6 +65,11 @@ public class HomebankRestController {
         return getHomebankService().getAccounts();
     }
 
+    @GetMapping("/accounts/{id}/operations")
+    public List<OperationResponse> getOperationsByAccount(@PathVariable int id) {
+        return getHomebankService().getOperationsByAccount(id);
+    }
+
     //
     // Categories
     //

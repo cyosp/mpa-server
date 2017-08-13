@@ -13,8 +13,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,8 @@ import java.util.List;
 @Service
 @Getter
 public class HomebankService {
+
+    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
     private XmlMapper xmlMapper;
@@ -68,6 +72,22 @@ public class HomebankService {
         return accountResponse;
     }
 
+    public String formatAmount(BigDecimal amount, Currency currency)
+    {
+        String pattern = "#,##0.";
+        for (int i = 0; i < currency.getFrac(); i++)
+            pattern += "0";
+        DecimalFormat df = new DecimalFormat(pattern);
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(currency.getGchar());
+        symbols.setDecimalSeparator(currency.getDchar());
+        df.setDecimalFormatSymbols(symbols);
+        // TODO : Change how symbol is defined and placed
+        // https://stackoverflow.com/questions/29215163/currency-symbol-with-another-number-format
+        return df.format(amount) + " " + currency.getSymb();
+
+    }
+
     public List<AccountResponse> getAccounts() {
 
         List<AccountResponse> ret = new ArrayList<>();
@@ -84,24 +104,25 @@ public class HomebankService {
             CurrencyResponse currencyResponse = new CurrencyResponse();
             BeanUtils.copyProperties(account.getCurrency(), currencyResponse);
             accountResponse.setCurrency(currencyResponse);
-
-            //
-            // Format balance
-            //
-            String pattern = "#,##0.";
-            for (int i = 0; i < account.getCurrency().getFrac(); i++)
-                pattern += "0";
-            DecimalFormat df = new DecimalFormat(pattern);
-            DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-            symbols.setGroupingSeparator(account.getCurrency().getGchar());
-            symbols.setDecimalSeparator(account.getCurrency().getDchar());
-            df.setDecimalFormatSymbols(symbols);
-            // TODO : Change how symbol is defined and placed
-            // https://stackoverflow.com/questions/29215163/currency-symbol-with-another-number-format
-            accountResponse.setBalance(df.format(account.getBalance()) + " " + account.getCurrency().getSymb());
-
+            accountResponse.setBalance(formatAmount(account.getBalance(),account.getCurrency()));
 
             ret.add(accountResponse);
+        }
+
+        return ret;
+    }
+
+    public List<OperationResponse> getOperationsByAccount(int id) {
+
+        List<OperationResponse> ret = new ArrayList<>();
+
+        for (Operation operation : getXmlMapper().getOperationsByAccount(id)) {
+            operation.convertJulianToDate();
+            OperationResponse operationResponse = new OperationResponse();
+            BeanUtils.copyProperties(operation, operationResponse);
+            operationResponse.setDateFormatted(SIMPLE_DATE_FORMAT.format(operation.getJavaDate()));
+            operationResponse.setAmount(formatAmount(operation.getAmount(),operation.getCurrency()));
+            ret.add(operationResponse);
         }
 
         return ret;
@@ -175,8 +196,11 @@ public class HomebankService {
         List<OperationResponse> ret = new ArrayList<>();
 
         for (Operation operation : getXmlMapper().getOperations()) {
+            operation.convertJulianToDate();
             OperationResponse operationResponse = new OperationResponse();
             BeanUtils.copyProperties(operation, operationResponse);
+            operationResponse.setDateFormatted(SIMPLE_DATE_FORMAT.format(operation.getJavaDate()));
+            operationResponse.setAmount(formatAmount(operation.getAmount(),operation.getCurrency()));
             ret.add(operationResponse);
         }
 

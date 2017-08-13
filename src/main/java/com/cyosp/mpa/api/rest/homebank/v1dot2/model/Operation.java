@@ -55,6 +55,15 @@ public class Operation {
     @XStreamOmitField
     private Date javaDate;
 
+    @XStreamOmitField
+    private String payeeName;
+
+    @XStreamOmitField
+    private String categoryName;
+
+    @XStreamOmitField
+    private Currency currency;
+
     public void convertDateToJulian() {
 
         GregorianCalendar gregorianCalendar = new GregorianCalendar();

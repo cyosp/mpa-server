@@ -29,7 +29,7 @@ public class XmlMapper {
 
     private static final int DEFAULT_KEY = 0;
     private static final int DEFAULT_CURRENCY_KEY = 1;
-    private static final String DEFAULT_NAME = "Default";
+    private static final String DEFAULT_NAME = "";
 
     @Value("${repository.homebank.v1dot2.file}")
     private File homebankFilePath;
@@ -162,6 +162,10 @@ public class XmlMapper {
 
     public List<Account> getAccounts() {
         return getDbMapper().getAccounts();
+    }
+
+    public List<Operation> getOperationsByAccount(int id) {
+        return getDbMapper().getOperationsByAccount(id);
     }
 
     public int addAccount(Account account) throws DuplicatedNameException, DataNotSavedException {

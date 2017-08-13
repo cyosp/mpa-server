@@ -14,7 +14,9 @@ public class OperationResponse {
 
     private long date;
 
-    private BigDecimal amount;
+    private String dateFormatted;
+
+    private String amount;
 
     private int account;
 
@@ -24,7 +26,11 @@ public class OperationResponse {
 
     private int payee;
 
+    private String payeeName;
+
     private String wording;
 
     private int category;
+
+    private String categoryName;
 }

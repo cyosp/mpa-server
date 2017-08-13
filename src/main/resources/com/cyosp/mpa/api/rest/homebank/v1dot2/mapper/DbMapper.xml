@@ -195,4 +195,76 @@
             JOIN CURRENCY ON CURRENCY.KEY = ACCOUNT.CURR
         GROUP BY ACCOUNT.KEY
     </select>
+
+
+    <resultMap id="operationResultMap" type="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Operation" autoMapping="true">
+        <association property="currency"
+                     javaType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Currency" autoMapping="true"
+                     columnPrefix="cur_">
+        </association>
+    </resultMap>
+
+    <select id="getOperations" resultType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Operation"
+            resultMap="operationResultMap">
+        SELECT
+            OPERATION.DATE,
+            OPERATION.AMOUNT,
+            OPERATION.ACCOUNT,
+            OPERATION.PAYMODE,
+            OPERATION.FLAGS,
+            OPERATION.PAYEE,
+            ISNULL(OPERATION.WORDING, '') AS WORDING,
+            OPERATION.CATEGORY,
+            PAYEE.NAME                    AS PAYEENAME,
+            CATEGORY.NAME                 AS CATEGORYNAME,
+            CURRENCY.KEY                  AS CUR_KEY,
+            CURRENCY.ISO                  AS CUR_ISO,
+            CURRENCY.NAME                 AS CUR_NAME,
+            CURRENCY.SYMB                 AS CUR_SYMB,
+            CURRENCY.SYPRF                AS CUR_SYPRF,
+            CURRENCY.DCHAR                AS CUR_DCHAR,
+            CURRENCY.GCHAR                AS CUR_GCHAR,
+            CURRENCY.FRAC                 AS CUR_FRAC,
+            CURRENCY.RATE                 AS CUR_RATE,
+            CURRENCY.MDATE                AS CUR_MDATE
+        FROM OPERATION
+            LEFT JOIN PAYEE ON OPERATION.PAYEE = PAYEE.KEY
+            LEFT JOIN CATEGORY ON OPERATION.CATEGORY = CATEGORY.KEY
+            JOIN ACCOUNT ON OPERATION.ACCOUNT = ACCOUNT.KEY
+            JOIN CURRENCY ON CURRENCY.KEY = ACCOUNT.CURR
+    </select>
+
+    <select id="getOperationsByAccount" parameterType="int"
+            resultType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Operation"
+            resultMap="operationResultMap">
+        SELECT
+            OPERATION.DATE,
+            OPERATION.AMOUNT,
+            OPERATION.ACCOUNT,
+            OPERATION.PAYMODE,
+            OPERATION.FLAGS,
+            OPERATION.PAYEE,
+            ISNULL(OPERATION.WORDING, '') AS WORDING,
+            OPERATION.CATEGORY,
+            PAYEE.NAME                    AS PAYEENAME,
+            CATEGORY.NAME                 AS CATEGORYNAME,
+            CURRENCY.KEY                  AS CUR_KEY,
+            CURRENCY.ISO                  AS CUR_ISO,
+            CURRENCY.NAME                 AS CUR_NAME,
+            CURRENCY.SYMB                 AS CUR_SYMB,
+            CURRENCY.SYPRF                AS CUR_SYPRF,
+            CURRENCY.DCHAR                AS CUR_DCHAR,
+            CURRENCY.GCHAR                AS CUR_GCHAR,
+            CURRENCY.FRAC                 AS CUR_FRAC,
+            CURRENCY.RATE                 AS CUR_RATE,
+            CURRENCY.MDATE                AS CUR_MDATE
+        FROM OPERATION
+            LEFT JOIN PAYEE ON OPERATION.PAYEE = PAYEE.KEY
+            LEFT JOIN CATEGORY ON OPERATION.CATEGORY = CATEGORY.KEY
+            JOIN ACCOUNT ON OPERATION.ACCOUNT = ACCOUNT.KEY
+            JOIN CURRENCY ON CURRENCY.KEY = ACCOUNT.CURR
+        WHERE ACCOUNT.KEY = #{id}
+        ORDER BY OPERATION.DATE
+        LIMIT 100
+    </select>
 </mapper>

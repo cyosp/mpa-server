@@ -38,13 +38,13 @@ public interface DbMapper {
     int addPayee(Payee payee);
 
     List<Account> getAccounts();
+    List<Operation> getOperations();
+    List<Operation> getOperationsByAccount(int id);
 
     @Select("SELECT * FROM CATEGORY")
     List<Category> getCategories();
     @Select("SELECT * FROM CURRENCY")
     List<Currency> getCurrencies();
-    @Select("SELECT * FROM OPERATION")
-    List<Operation> getOperations();
     @Select("SELECT * FROM PAYEE")
     List<Payee> getPayees();
     @Select("SELECT * FROM TAG")
