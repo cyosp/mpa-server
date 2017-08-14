@@ -18,6 +18,8 @@ public class OperationResponse {
 
     private String amount;
 
+    private String balance;
+
     private int account;
 
     private int paymode;

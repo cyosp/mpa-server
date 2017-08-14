@@ -122,6 +122,7 @@ public class HomebankService {
             BeanUtils.copyProperties(operation, operationResponse);
             operationResponse.setDateFormatted(SIMPLE_DATE_FORMAT.format(operation.getJavaDate()));
             operationResponse.setAmount(formatAmount(operation.getAmount(),operation.getCurrency()));
+            operationResponse.setBalance(formatAmount(operation.getBalance(),operation.getCurrency()));
             ret.add(operationResponse);
         }
 

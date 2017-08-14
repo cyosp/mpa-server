@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.io.BufferedWriter;
@@ -164,7 +165,9 @@ public class XmlMapper {
         return getDbMapper().getAccounts();
     }
 
+    @Transactional(value = HomebankDatasourceConfig.TX_MANAGER)
     public List<Operation> getOperationsByAccount(int id) {
+        getDbMapper().setBalanceVariable(id);
         return getDbMapper().getOperationsByAccount(id);
     }
 

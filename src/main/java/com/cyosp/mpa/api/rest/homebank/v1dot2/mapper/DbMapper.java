@@ -37,6 +37,9 @@ public interface DbMapper {
     @Insert({"INSERT INTO PAYEE(key, name) VALUES( #{key}, #{name} )"})
     int addPayee(Payee payee);
 
+   @Insert("SET @BALANCE = (SELECT INITIAL FROM ACCOUNT WHERE KEY= #{accountId})")
+   int setBalanceVariable(int accountId);
+
     List<Account> getAccounts();
     List<Operation> getOperations();
     List<Operation> getOperationsByAccount(int id);

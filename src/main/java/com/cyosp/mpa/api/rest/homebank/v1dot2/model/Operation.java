@@ -64,6 +64,9 @@ public class Operation {
     @XStreamOmitField
     private Currency currency;
 
+    @XStreamOmitField
+    private BigDecimal balance;
+
     public void convertDateToJulian() {
 
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
