@@ -129,6 +129,20 @@ public class HomebankService {
         return ret;
     }
 
+    public List<CategoryResponse> getCategoriesByAccount(int id) {
+
+        List<CategoryResponse> ret = new ArrayList<>();
+
+        for (Category category : getXmlMapper().getCategoriesByAccount(id)) {
+            CategoryResponse categoryResponse = new CategoryResponse();
+            BeanUtils.copyProperties(category, categoryResponse);
+            categoryResponse.setBalance(formatAmount(category.getBalance(),category.getCurrency()));
+            ret.add(categoryResponse);
+        }
+
+        return ret;
+    }
+
     public AccountResponse getAccountById(long id) {
         return null;
     }

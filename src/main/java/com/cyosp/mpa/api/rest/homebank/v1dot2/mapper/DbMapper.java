@@ -43,6 +43,7 @@ public interface DbMapper {
     List<Account> getAccounts();
     List<Operation> getOperations();
     List<Operation> getOperationsByAccount(int id);
+    List<Category> getCategoriesByAccount(int id);
 
     @Select("SELECT * FROM CATEGORY")
     List<Category> getCategories();

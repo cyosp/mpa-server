@@ -171,6 +171,10 @@ public class XmlMapper {
         return getDbMapper().getOperationsByAccount(id);
     }
 
+    public List<Category> getCategoriesByAccount(int id) {
+        return getDbMapper().getCategoriesByAccount(id);
+    }
+
     public int addAccount(Account account) throws DuplicatedNameException, DataNotSavedException {
         int ret = -1;
 

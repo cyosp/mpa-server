@@ -273,4 +273,37 @@
         ORDER BY DATE DESC
         LIMIT 100
     </select>
+
+    <resultMap id="categoryResultMap" type="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Category" autoMapping="true">
+        <association property="currency"
+                     javaType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Currency" autoMapping="true"
+                     columnPrefix="cur_">
+        </association>
+    </resultMap>
+
+    <select id="getCategoriesByAccount" parameterType="int"
+            resultType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Category"
+            resultMap="categoryResultMap">
+        SELECT
+            CATEGORY.KEY,
+            CATEGORY.NAME,
+            ISNULL(SUM(OPERATION.AMOUNT), 0) AS BALANCE,
+            CURRENCY.KEY                     AS CUR_KEY,
+            CURRENCY.ISO                     AS CUR_ISO,
+            CURRENCY.NAME                    AS CUR_NAME,
+            CURRENCY.SYMB                    AS CUR_SYMB,
+            CURRENCY.SYPRF                   AS CUR_SYPRF,
+            CURRENCY.DCHAR                   AS CUR_DCHAR,
+            CURRENCY.GCHAR                   AS CUR_GCHAR,
+            CURRENCY.FRAC                    AS CUR_FRAC,
+            CURRENCY.RATE                    AS CUR_RATE,
+            CURRENCY.MDATE                   AS CUR_MDATE
+        FROM CATEGORY
+            JOIN OPERATION ON OPERATION.CATEGORY = CATEGORY.KEY
+            JOIN ACCOUNT ON OPERATION.ACCOUNT = ACCOUNT.KEY
+            JOIN CURRENCY ON ACCOUNT.CURR = CURRENCY.KEY
+        WHERE ACCOUNT.KEY = #{ID}
+        GROUP BY CATEGORY.KEY
+        ORDER BY BALANCE ASC
+    </select>
 </mapper>

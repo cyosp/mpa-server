@@ -35,4 +35,7 @@ public class Category {
 
     @XStreamOmitField
     private BigDecimal balance;
+
+    @XStreamOmitField
+    private Currency currency;
 }
