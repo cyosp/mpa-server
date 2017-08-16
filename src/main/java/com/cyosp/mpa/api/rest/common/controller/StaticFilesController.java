@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.io.File;
-
 /**
  * Created by CYOSP on 2017-07-24.
  */
@@ -38,11 +36,14 @@ public class StaticFilesController implements WebMvcConfigurer {
                 Resource[] resources = resolver.getResources("classpath*:" + staticDir + personalAccountingManaged + "**");
                 for (int i = 0; i < resources.length; i++) {
 
-                    File resourceFile = resources[i].getFile();
-                    String endPath = resourceFile.getAbsolutePath().substring(resourceFile.getAbsolutePath().indexOf(personalAccountingManaged));
+                    String uri = resources[i].getURI().toString();
+                    String endPath = uri.substring(uri.indexOf(personalAccountingManaged));
                     String urlPath = "/mpa/" + endPath.replace(personalAccountingManaged, "");
                     String viewName = "forward:" + endPath;
-                    if (resourceFile.isDirectory()) viewName += "/index.html";
+                    if (uri.endsWith("/")) {
+                        urlPath = urlPath.substring(0, urlPath.length() - 1);
+                        viewName += "index.html";
+                    }
 
                     registry.addViewController(urlPath).setViewName(viewName);
                 }
