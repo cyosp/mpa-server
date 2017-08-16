@@ -24,7 +24,7 @@ apply plugin: 'docker'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
-mainClassName = "org.springframework.boot.loader.JarLauncher"
+mainClassName = "com.cyosp.mpa.api.rest.MpaServerApplication"
 
 repositories {
 	mavenCentral()
@@ -37,22 +37,10 @@ ext {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.cloud:spring-cloud-starter-config')
 	compile('org.springframework.cloud:spring-cloud-config-server')
-	compile('org.springframework.cloud:spring-cloud-starter-oauth2')
-	compile('org.springframework.cloud:spring-cloud-starter-security')
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-jersey')
-	compile('org.springframework.boot:spring-boot-starter-mobile')
 	compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0')
-	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.boot:spring-boot-starter-validation')
-	compile('org.springframework.boot:spring-boot-starter-websocket')
 	compile('com.thoughtworks.xstream:xstream:1.4.10')
-	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('com.h2database:h2')
-	compileOnly('org.springframework.boot:spring-boot-configuration-processor')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.cloud:spring-cloud-starter-contract-verifier')
@@ -69,6 +57,10 @@ dependencyManagement {
 docker {
     baseImage "openjdk:8-jre-alpine"
     maintainer 'CYOSP "cyosp@cyosp.com"'
+}
+
+jar {
+	enabled = true
 }
 
 /*distDocker {
