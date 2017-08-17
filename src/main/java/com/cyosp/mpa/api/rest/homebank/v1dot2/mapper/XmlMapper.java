@@ -95,15 +95,24 @@ public class XmlMapper {
                 payee.setName(DEFAULT_NAME);
                 getDbMapper().addPayee(payee);
 
-                getDbMapper().addHomebank(getHomeBank());
-                getDbMapper().addCurrencies(getHomeBank().getCurrencies());
-                getDbMapper().addProperties(getHomeBank().getProperties());
-                getDbMapper().addAccounts(getHomeBank().getAccounts());
-                getDbMapper().addCategories(getHomeBank().getCategories());
-                getDbMapper().addPayees(getHomeBank().getPayees());
-                getDbMapper().addFavorites(getHomeBank().getFavorites());
-                getDbMapper().addTags(getHomeBank().getTags());
-                getDbMapper().addOperations(getHomeBank().getOperations());
+                if (getHomeBank() != null)
+                    getDbMapper().addHomebank(getHomeBank());
+                if (getHomeBank().getCurrencies() != null)
+                    getDbMapper().addCurrencies(getHomeBank().getCurrencies());
+                if (getHomeBank().getProperties() != null)
+                    getDbMapper().addProperties(getHomeBank().getProperties());
+                if (getHomeBank().getAccounts() != null)
+                    getDbMapper().addAccounts(getHomeBank().getAccounts());
+                if (getHomeBank().getCategories() != null)
+                    getDbMapper().addCategories(getHomeBank().getCategories());
+                if (getHomeBank().getPayees() != null)
+                    getDbMapper().addPayees(getHomeBank().getPayees());
+                if (getHomeBank().getFavorites() != null)
+                    getDbMapper().addFavorites(getHomeBank().getFavorites());
+                if (getHomeBank().getTags() != null)
+                    getDbMapper().addTags(getHomeBank().getTags());
+                if (getHomeBank().getOperations() != null)
+                    getDbMapper().addOperations(getHomeBank().getOperations());
             } catch (Exception e) {
                 e.printStackTrace();
             }
