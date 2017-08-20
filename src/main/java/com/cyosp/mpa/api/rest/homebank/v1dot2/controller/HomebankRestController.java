@@ -4,6 +4,7 @@ import com.cyosp.mpa.api.rest.common.controller.CommonController;
 import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.request.OperationRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.service.HomebankService;
 import lombok.Getter;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Created by CYOSP on 2017-07-24.
@@ -73,6 +76,21 @@ public class HomebankRestController {
     @GetMapping("/accounts/{id}/categories")
     public List<CategoryResponse> getCategoriesByAccount(@PathVariable int id) {
         return getHomebankService().getCategoriesByAccount(id);
+    }
+
+    @PostMapping("/accounts/{id}/operations/add")
+    public List<OperationResponse> addOperationsByAccount(@PathVariable int id, @RequestBody OperationRequest operationRequest) {
+        List<OperationResponse> ret = new ArrayList<>();
+
+        StringJoiner stringJoiner = new StringJoiner(" ", "Info received:", "");
+        stringJoiner.add(operationRequest.getDate().toString());
+        stringJoiner.add(operationRequest.getPayee());
+        stringJoiner.add(operationRequest.getAmount().toString());
+        stringJoiner.add(operationRequest.getCategory());
+        stringJoiner.add(operationRequest.getWording());
+        System.out.println(stringJoiner);
+
+        return ret;
     }
 
     //
