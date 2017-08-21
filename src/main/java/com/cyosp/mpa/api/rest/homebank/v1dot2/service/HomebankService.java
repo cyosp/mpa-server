@@ -7,6 +7,7 @@ import com.cyosp.mpa.api.rest.common.exception.LineNotUpdatedException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.mapper.XmlMapper;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.request.OperationRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.*;
 import lombok.Getter;
 import org.springframework.beans.BeanUtils;
@@ -72,8 +73,7 @@ public class HomebankService {
         return accountResponse;
     }
 
-    public String formatAmount(BigDecimal amount, Currency currency)
-    {
+    public String formatAmount(BigDecimal amount, Currency currency) {
         String pattern = "#,##0.";
         for (int i = 0; i < currency.getFrac(); i++)
             pattern += "0";
@@ -104,7 +104,7 @@ public class HomebankService {
             CurrencyResponse currencyResponse = new CurrencyResponse();
             BeanUtils.copyProperties(account.getCurrency(), currencyResponse);
             accountResponse.setCurrency(currencyResponse);
-            accountResponse.setBalance(formatAmount(account.getBalance(),account.getCurrency()));
+            accountResponse.setBalance(formatAmount(account.getBalance(), account.getCurrency()));
 
             ret.add(accountResponse);
         }
@@ -121,8 +121,8 @@ public class HomebankService {
             OperationResponse operationResponse = new OperationResponse();
             BeanUtils.copyProperties(operation, operationResponse);
             operationResponse.setDateFormatted(SIMPLE_DATE_FORMAT.format(operation.getJavaDate()));
-            operationResponse.setAmount(formatAmount(operation.getAmount(),operation.getCurrency()));
-            operationResponse.setBalance(formatAmount(operation.getBalance(),operation.getCurrency()));
+            operationResponse.setAmount(formatAmount(operation.getAmount(), operation.getCurrency()));
+            operationResponse.setBalance(formatAmount(operation.getBalance(), operation.getCurrency()));
             ret.add(operationResponse);
         }
 
@@ -136,11 +136,15 @@ public class HomebankService {
         for (Category category : getXmlMapper().getCategoriesByAccount(id)) {
             CategoryResponse categoryResponse = new CategoryResponse();
             BeanUtils.copyProperties(category, categoryResponse);
-            categoryResponse.setBalance(formatAmount(category.getBalance(),category.getCurrency()));
+            categoryResponse.setBalance(formatAmount(category.getBalance(), category.getCurrency()));
             ret.add(categoryResponse);
         }
 
         return ret;
+    }
+
+    public OperationResponse addOperationByAccount(int id, OperationRequest operationRequest) throws DataNotSavedException {
+        return getXmlMapper().addOperationByAccount(id, operationRequest);
     }
 
     public AccountResponse getAccountById(long id) {
@@ -215,7 +219,7 @@ public class HomebankService {
             OperationResponse operationResponse = new OperationResponse();
             BeanUtils.copyProperties(operation, operationResponse);
             operationResponse.setDateFormatted(SIMPLE_DATE_FORMAT.format(operation.getJavaDate()));
-            operationResponse.setAmount(formatAmount(operation.getAmount(),operation.getCurrency()));
+            operationResponse.setAmount(formatAmount(operation.getAmount(), operation.getCurrency()));
             ret.add(operationResponse);
         }
 

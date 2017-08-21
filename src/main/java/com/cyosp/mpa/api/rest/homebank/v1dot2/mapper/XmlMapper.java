@@ -3,6 +3,8 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.mapper;
 import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.*;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.request.OperationRequest;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.response.OperationResponse;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
@@ -89,11 +91,11 @@ public class XmlMapper {
                 Category category = new Category();
                 category.setKey(DEFAULT_KEY);
                 category.setName(DEFAULT_NAME);
-                getDbMapper().addCategory(category);
+                getDbMapper().addCategoryWithKey(category);
                 Payee payee = new Payee();
                 payee.setKey(DEFAULT_KEY);
                 payee.setName(DEFAULT_NAME);
-                getDbMapper().addPayee(payee);
+                getDbMapper().addPayeeWithKey(payee);
 
                 if (getHomeBank() != null)
                     getDbMapper().addHomebank(getHomeBank());
@@ -182,6 +184,51 @@ public class XmlMapper {
 
     public List<Category> getCategoriesByAccount(int id) {
         return getDbMapper().getCategoriesByAccount(id);
+    }
+
+    @Transactional(value = HomebankDatasourceConfig.TX_MANAGER)
+    public OperationResponse addOperationByAccount(int id, OperationRequest operationRequest)throws DataNotSavedException {
+
+        OperationResponse ret = new OperationResponse();
+
+        try {
+
+            Payee payee = getDbMapper().getPayeeByName(operationRequest.getPayee());
+            if (payee == null) {
+                payee = new Payee();
+                payee.setName(operationRequest.getPayee());
+                int lineInserted = getDbMapper().addPayee(payee);
+                if (lineInserted < 1) System.err.println("Payee not inserted: " + operationRequest.getPayee());
+            }
+
+            Category category = getDbMapper().getCategoryByName(operationRequest.getCategory());
+            if (category == null) {
+                category = new Category();
+                category.setName(operationRequest.getCategory());
+                int lineInserted = getDbMapper().addCategory(category);
+                if (lineInserted < 1) System.err.println("Category not inserted: " + operationRequest.getCategory());
+            }
+
+            Operation operation = new Operation();
+            operation.setPayee(payee.getKey());
+            operation.setAccount(id);
+            operation.setCategory(category.getKey());
+            operation.setWording(operationRequest.getWording());
+            operation.setAmount(operationRequest.getAmount());
+
+            // TODO Next : remove hard coded values
+            operation.setFlags(0);
+            operation.setDate(736559);
+            operation.setPaymode(0);
+
+            getDbMapper().addOperation(operation);
+
+            saveXmlFile();
+        } catch (Exception e) {
+            throw new DataNotSavedException();
+        }
+
+        return ret;
     }
 
     public int addAccount(Account account) throws DuplicatedNameException, DataNotSavedException {

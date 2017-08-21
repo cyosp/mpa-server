@@ -33,12 +33,23 @@ public interface DbMapper {
     @Options(useGeneratedKeys = true, keyProperty = "key")
     int addAccount(Account account);
     @Insert({"INSERT INTO CATEGORY(key, parent, flags, name) VALUES( #{key}, #{parent}, #{flags}, #{name} )"})
-    int addCategory(Category category);
+    int addCategoryWithKey(Category category);
     @Insert({"INSERT INTO PAYEE(key, name) VALUES( #{key}, #{name} )"})
-    int addPayee(Payee payee);
+    int addPayeeWithKey(Payee payee);
 
-   @Insert("SET @BALANCE = (SELECT INITIAL FROM ACCOUNT WHERE KEY= #{accountId})")
-   int setBalanceVariable(int accountId);
+    @Options(useGeneratedKeys = true, keyProperty = "key")
+    @Insert({"INSERT INTO PAYEE(name) VALUES(#{name})"})
+    int addPayee(Payee payee);
+    @Options(useGeneratedKeys = true, keyProperty = "key")
+    @Insert({"INSERT INTO CATEGORY(name) VALUES(#{name})"})
+    int addCategory(Category category);
+
+    @Options(useGeneratedKeys = true, keyProperty = "key")
+    @Insert({"INSERT INTO OPERATION(date, amount, account, paymode, flags, payee, wording, category) VALUES( #{date}, #{amount}, #{account}, #{paymode}, #{flags}, #{payee}, #{wording}, #{category} )"})
+    int addOperation(Operation operation);
+
+    @Insert("SET @BALANCE = (SELECT INITIAL FROM ACCOUNT WHERE KEY= #{accountId})")
+    int setBalanceVariable(int accountId);
 
     List<Account> getAccounts();
     List<Operation> getOperations();
@@ -55,6 +66,11 @@ public interface DbMapper {
     List<Tag> getTags();
     @Select("SELECT * FROM FAVORITE")
     List<Favorite> getFavorites();
+
+    @Select("SELECT * FROM PAYEE WHERE NAME = #{name}")
+    Payee getPayeeByName(String name);
+    @Select("SELECT * FROM CATEGORY WHERE NAME = #{name}")
+    Category getCategoryByName(String name);
 
     int addAccounts(List<Account> accounts);
     int addCategories(List<Category> categories);

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  */
 @Getter
 @Setter
-public class OperationResponse {
+public class OperationResponse extends RootResponse {
 
     private long date;
 

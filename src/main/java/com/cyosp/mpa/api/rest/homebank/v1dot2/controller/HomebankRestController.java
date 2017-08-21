@@ -55,9 +55,9 @@ public class HomebankRestController {
         try {
             ret = getHomebankService().addAccount(accountRequest);
         } catch (DataNotSavedException e) {
-            ret.setKey(AccountResponse.KEY_DATA_NOT_SAVED);
+            ret.setKey(RootResponse.KEY_DATA_NOT_SAVED);
         } catch (DuplicatedNameException e) {
-            ret.setKey(AccountResponse.KEY_DUPLICATED_NAME);
+            ret.setKey(RootResponse.KEY_DUPLICATED_NAME);
         }
 
         return ret;
@@ -79,8 +79,12 @@ public class HomebankRestController {
     }
 
     @PostMapping("/accounts/{id}/operations/add")
-    public List<OperationResponse> addOperationsByAccount(@PathVariable int id, @RequestBody OperationRequest operationRequest) {
-        List<OperationResponse> ret = new ArrayList<>();
+    public OperationResponse addOperationsByAccount(@PathVariable int id, @RequestBody OperationRequest operationRequest) {
+
+        OperationResponse ret = new OperationResponse();
+
+        try
+        {
 
         StringJoiner stringJoiner = new StringJoiner(" ", "Info received:", "");
         stringJoiner.add(operationRequest.getDate().toString());
@@ -90,7 +94,14 @@ public class HomebankRestController {
         stringJoiner.add(operationRequest.getWording());
         System.out.println(stringJoiner);
 
-        return ret;
+        ret= getHomebankService().addOperationByAccount(id,operationRequest);
+
+
+    } catch (DataNotSavedException e) {
+        ret.setKey(RootResponse.KEY_DATA_NOT_SAVED);
+    }
+
+    return  ret;
     }
 
     //

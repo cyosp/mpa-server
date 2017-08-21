@@ -18,6 +18,11 @@ import java.util.GregorianCalendar;
 @Setter
 public class Operation {
 
+    @XStreamOmitField
+    private int key;
+
+    //-----------------------------
+
     @XStreamAsAttribute
     @XStreamAlias("date")
     private long date;
