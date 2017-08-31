@@ -56,10 +56,14 @@
             FOREIGN KEY (curr) REFERENCES CURRENCY (key)
         );
 
+        CREATE INDEX IDX_ACCOUNT_NAME ON ACCOUNT(name);
+
         CREATE TABLE IF NOT EXISTS PAYEE (
             key  INT PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR
         );
+
+        CREATE INDEX IDX_PAYEE_NAME ON PAYEE(name);
 
         CREATE TABLE IF NOT EXISTS CATEGORY (
             key    INT PRIMARY KEY AUTO_INCREMENT,
@@ -68,10 +72,14 @@
             name   VARCHAR
         );
 
+        CREATE INDEX IDX_CATEGORY_NAME ON CATEGORY(name);
+
         CREATE TABLE IF NOT EXISTS TAG (
             key  INT PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR
         );
+
+        CREATE INDEX IDX_TAG_NAME ON TAG(name);
 
         CREATE TABLE IF NOT EXISTS FAVORITE (
             key       INT PRIMARY KEY AUTO_INCREMENT,
@@ -104,6 +112,8 @@
             FOREIGN KEY (payee) REFERENCES PAYEE (key),
             FOREIGN KEY (category) REFERENCES CATEGORY (key)
         );
+
+        CREATE INDEX IDX_OPERATION_WORDING ON OPERATION(wording);
     </insert>
 
     <insert id="addAccounts" parameterType="java.util.List">
