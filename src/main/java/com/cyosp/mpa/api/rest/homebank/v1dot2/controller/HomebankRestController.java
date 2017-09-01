@@ -78,6 +78,11 @@ public class HomebankRestController {
         return getHomebankService().getCategoriesByAccount(id);
     }
 
+    @GetMapping("/accounts/{id}/payees")
+    public List<PayeeResponse> getPayeesByAccount(@PathVariable int id) {
+        return getHomebankService().getPayeesByAccount(id);
+    }
+
     @PostMapping("/accounts/{id}/operations/add")
     public OperationResponse addOperationsByAccount(@PathVariable int id, @RequestBody OperationRequest operationRequest) {
 

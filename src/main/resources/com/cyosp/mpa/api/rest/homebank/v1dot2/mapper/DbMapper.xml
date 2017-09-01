@@ -316,4 +316,37 @@
         GROUP BY CATEGORY.KEY
         ORDER BY BALANCE ASC
     </select>
+
+    <resultMap id="payeeResultMap" type="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Payee" autoMapping="true">
+        <association property="currency"
+                     javaType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Currency" autoMapping="true"
+                     columnPrefix="cur_">
+        </association>
+    </resultMap>
+
+    <select id="getPayeesByAccount" parameterType="int"
+            resultType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Payee"
+            resultMap="payeeResultMap">
+        SELECT
+        PAYEE.KEY,
+        PAYEE.NAME,
+        ISNULL(SUM(OPERATION.AMOUNT), 0) AS BALANCE,
+        CURRENCY.KEY                     AS CUR_KEY,
+        CURRENCY.ISO                     AS CUR_ISO,
+        CURRENCY.NAME                    AS CUR_NAME,
+        CURRENCY.SYMB                    AS CUR_SYMB,
+        CURRENCY.SYPRF                   AS CUR_SYPRF,
+        CURRENCY.DCHAR                   AS CUR_DCHAR,
+        CURRENCY.GCHAR                   AS CUR_GCHAR,
+        CURRENCY.FRAC                    AS CUR_FRAC,
+        CURRENCY.RATE                    AS CUR_RATE,
+        CURRENCY.MDATE                   AS CUR_MDATE
+        FROM PAYEE
+        JOIN OPERATION ON OPERATION.PAYEE = PAYEE.KEY
+        JOIN ACCOUNT ON OPERATION.ACCOUNT = ACCOUNT.KEY
+        JOIN CURRENCY ON ACCOUNT.CURR = CURRENCY.KEY
+        WHERE ACCOUNT.KEY = #{ID}
+        GROUP BY PAYEE.KEY
+        ORDER BY BALANCE ASC
+    </select>
 </mapper>

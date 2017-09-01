@@ -27,4 +27,7 @@ public class Payee {
 
     @XStreamOmitField
     private BigDecimal balance;
+
+    @XStreamOmitField
+    private Currency currency;
 }

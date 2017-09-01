@@ -143,6 +143,20 @@ public class HomebankService {
         return ret;
     }
 
+    public List<PayeeResponse> getPayeesByAccount(int id) {
+
+        List<PayeeResponse> ret = new ArrayList<>();
+
+        for (Payee payee : getXmlMapper().getPayeesByAccount(id)) {
+            PayeeResponse payeeResponse = new PayeeResponse();
+            BeanUtils.copyProperties(payee, payeeResponse);
+            payeeResponse.setBalance(formatAmount(payee.getBalance(), payee.getCurrency()));
+            ret.add(payeeResponse);
+        }
+
+        return ret;
+    }
+
     public OperationResponse addOperationByAccount(int id, OperationRequest operationRequest) throws DataNotSavedException {
         return getXmlMapper().addOperationByAccount(id, operationRequest);
     }

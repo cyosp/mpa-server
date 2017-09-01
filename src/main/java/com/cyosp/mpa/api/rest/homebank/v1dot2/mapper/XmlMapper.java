@@ -186,6 +186,10 @@ public class XmlMapper {
         return getDbMapper().getCategoriesByAccount(id);
     }
 
+    public List<Payee> getPayeesByAccount(int id) {
+        return getDbMapper().getPayeesByAccount(id);
+    }
+
     @Transactional(value = HomebankDatasourceConfig.TX_MANAGER)
     public OperationResponse addOperationByAccount(int id, OperationRequest operationRequest)throws DataNotSavedException {
 

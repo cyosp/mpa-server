@@ -55,6 +55,7 @@ public interface DbMapper {
     List<Operation> getOperations();
     List<Operation> getOperationsByAccount(int id);
     List<Category> getCategoriesByAccount(int id);
+    List<Payee> getPayeesByAccount(int id);
 
     @Select("SELECT * FROM CATEGORY")
     List<Category> getCategories();

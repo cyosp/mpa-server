@@ -1,5 +1,6 @@
 package com.cyosp.mpa.api.rest.homebank.v1dot2.response;
 
+import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Currency;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +15,7 @@ public class PayeeResponse extends RootResponse {
 
     private String name;
 
-    private BigDecimal balance;
+    private String balance;
+
+    private Currency currency;
 }
