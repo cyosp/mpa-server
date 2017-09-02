@@ -286,14 +286,6 @@ public class XmlMapper {
     }
 
     //
-    // Payees
-    //
-
-    public List<Payee> getPayees() {
-        return getDbMapper().getPayees();
-    }
-
-    //
     // Tags
     //
 

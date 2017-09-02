@@ -241,22 +241,6 @@ public class HomebankService {
     }
 
     //
-    // Payees
-    //
-
-    public List<PayeeResponse> getPayees() {
-        List<PayeeResponse> ret = new ArrayList<>();
-
-        for (Payee payee : getXmlMapper().getPayees()) {
-            PayeeResponse payeeResponse = new PayeeResponse();
-            BeanUtils.copyProperties(payee, payeeResponse);
-            ret.add(payeeResponse);
-        }
-
-        return ret;
-    }
-
-    //
     // Tags
     //
 
