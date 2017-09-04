@@ -110,15 +110,6 @@ public class HomebankRestController {
     }
 
     //
-    // Categories
-    //
-
-    @GetMapping("/categories")
-    public List<CategoryResponse> getCategories() {
-        return getHomebankService().getCategories();
-    }
-
-    //
     // Currencies
     //
 

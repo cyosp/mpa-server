@@ -174,22 +174,6 @@ public class HomebankService {
     }
 
     //
-    // Categories
-    //
-
-    public List<CategoryResponse> getCategories() {
-        List<CategoryResponse> ret = new ArrayList<>();
-
-        for (Category category : getXmlMapper().getCategories()) {
-            CategoryResponse categoryResponse = new CategoryResponse();
-            BeanUtils.copyProperties(category, categoryResponse);
-            ret.add(categoryResponse);
-        }
-
-        return ret;
-    }
-
-    //
     // Currencies
     //
 

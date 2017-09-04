@@ -254,14 +254,6 @@ public class XmlMapper {
     }
 
     //
-    // Categories
-    //
-
-    public List<Category> getCategories() {
-        return getDbMapper().getCategories();
-    }
-
-    //
     // Currencies
     //
 
