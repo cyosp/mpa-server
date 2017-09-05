@@ -73,6 +73,11 @@ body {
 /* ********** */
 /* Amount CSS */
 /* ********** */
+.amount
+{
+    text-align: right;
+}
+
 .amountNegativeSign
 {
 	color: red;
