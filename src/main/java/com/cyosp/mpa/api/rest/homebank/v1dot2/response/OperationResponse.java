@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Setter
 public class OperationResponse extends RootResponse {
 
-    private long date;
+    private Long date;
 
     private String dateFormatted;
 
@@ -20,19 +20,19 @@ public class OperationResponse extends RootResponse {
 
     private String balance;
 
-    private int account;
+    private Integer account;
 
-    private int paymode;
+    private Integer paymode;
 
-    private int flags;
+    private Integer flags;
 
-    private int payee;
+    private Integer payee;
 
     private String payeeName;
 
     private String wording;
 
-    private int category;
+    private Integer category;
 
     private String categoryName;
 }

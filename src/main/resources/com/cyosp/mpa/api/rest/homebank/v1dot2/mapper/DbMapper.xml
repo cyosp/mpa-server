@@ -56,14 +56,16 @@
             FOREIGN KEY (curr) REFERENCES CURRENCY (key)
         );
 
-        CREATE INDEX IDX_ACCOUNT_NAME ON ACCOUNT(name);
+        CREATE INDEX IDX_ACCOUNT_NAME
+            ON ACCOUNT (name);
 
         CREATE TABLE IF NOT EXISTS PAYEE (
             key  INT PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR
         );
 
-        CREATE INDEX IDX_PAYEE_NAME ON PAYEE(name);
+        CREATE INDEX IDX_PAYEE_NAME
+            ON PAYEE (name);
 
         CREATE TABLE IF NOT EXISTS CATEGORY (
             key    INT PRIMARY KEY AUTO_INCREMENT,
@@ -72,14 +74,16 @@
             name   VARCHAR
         );
 
-        CREATE INDEX IDX_CATEGORY_NAME ON CATEGORY(name);
+        CREATE INDEX IDX_CATEGORY_NAME
+            ON CATEGORY (name);
 
         CREATE TABLE IF NOT EXISTS TAG (
             key  INT PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR
         );
 
-        CREATE INDEX IDX_TAG_NAME ON TAG(name);
+        CREATE INDEX IDX_TAG_NAME
+            ON TAG (name);
 
         CREATE TABLE IF NOT EXISTS FAVORITE (
             key       INT PRIMARY KEY AUTO_INCREMENT,
@@ -113,7 +117,8 @@
             FOREIGN KEY (category) REFERENCES CATEGORY (key)
         );
 
-        CREATE INDEX IDX_OPERATION_WORDING ON OPERATION(wording);
+        CREATE INDEX IDX_OPERATION_WORDING
+            ON OPERATION (wording);
     </insert>
 
     <insert id="addAccounts" parameterType="java.util.List">
@@ -223,7 +228,7 @@
             OPERATION.PAYMODE,
             OPERATION.FLAGS,
             OPERATION.PAYEE,
-            ISNULL(OPERATION.WORDING, '') AS WORDING,
+            OPERATION.WORDING,
             OPERATION.CATEGORY,
             PAYEE.NAME                    AS PAYEENAME,
             CATEGORY.NAME                 AS CATEGORYNAME,
@@ -244,7 +249,7 @@
             JOIN CURRENCY ON CURRENCY.KEY = ACCOUNT.CURR
     </select>
 
-    <select id="getOperationsByAccount" parameterType="int"
+    <select id="getOperationsByAccount" parameterType="Integer"
             resultType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Operation"
             resultMap="operationResultMap">
         SELECT *
@@ -257,27 +262,27 @@
                                           OPERATION.PAYMODE,
                                           OPERATION.FLAGS,
                  OPERATION.PAYEE,
-                 ISNULL(OPERATION.WORDING, '') AS WORDING,
-                                               OPERATION.CATEGORY,
-                                               PAYEE.NAME AS PAYEENAME,
-                                                          CATEGORY.NAME AS CATEGORYNAME,
-                                                          CURRENCY.KEY AS CUR_KEY,
-                                                                  CURRENCY.ISO AS CUR_ISO,
+                 OPERATION.WORDING,
+                 OPERATION.CATEGORY,
+                           PAYEE.NAME AS PAYEENAME,
+                           CATEGORY.NAME AS CATEGORYNAME,
+                                    CURRENCY.KEY AS CUR_KEY,
+                 CURRENCY.ISO AS CUR_ISO,
                  CURRENCY.NAME AS CUR_NAME,
-                 CURRENCY.SYMB AS CUR_SYMB,
-                               CURRENCY.SYPRF AS CUR_SYPRF,
-                               CURRENCY.DCHAR AS CUR_DCHAR,
-                                       CURRENCY.GCHAR AS CUR_GCHAR,
+                                  CURRENCY.SYMB AS CUR_SYMB,
+                                  CURRENCY.SYPRF AS CUR_SYPRF,
+                                           CURRENCY.DCHAR AS CUR_DCHAR,
+                 CURRENCY.GCHAR AS CUR_GCHAR,
                  CURRENCY.FRAC AS CUR_FRAC,
-                 CURRENCY.RATE AS CUR_RATE,
-                               CURRENCY.MDATE AS CUR_MDATE
-                               FROM OPERATION
-                 LEFT JOIN PAYEE ON OPERATION.PAYEE = PAYEE.KEY
-                                                            LEFT JOIN CATEGORY ON OPERATION.CATEGORY = CATEGORY.KEY
-                                                                                                               JOIN ACCOUNT ON OPERATION.ACCOUNT = ACCOUNT.KEY
-                                                                                                                                                          JOIN CURRENCY ON CURRENCY.KEY = ACCOUNT.CURR
-                                                                                                                                                                                                 WHERE ACCOUNT.KEY = #{ID}
-                 ORDER BY OPERATION.DATE ASC
+                                  CURRENCY.RATE AS CUR_RATE,
+                                  CURRENCY.MDATE AS CUR_MDATE
+                                           FROM OPERATION
+                                           LEFT JOIN PAYEE ON OPERATION.PAYEE = PAYEE.KEY
+                                                                       LEFT JOIN CATEGORY ON OPERATION.CATEGORY = CATEGORY.KEY
+                                                                                             JOIN ACCOUNT ON OPERATION.ACCOUNT = ACCOUNT.KEY
+                                                                                                             JOIN CURRENCY ON CURRENCY.KEY = ACCOUNT.CURR
+                                                                                                                              WHERE ACCOUNT.KEY = #{ID}
+                                                                                                                                            ORDER BY OPERATION.DATE ASC
              )
              SUB
         ORDER BY DATE DESC
@@ -291,7 +296,7 @@
         </association>
     </resultMap>
 
-    <select id="getCategoriesByAccount" parameterType="int"
+    <select id="getCategoriesByAccount" parameterType="Integer"
             resultType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Category"
             resultMap="categoryResultMap">
         SELECT
@@ -324,27 +329,27 @@
         </association>
     </resultMap>
 
-    <select id="getPayeesByAccount" parameterType="int"
+    <select id="getPayeesByAccount" parameterType="Integer"
             resultType="com.cyosp.mpa.api.rest.homebank.v1dot2.model.Payee"
             resultMap="payeeResultMap">
         SELECT
-        PAYEE.KEY,
-        PAYEE.NAME,
-        ISNULL(SUM(OPERATION.AMOUNT), 0) AS BALANCE,
-        CURRENCY.KEY                     AS CUR_KEY,
-        CURRENCY.ISO                     AS CUR_ISO,
-        CURRENCY.NAME                    AS CUR_NAME,
-        CURRENCY.SYMB                    AS CUR_SYMB,
-        CURRENCY.SYPRF                   AS CUR_SYPRF,
-        CURRENCY.DCHAR                   AS CUR_DCHAR,
-        CURRENCY.GCHAR                   AS CUR_GCHAR,
-        CURRENCY.FRAC                    AS CUR_FRAC,
-        CURRENCY.RATE                    AS CUR_RATE,
-        CURRENCY.MDATE                   AS CUR_MDATE
+            PAYEE.KEY,
+            PAYEE.NAME,
+            ISNULL(SUM(OPERATION.AMOUNT), 0) AS BALANCE,
+            CURRENCY.KEY                     AS CUR_KEY,
+            CURRENCY.ISO                     AS CUR_ISO,
+            CURRENCY.NAME                    AS CUR_NAME,
+            CURRENCY.SYMB                    AS CUR_SYMB,
+            CURRENCY.SYPRF                   AS CUR_SYPRF,
+            CURRENCY.DCHAR                   AS CUR_DCHAR,
+            CURRENCY.GCHAR                   AS CUR_GCHAR,
+            CURRENCY.FRAC                    AS CUR_FRAC,
+            CURRENCY.RATE                    AS CUR_RATE,
+            CURRENCY.MDATE                   AS CUR_MDATE
         FROM PAYEE
-        JOIN OPERATION ON OPERATION.PAYEE = PAYEE.KEY
-        JOIN ACCOUNT ON OPERATION.ACCOUNT = ACCOUNT.KEY
-        JOIN CURRENCY ON ACCOUNT.CURR = CURRENCY.KEY
+            JOIN OPERATION ON OPERATION.PAYEE = PAYEE.KEY
+            JOIN ACCOUNT ON OPERATION.ACCOUNT = ACCOUNT.KEY
+            JOIN CURRENCY ON ACCOUNT.CURR = CURRENCY.KEY
         WHERE ACCOUNT.KEY = #{ID}
         GROUP BY PAYEE.KEY
         ORDER BY BALANCE ASC

@@ -10,10 +10,10 @@ import lombok.Setter;
 @Setter
 public class RootResponse {
 
-    public static final int KEY_NOT_INITIALIZED = -100;
-    public static final int KEY_DATA_NOT_SAVED = -200;
-    public static final int KEY_DUPLICATED_NAME = -500;
-    public static final int KEY_NOT_FOUND = -600;
+    public static final Integer KEY_NOT_INITIALIZED = -100;
+    public static final Integer KEY_DATA_NOT_SAVED = -200;
+    public static final Integer KEY_DUPLICATED_NAME = -500;
+    public static final Integer KEY_NOT_FOUND = -600;
 
-    private int key = KEY_NOT_INITIALIZED;
+    private Integer key = KEY_NOT_INITIALIZED;
 }

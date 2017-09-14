@@ -14,7 +14,7 @@ public class Currency {
 
     @XStreamAsAttribute
     @XStreamAlias("key")
-    private int key;
+    private Integer key;
 
     @XStreamAsAttribute
     @XStreamAlias("iso")
@@ -26,29 +26,29 @@ public class Currency {
 
     @XStreamAsAttribute
     @XStreamAlias("symb")
-    private char symb;
+    private Character symb;
 
     @XStreamAsAttribute
     @XStreamAlias("syprf")
-    private int syprf;
+    private Integer syprf;
 
     @XStreamAsAttribute
     @XStreamAlias("dchar")
-    private char dchar;
+    private Character dchar;
 
     @XStreamAsAttribute
     @XStreamAlias("gchar")
-    private char gchar;
+    private Character gchar;
 
     @XStreamAsAttribute
     @XStreamAlias("frac")
-    private int frac;
+    private Integer frac;
 
     @XStreamAsAttribute
     @XStreamAlias("rate")
-    private int rate;
+    private Integer rate;
 
     @XStreamAsAttribute
     @XStreamAlias("mdate")
-    private int mdate;
+    private Integer mdate;
 }

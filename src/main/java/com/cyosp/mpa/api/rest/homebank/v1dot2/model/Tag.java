@@ -14,7 +14,7 @@ public class Tag {
 
     @XStreamAsAttribute
     @XStreamAlias("key")
-    private int key;
+    private Integer key;
 
     @XStreamAsAttribute
     @XStreamAlias("name")

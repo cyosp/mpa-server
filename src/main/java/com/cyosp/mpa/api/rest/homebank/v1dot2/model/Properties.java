@@ -18,13 +18,13 @@ public class Properties {
 
     @XStreamAsAttribute
     @XStreamAlias("curr")
-    private int curr;
+    private Integer curr;
 
     @XStreamAsAttribute
     @XStreamAlias("auto_smode")
-    private int autoSmode;
+    private Integer autoSmode;
 
     @XStreamAsAttribute
     @XStreamAlias("auto_weekday")
-    private int autoWeekday;
+    private Integer autoWeekday;
 }

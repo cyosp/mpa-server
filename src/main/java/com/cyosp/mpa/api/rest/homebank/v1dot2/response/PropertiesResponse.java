@@ -12,9 +12,9 @@ public class PropertiesResponse {
 
     private String title;
 
-    private int curr;
+    private Integer curr;
 
-    private int autoSmode;
+    private Integer autoSmode;
 
-    private int autoWeekday;
+    private Integer autoWeekday;
 }

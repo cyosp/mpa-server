@@ -17,7 +17,7 @@ public class Payee {
 
     @XStreamAsAttribute
     @XStreamAlias("key")
-    private int key;
+    private Integer key;
 
     @XStreamAsAttribute
     @XStreamAlias("name")

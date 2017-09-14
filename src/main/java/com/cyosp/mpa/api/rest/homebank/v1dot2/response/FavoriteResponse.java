@@ -14,23 +14,23 @@ public class FavoriteResponse {
 
     private BigDecimal amount;
 
-    private int account;
+    private Integer account;
 
-    private int paymode;
+    private Integer paymode;
 
-    private int flags;
+    private Integer flags;
 
-    private int payee;
+    private Integer payee;
 
-    private int category;
+    private Integer category;
 
     private String wording;
 
-    private long nextdate;
+    private Long nextdate;
 
-    private int every;
+    private Integer every;
 
-    private int unit;
+    private Integer unit;
 
-    private int limit;
+    private Integer limit;
 }

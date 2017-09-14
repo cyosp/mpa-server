@@ -17,23 +17,23 @@ public class Account {
 
     @XStreamAsAttribute
     @XStreamAlias("key")
-    private int key;
+    private Integer key;
 
     @XStreamAsAttribute
     @XStreamAlias("flags")
-    private int flags;
+    private Integer flags;
 
     @XStreamAsAttribute
     @XStreamAlias("pos")
-    private int pos;
+    private Integer pos;
 
     @XStreamAsAttribute
     @XStreamAlias("type")
-    private int type;
+    private Integer type;
 
     @XStreamAsAttribute
     @XStreamAlias("curr")
-    private int curr;
+    private Integer curr;
 
     @XStreamAsAttribute
     @XStreamAlias("name")
@@ -49,11 +49,11 @@ public class Account {
 
     @XStreamAsAttribute
     @XStreamAlias("cheque1")
-    private long cheque1;
+    private Long cheque1;
 
     @XStreamAsAttribute
     @XStreamAlias("cheque2")
-    private long cheque2;
+    private Long cheque2;
 
     //----------------------------------
 

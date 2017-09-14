@@ -3,6 +3,7 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.model;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,13 +20,13 @@ import java.util.GregorianCalendar;
 public class Operation {
 
     @XStreamOmitField
-    private int key;
+    private Integer key;
 
     //-----------------------------
 
     @XStreamAsAttribute
     @XStreamAlias("date")
-    private long date;
+    private Long date;
 
     @XStreamAsAttribute
     @XStreamAlias("amount")
@@ -33,19 +34,19 @@ public class Operation {
 
     @XStreamAsAttribute
     @XStreamAlias("account")
-    private int account;
+    private Integer account;
 
     @XStreamAsAttribute
     @XStreamAlias("paymode")
-    private int paymode;
+    private Integer paymode;
 
     @XStreamAsAttribute
     @XStreamAlias("flags")
-    private int flags;
+    private Integer flags;
 
     @XStreamAsAttribute
     @XStreamAlias("payee")
-    private int payee;
+    private Integer payee;
 
     @XStreamAsAttribute
     @XStreamAlias("wording")
@@ -53,7 +54,7 @@ public class Operation {
 
     @XStreamAsAttribute
     @XStreamAlias("category")
-    private int category;
+    private Integer category;
 
     //--------------------------
 

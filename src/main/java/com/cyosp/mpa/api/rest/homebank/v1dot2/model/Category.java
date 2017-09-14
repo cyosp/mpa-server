@@ -17,15 +17,15 @@ public class Category {
 
     @XStreamAsAttribute
     @XStreamAlias("key")
-    private int key;
+    private Integer key;
 
     @XStreamAsAttribute
     @XStreamAlias("parent")
-    private int parent;
+    private Integer parent;
 
     @XStreamAsAttribute
     @XStreamAlias("flags")
-    private int flags;
+    private Integer flags;
 
     @XStreamAsAttribute
     @XStreamAlias("name")

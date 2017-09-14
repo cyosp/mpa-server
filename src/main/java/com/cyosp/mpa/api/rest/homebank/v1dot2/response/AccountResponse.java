@@ -14,9 +14,9 @@ public class AccountResponse extends RootResponse {
 
     private OptionsResponse options;
 
-    private int pos;
+    private Integer pos;
 
-    private int type;
+    private Integer type;
 
     private CurrencyResponse currency;
 
@@ -26,9 +26,9 @@ public class AccountResponse extends RootResponse {
 
     private BigDecimal minimum;
 
-    private long cheque1;
+    private Long cheque1;
 
-    private long cheque2;
+    private Long cheque2;
 
     private String balance;
 }

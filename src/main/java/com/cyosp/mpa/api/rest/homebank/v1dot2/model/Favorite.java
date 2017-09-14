@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class Favorite {
 
     @XStreamOmitField
-    private int key;
+    private Integer key;
 
     //-----------------------------
 
@@ -26,23 +26,23 @@ public class Favorite {
 
     @XStreamAsAttribute
     @XStreamAlias("account")
-    private int account;
+    private Integer account;
 
     @XStreamAsAttribute
     @XStreamAlias("paymode")
-    private int paymode;
+    private Integer paymode;
 
     @XStreamAsAttribute
     @XStreamAlias("flags")
-    private int flags;
+    private Integer flags;
 
     @XStreamAsAttribute
     @XStreamAlias("payee")
-    private int payee;
+    private Integer payee;
 
     @XStreamAsAttribute
     @XStreamAlias("category")
-    private int category;
+    private Integer category;
 
     @XStreamAsAttribute
     @XStreamAlias("wording")
@@ -50,17 +50,17 @@ public class Favorite {
 
     @XStreamAsAttribute
     @XStreamAlias("nextdate")
-    private long nextdate;
+    private Long nextdate;
 
     @XStreamAsAttribute
     @XStreamAlias("every")
-    private int every;
+    private Integer every;
 
     @XStreamAsAttribute
     @XStreamAlias("unit")
-    private int unit;
+    private Integer unit;
 
     @XStreamAsAttribute
     @XStreamAlias("limit")
-    private int limit;
+    private Integer limit;
 }

@@ -10,11 +10,11 @@ import lombok.Setter;
 @Setter
 public class OptionsResponse {
 
-    private boolean accountClosed;
+    private Boolean accountClosed;
 
-    private boolean accountSummaryExclude;
+    private Boolean accountSummaryExclude;
 
-    private boolean accountBudgetExclude;
+    private Boolean accountBudgetExclude;
 
-    private boolean accountReportsExclude;
+    private Boolean accountReportsExclude;
 }
