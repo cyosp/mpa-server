@@ -49,12 +49,12 @@ public class Operation {
     private Integer payee;
 
     @XStreamAsAttribute
-    @XStreamAlias("wording")
-    private String wording;
-
-    @XStreamAsAttribute
     @XStreamAlias("category")
     private Integer category;
+
+    @XStreamAsAttribute
+    @XStreamAlias("wording")
+    private String wording;
 
     //--------------------------
 
