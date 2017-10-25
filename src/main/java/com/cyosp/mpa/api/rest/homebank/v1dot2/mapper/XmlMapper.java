@@ -83,6 +83,7 @@ public class XmlMapper {
         try {
             homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
             getHomeBank().checkVersion();
+            getHomeBank().formatInputData();
 
             try {
                 getDbMapper().init();
@@ -125,7 +126,7 @@ public class XmlMapper {
         }
     }
 
-    public void saveXmlFile() throws DataNotSavedException {
+    public void saveXmlFile(Boolean useTemporaryFile) throws DataNotSavedException {
 
         try {
             homeBank = getDbMapper().getHomebank();
@@ -145,13 +146,18 @@ public class XmlMapper {
             getHomeBank().setFavorites(getDbMapper().getFavorites());
             getHomeBank().setOperations(getDbMapper().getOperations());
 
+            getHomeBank().formatOutputData();
 
             String xmlContent = getXstream().toXML(getHomeBank());
             // Format content like HomeBank
-            xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|tag|fav|ope)>", "/>");
+            xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|tag|fav|ope)>", " />");
             String xmlContentIndent = xmlContent.replaceAll("><", ">\n<");
 
-            Path path = Paths.get(getHomebankFilePath().toURI());
+            String outputFilePath = getHomebankFilePath().getAbsolutePath();
+            if (useTemporaryFile) outputFilePath += ".mpa-server.tmp";
+
+            File outputFile = new File(outputFilePath);
+            Path path = Paths.get(outputFile.toURI());
             try (BufferedWriter writer = Files.newBufferedWriter(path)) {
                 writer.write(xmlContentIndent);
             }
@@ -191,7 +197,7 @@ public class XmlMapper {
     }
 
     @Transactional(value = HomebankDatasourceConfig.TX_MANAGER)
-    public OperationResponse addOperationByAccount(int id, OperationRequest operationRequest)throws DataNotSavedException {
+    public OperationResponse addOperationByAccount(int id, OperationRequest operationRequest) throws DataNotSavedException {
 
         OperationResponse ret = new OperationResponse();
 
@@ -222,12 +228,12 @@ public class XmlMapper {
 
             // TODO Next : remove hard coded values
             operation.setFlags(0);
-            operation.setDate(736559);
+            operation.setDate(new Long(736559));
             operation.setPaymode(0);
 
             getDbMapper().addOperation(operation);
 
-            saveXmlFile();
+            saveXmlFile(true);
         } catch (Exception e) {
             throw new DataNotSavedException();
         }
@@ -243,7 +249,7 @@ public class XmlMapper {
 
         try {
             ret = getDbMapper().addAccount(account);
-            saveXmlFile();
+            saveXmlFile(true);
         } catch (DuplicateKeyException dke) {
             throw new DuplicatedNameException();
         } catch (Exception e) {
