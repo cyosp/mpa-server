@@ -32,7 +32,7 @@ import java.util.List;
 @Getter
 public class HomebankService {
 
-    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     @Autowired
     private XmlMapper xmlMapper;

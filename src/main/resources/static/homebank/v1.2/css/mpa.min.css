@@ -6,6 +6,11 @@
 	width: 100%
 }
 
+#mpaOperationHeader
+{
+    font-size: 13px;
+}
+
 .full
 {
 	width: 100%

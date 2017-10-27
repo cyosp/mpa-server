@@ -1,5 +1,6 @@
 package com.cyosp.mpa.api.rest.common.service;
 
+import com.cyosp.mpa.api.rest.common.model.Infos;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

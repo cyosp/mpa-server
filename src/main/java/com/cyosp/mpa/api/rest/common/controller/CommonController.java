@@ -1,7 +1,7 @@
 package com.cyosp.mpa.api.rest.common.controller;
 
+import com.cyosp.mpa.api.rest.common.model.Infos;
 import com.cyosp.mpa.api.rest.common.service.CommonService;
-import com.cyosp.mpa.api.rest.common.service.Infos;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
