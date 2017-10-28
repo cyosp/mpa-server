@@ -7,11 +7,11 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -25,7 +25,7 @@ public class HomebankDatasourceConfig {
     @Bean(name = "homebankDatasource")
     @ConfigurationProperties(prefix = "repository.homebank.v1dot2.db")
     public DataSource homebankDataSource() {
-        return DataSourceBuilder.create().build();
+        return new DriverManagerDataSource();
     }
 
     @Bean(name = TX_MANAGER)
