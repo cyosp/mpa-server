@@ -31,6 +31,9 @@ public class HomeBank {
     @XStreamAsAttribute
     private String d;
 
+    @XStreamAlias("mpa")
+    private String mpa;
+
     @XStreamAlias("properties")
     private Properties properties;
 

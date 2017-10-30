@@ -8,6 +8,7 @@ import com.cyosp.mpa.api.rest.homebank.v1dot2.response.OperationResponse;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
+import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,10 @@ public class XmlMapper {
 
     @Value("${repository.homebank.v1dot2.file}")
     private File homebankFilePath;
+
+    @Value("${mpa.version}")
+    @Getter(AccessLevel.PRIVATE)
+    private String mpaVersion;
 
     @Getter
     private static HomeBank homeBank = null;
@@ -130,6 +135,10 @@ public class XmlMapper {
 
         try {
             homeBank = getDbMapper().getHomebank();
+
+            // Specify file has not been saved by HomeBank
+            getHomeBank().setMpa(getMpaVersion());
+
             getHomeBank().setProperties(getDbMapper().getProperties());
             getHomeBank().setCurrencies(getDbMapper().getCurrencies());
             getHomeBank().setAccounts(getDbMapper().getAccounts());
