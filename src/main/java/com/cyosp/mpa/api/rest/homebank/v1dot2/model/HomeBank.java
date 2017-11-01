@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
 @XStreamAlias("homebank")
 public class HomeBank {
 
-    private static final int BIGDECIMAL_SCALE = 2;
+    private static final int BIGDECIMAL_SCALE_0 = 0;
+    private static final int BIGDECIMAL_SCALE_2 = 2;
     private static final RoundingMode BIGDECIMAL_ROUNDINGMODE = RoundingMode.HALF_UP;
 
     @XStreamAlias("v")
@@ -78,30 +79,43 @@ public class HomeBank {
 
     private static Account inputFormatter(Account account) {
 
-        account.setInitial(account.getInitial().setScale(BIGDECIMAL_SCALE, BIGDECIMAL_ROUNDINGMODE));
-        account.setMinimum(account.getMinimum().setScale(BIGDECIMAL_SCALE, BIGDECIMAL_ROUNDINGMODE));
+        account.setInitial(account.getInitial().setScale(BIGDECIMAL_SCALE_2, BIGDECIMAL_ROUNDINGMODE));
+        account.setMinimum(account.getMinimum().setScale(BIGDECIMAL_SCALE_2, BIGDECIMAL_ROUNDINGMODE));
 
         return account;
     }
 
     private static Operation inputFormatter(Operation operation) {
 
-        operation.setAmount(operation.getAmount().setScale(BIGDECIMAL_SCALE, BIGDECIMAL_ROUNDINGMODE));
+        operation.setAmount(operation.getAmount().setScale(BIGDECIMAL_SCALE_2, BIGDECIMAL_ROUNDINGMODE));
 
         return operation;
     }
 
     private static Account outputFormatter(Account account) {
 
-        account.setInitial(account.getInitial().setScale(BIGDECIMAL_SCALE));
-        account.setMinimum(account.getMinimum().setScale(BIGDECIMAL_SCALE));
+        try {
+            account.setInitial(account.getInitial().setScale(BIGDECIMAL_SCALE_0));
+        } catch (Exception e) {
+            account.setInitial(account.getInitial().setScale(BIGDECIMAL_SCALE_2));
+        }
+
+        try {
+            account.setMinimum(account.getMinimum().setScale(BIGDECIMAL_SCALE_0));
+        } catch (Exception e) {
+            account.setMinimum(account.getMinimum().setScale(BIGDECIMAL_SCALE_2));
+        }
 
         return account;
     }
 
     private static Operation outputFormatter(Operation operation) {
 
-        operation.setAmount(operation.getAmount().setScale(BIGDECIMAL_SCALE));
+        try {
+            operation.setAmount(operation.getAmount().setScale(BIGDECIMAL_SCALE_0));
+        } catch (Exception e) {
+            operation.setAmount(operation.getAmount().setScale(BIGDECIMAL_SCALE_2));
+        }
 
         return operation;
     }
