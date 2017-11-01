@@ -159,6 +159,7 @@ public class XmlMapper {
 
             String xmlContent = getXstream().toXML(getHomeBank());
             // Format content like HomeBank
+            xmlContent = xmlContent.replaceAll(" \\?>", "?>");
             xmlContent = xmlContent.replaceAll("></(properties|cur|account|pay|cat|tag|fav|ope)>", " />");
             xmlContent = xmlContent.replaceAll("'", "&apos;");
             String xmlContentIndent = xmlContent.replaceAll("><", ">\n<");
