@@ -65,11 +65,6 @@ public class HomeBank {
         if (!"1.2".equals(getV())) throw new VersionNotSupportedException();
     }
 
-    public void formatInputData() {
-        setAccounts(getAccounts().stream().map(HomeBank::inputFormatter).collect(Collectors.toList()));
-        setOperations(getOperations().stream().map(HomeBank::inputFormatter).collect(Collectors.toList()));
-    }
-
     public void formatOutputData() {
         setAccounts(getAccounts().stream().map(HomeBank::outputFormatter).collect(Collectors.toList()));
         setOperations(getOperations().stream().map(HomeBank::outputFormatter).collect(Collectors.toList()));
@@ -77,33 +72,16 @@ public class HomeBank {
 
     //---------------------------------------------------------
 
-    private static Account inputFormatter(Account account) {
-
-        account.setInitial(account.getInitial().setScale(BIGDECIMAL_SCALE_2, BIGDECIMAL_ROUNDINGMODE));
-        account.setMinimum(account.getMinimum().setScale(BIGDECIMAL_SCALE_2, BIGDECIMAL_ROUNDINGMODE));
-
-        return account;
-    }
-
-    private static Operation inputFormatter(Operation operation) {
-
-        operation.setAmount(operation.getAmount().setScale(BIGDECIMAL_SCALE_2, BIGDECIMAL_ROUNDINGMODE));
-
-        return operation;
-    }
-
     private static Account outputFormatter(Account account) {
 
         try {
             account.setInitial(account.getInitial().setScale(BIGDECIMAL_SCALE_0));
         } catch (Exception e) {
-            account.setInitial(account.getInitial().setScale(BIGDECIMAL_SCALE_2));
         }
 
         try {
             account.setMinimum(account.getMinimum().setScale(BIGDECIMAL_SCALE_0));
         } catch (Exception e) {
-            account.setMinimum(account.getMinimum().setScale(BIGDECIMAL_SCALE_2));
         }
 
         return account;
@@ -114,7 +92,6 @@ public class HomeBank {
         try {
             operation.setAmount(operation.getAmount().setScale(BIGDECIMAL_SCALE_0));
         } catch (Exception e) {
-            operation.setAmount(operation.getAmount().setScale(BIGDECIMAL_SCALE_2));
         }
 
         return operation;

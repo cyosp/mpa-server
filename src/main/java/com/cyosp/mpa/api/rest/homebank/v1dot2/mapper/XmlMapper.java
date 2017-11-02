@@ -88,7 +88,6 @@ public class XmlMapper {
         try {
             homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
             getHomeBank().checkVersion();
-            getHomeBank().formatInputData();
 
             try {
                 getDbMapper().init();

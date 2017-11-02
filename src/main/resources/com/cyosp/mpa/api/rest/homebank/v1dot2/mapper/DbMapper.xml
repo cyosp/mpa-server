@@ -54,8 +54,8 @@
             type    INT,
             curr    INT,
             name    VARCHAR UNIQUE,
-            initial FLOAT,
-            minimum FLOAT,
+            initial DECIMAL,
+            minimum DECIMAL,
             cheque1 INT,
             cheque2 INT,
             FOREIGN KEY (curr) REFERENCES CURRENCY (key)
@@ -125,7 +125,7 @@
         CREATE TABLE IF NOT EXISTS OPERATION (
             id       INT PRIMARY KEY AUTO_INCREMENT,
             date     INT,
-            amount   FLOAT,
+            amount   DECIMAL,
             account  INT,
             paymode  INT,
             flags    INT,
