@@ -34,6 +34,21 @@ public class HomebankRestController {
         getHomebankService().reload();
     }
 
+    @GetMapping("/payment-modes")
+    public List<PaymentModeResponse> getPaymentModes() {
+
+        ArrayList<PaymentModeResponse> ret = new ArrayList<>();
+
+        // TODO : translate names
+        ret.add(new PaymentModeResponse(1, "Credit card"));
+        ret.add(new PaymentModeResponse(2, "Check"));
+        ret.add(new PaymentModeResponse(3, "Cash"));
+        ret.add(new PaymentModeResponse(4, "Debit Card"));
+        ret.add(new PaymentModeResponse(9, "Deposit"));
+
+        return ret;
+    }
+
     @GetMapping("/infos")
     public InfosResponse getInfos() {
         return getHomebankService().getInfos();
@@ -88,25 +103,24 @@ public class HomebankRestController {
 
         OperationResponse ret = new OperationResponse();
 
-        try
-        {
+        try {
 
-        StringJoiner stringJoiner = new StringJoiner(" ", "Info received:", "");
-        stringJoiner.add(operationRequest.getDate().toString());
-        stringJoiner.add(operationRequest.getPayee());
-        stringJoiner.add(operationRequest.getAmount().toString());
-        stringJoiner.add(operationRequest.getCategory());
-        stringJoiner.add(operationRequest.getWording());
-        System.out.println(stringJoiner);
+            StringJoiner stringJoiner = new StringJoiner(" ", "Info received:", "");
+            stringJoiner.add(operationRequest.getDate().toString());
+            stringJoiner.add(operationRequest.getPayee());
+            stringJoiner.add(operationRequest.getAmount().toString());
+            stringJoiner.add(operationRequest.getCategory());
+            stringJoiner.add(operationRequest.getWording());
+            System.out.println(stringJoiner);
 
-        ret= getHomebankService().addOperationByAccount(id,operationRequest);
+            ret = getHomebankService().addOperationByAccount(id, operationRequest);
 
 
-    } catch (DataNotSavedException e) {
-        ret.setKey(RootResponse.KEY_DATA_NOT_SAVED);
-    }
+        } catch (DataNotSavedException e) {
+            ret.setKey(RootResponse.KEY_DATA_NOT_SAVED);
+        }
 
-    return  ret;
+        return ret;
     }
 
     //
