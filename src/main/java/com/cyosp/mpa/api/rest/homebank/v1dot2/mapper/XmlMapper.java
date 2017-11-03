@@ -230,6 +230,8 @@ public class XmlMapper {
             }
 
             Operation operation = new Operation();
+            operation.setJavaDate(operationRequest.getDate());
+            operation.convertDateToJulian();
             operation.setPayee(payee.getKey());
             operation.setAccount(id);
             operation.setCategory(category.getKey());
@@ -238,7 +240,6 @@ public class XmlMapper {
 
             // TODO Next : remove hard coded values
             operation.setFlags(0);
-            operation.setDate(new Long(736559));
             operation.setPaymode(0);
 
             getDbMapper().addOperation(operation);
