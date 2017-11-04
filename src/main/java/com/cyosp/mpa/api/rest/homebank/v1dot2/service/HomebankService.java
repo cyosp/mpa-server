@@ -11,18 +11,14 @@ import com.cyosp.mpa.api.rest.homebank.v1dot2.request.OperationRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.*;
 import lombok.Getter;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -125,6 +121,13 @@ public class HomebankService {
             OperationResponse operationResponse = new OperationResponse();
             BeanUtils.copyProperties(operation, operationResponse);
             operationResponse.setDateFormatted(SIMPLE_DATE_FORMAT.format(operation.getJavaDate()));
+
+            if (operation.getPaymode() != null) {
+                PaymentMode paymentMode =
+                        PaymentMode.getPaymentModes().stream().filter(pm -> pm.getCode() == operation.getPaymode()).findFirst().get();
+                operationResponse.setPaymodeName(paymentMode.getName());
+            } else operationResponse.setPaymodeName("");
+
             operationResponse.setAmount(formatAmount(operation.getAmount(), operation.getCurrency()));
             operationResponse.setBalance(formatAmount(operation.getBalance(), operation.getCurrency()));
             ret.add(operationResponse);

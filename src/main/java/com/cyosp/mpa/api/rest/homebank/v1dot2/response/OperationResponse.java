@@ -24,6 +24,8 @@ public class OperationResponse extends RootResponse {
 
     private Integer paymode;
 
+    private String paymodeName;
+
     private Integer flags;
 
     private Integer payee;
