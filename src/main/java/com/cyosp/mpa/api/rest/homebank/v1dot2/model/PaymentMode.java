@@ -29,6 +29,7 @@ public class PaymentMode {
     @Getter
     public static List<PaymentMode> paymentModes = new ArrayList<PaymentMode>() {
         {
+            add(new PaymentMode(0, "", true));
             add(new PaymentMode(1, PaymentMode.CREDIT_CARD, true));
             add(new PaymentMode(2, PaymentMode.CHECK, true));
             add(new PaymentMode(3, PaymentMode.CASH, true));
