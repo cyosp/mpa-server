@@ -3,6 +3,7 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.controller;
 import com.cyosp.mpa.api.rest.common.controller.CommonController;
 import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.model.PaymentMode;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.OperationRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.*;
@@ -12,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 /**
  * Created by CYOSP on 2017-07-24.
@@ -36,22 +37,7 @@ public class HomebankRestController {
 
     @GetMapping("/payment-modes")
     public List<PaymentModeResponse> getPaymentModes() {
-
-        ArrayList<PaymentModeResponse> ret = new ArrayList<>();
-
-        ret.add(new PaymentModeResponse(1, "Credit Card", true));
-        ret.add(new PaymentModeResponse(2, "Check", true));
-        ret.add(new PaymentModeResponse(3, "Cash", true));
-        ret.add(new PaymentModeResponse(4, "Transfer", false));
-        ret.add(new PaymentModeResponse(5, "Internal Transfer", false));
-        ret.add(new PaymentModeResponse(6, "Debit Card", true));
-        ret.add(new PaymentModeResponse(7, "Standing order", false));
-        ret.add(new PaymentModeResponse(8, "Electronic payment", false));
-        ret.add(new PaymentModeResponse(9, "Deposit", true));
-        ret.add(new PaymentModeResponse(10, "FI fee", false));
-        ret.add(new PaymentModeResponse(11, "Direct debit", false));
-
-        return ret;
+        return PaymentMode.getPaymentModes().stream().map(pm -> new PaymentModeResponse(pm.getCode(), pm.getName(), pm.getManaged())).collect(Collectors.toList());
     }
 
     @GetMapping("/infos")
