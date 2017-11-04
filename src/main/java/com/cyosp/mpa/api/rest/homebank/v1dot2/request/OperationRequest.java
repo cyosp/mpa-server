@@ -18,6 +18,8 @@ public class OperationRequest {
     //@Size(min = 1, max = 30, message = "error.v1.account.name.size")
     private Date date;
 
+    private Integer paymode;
+
     private String payee;
 
     private BigDecimal amount;

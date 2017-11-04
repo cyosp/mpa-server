@@ -231,6 +231,7 @@ public class XmlMapper {
 
             Operation operation = new Operation();
             operation.setJavaDate(operationRequest.getDate());
+            operation.setPaymode(operationRequest.getPaymode());
             operation.convertDateToJulian();
             operation.setPayee(payee.getKey());
             operation.setAccount(id);
@@ -238,9 +239,8 @@ public class XmlMapper {
             operation.setWording(operationRequest.getWording());
             operation.setAmount(operationRequest.getAmount());
 
-            // TODO Next : remove hard coded values
+            // TODO Next : remove hard coded value
             operation.setFlags(0);
-            operation.setPaymode(0);
 
             getDbMapper().addOperation(operation);
 
