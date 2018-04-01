@@ -18,8 +18,12 @@ public class CommonController {
 
     public static final String SUB_PATH = "/common";
 
+    final CommonService commonService;
+
     @Autowired
-    CommonService commonService;
+    public CommonController(CommonService commonService) {
+        this.commonService = commonService;
+    }
 
     @GetMapping("/infos")
     public Infos getInfos() {

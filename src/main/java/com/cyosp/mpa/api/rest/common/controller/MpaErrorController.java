@@ -2,6 +2,7 @@ package com.cyosp.mpa.api.rest.common.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,15 +16,15 @@ import java.util.Map;
  * Created by CYOSP on 2017-08-01.
  */
 @RestController
-@RequestMapping(ErrorController.PATH)
-public class ErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
+@RequestMapping(MpaErrorController.PATH)
+public class MpaErrorController implements ErrorController {
 
     static final String PATH = "/error";
 
     private final ErrorAttributes errorAttributes;
 
     @Autowired
-    public ErrorController(ErrorAttributes errorAttributes) {
+    public MpaErrorController(ErrorAttributes errorAttributes) {
         Assert.notNull(errorAttributes, "ErrorAttributes must not be null");
         this.errorAttributes = errorAttributes;
     }
