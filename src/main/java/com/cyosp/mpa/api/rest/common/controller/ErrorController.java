@@ -17,7 +17,6 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(ErrorController.PATH)
-@Getter
 public class ErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
 
     static final String PATH = "/error";
@@ -40,7 +39,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
         Map<String, Object> ret;
 
         WebRequest webRequest = new ServletWebRequest(request);
-        ret = getErrorAttributes().getErrorAttributes(webRequest, false);
+        ret = errorAttributes.getErrorAttributes(webRequest, false);
 
         // Return a map only for REST requests
         String path = (String) ret.get("path");

@@ -2,7 +2,6 @@ package com.cyosp.mpa.api.rest.common.controller;
 
 import com.cyosp.mpa.api.rest.common.messages.Message;
 import com.cyosp.mpa.api.rest.common.messages.MessageType;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -21,7 +20,6 @@ import java.util.Locale;
  * Created by CYOSP on 2017-07-19.
  */
 @ControllerAdvice
-@Getter
 public class ControllerValidationHandler {
     @Autowired
     private MessageSource messageSource;
@@ -40,10 +38,8 @@ public class ControllerValidationHandler {
         Message message = null;
         if (error != null) {
             Locale currentLocale = LocaleContextHolder.getLocale();
-            String msg = getMessageSource().getMessage(error.getDefaultMessage(), null, currentLocale);
-            message = new Message();
-            message.setType(MessageType.ERROR);
-            message.setMessage(msg);
+            String msg = messageSource.getMessage(error.getDefaultMessage(), null, currentLocale);
+            message = new Message(MessageType.ERROR, msg);
         }
         return message;
     }

@@ -20,20 +20,19 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(CommonController.COMMON_API_PATH + MpaRestController.SUB_PATH)
-@Getter
 public class MpaRestController {
 
     public static final String SUB_PATH = "/core/v1";
 
     @Autowired
-    private MpaService mpaService;
+    MpaService mpaService;
 
     @PostMapping("/accounts/add")
     public AccountResponse addAccount(@Validated @RequestBody AccountRequest accountRequest) {
         AccountResponse ret = new AccountResponse();
 
         try {
-            ret = getMpaService().addAccount(accountRequest);
+            ret = mpaService.addAccount(accountRequest);
         } catch (LineNotInsertedException e) {
             ret.setId(AccountResponse.ID_LINE_NOT_INSERTED);
         } catch (DuplicatedNameException e) {
@@ -45,13 +44,13 @@ public class MpaRestController {
 
     @GetMapping("/accounts")
     public List<AccountResponse> getAccounts() {
-        return getMpaService().getAccounts();
+        return mpaService.getAccounts();
     }
 
     @GetMapping("/accounts/{id}")
     public AccountResponse getAccount(@PathVariable
                                               long id) {
-        return getMpaService().getAccountById(id);
+        return mpaService.getAccountById(id);
     }
 
     @PostMapping("/accounts/upd/{id}")
@@ -60,7 +59,7 @@ public class MpaRestController {
         AccountResponse ret = new AccountResponse();
 
         try {
-            ret = getMpaService().updateAccount(id, accountRequest);
+            ret = mpaService.updateAccount(id, accountRequest);
         } catch (LineNotUpdatedException e) {
             ret.setId(AccountResponse.ID_LINE_NOT_UPDATED);
         } catch (DuplicatedNameException e) {
@@ -76,7 +75,7 @@ public class MpaRestController {
         AccountResponse ret = new AccountResponse();
 
         try {
-            ret = getMpaService().deleteAccount(id);
+            ret = mpaService.deleteAccount(id);
         } catch (LineNotDeletedException e) {
             ret.setId(AccountResponse.ID_LINE_NOT_DELETED);
         }

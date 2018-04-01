@@ -1,17 +1,17 @@
 package com.cyosp.mpa.api.rest.common.messages;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Created by CYOSP on 2017-07-19.
  */
 @Getter
-@Setter
+@AllArgsConstructor
 public class Message {
 
-    private MessageType type;
+    MessageType type;
 
-    private String message;
+    String message;
 
 }

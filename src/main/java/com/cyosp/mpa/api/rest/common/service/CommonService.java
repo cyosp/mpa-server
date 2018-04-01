@@ -13,12 +13,11 @@ import org.springframework.stereotype.Service;
 public class CommonService {
 
     @Value("${mpa.version}")
-    @Getter(AccessLevel.PRIVATE)
-    private String version;
+    String version;
 
     public Infos getInfos() {
         Infos ret = new Infos();
-        ret.setVersion(getVersion());
+        ret.setVersion(version);
         return ret;
     }
 }

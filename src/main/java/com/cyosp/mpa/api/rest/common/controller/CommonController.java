@@ -21,11 +21,10 @@ public class CommonController {
     public static final String SUB_PATH = "/common";
 
     @Autowired
-    @Getter(AccessLevel.PRIVATE)
     CommonService commonService;
 
     @GetMapping("/infos")
     public Infos getInfos() {
-        return getCommonService().getInfos();
+        return commonService.getInfos();
     }
 }

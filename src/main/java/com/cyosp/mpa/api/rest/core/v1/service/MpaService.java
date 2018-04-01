@@ -22,18 +22,17 @@ import java.util.List;
  * Created by CYOSP on 2017-06-27.
  */
 @Service
-@Getter
 public class MpaService {
 
     @Autowired
-    private AccountMapper accountMapper;
+    AccountMapper accountMapper;
 
     //Transactional
     public Account addAcount(Account account) throws LineNotInsertedException, DuplicatedNameException {
         try {
-            if (getAccountMapper().addAccount(account) != 1)
+            if (accountMapper.addAccount(account) != 1)
                 throw new LineNotInsertedException();
-            account = getAccountMapper().getAccountById(account.getId());
+            account = accountMapper.getAccountById(account.getId());
         } catch (DuplicateKeyException e) {
             throw new DuplicatedNameException();
         }
@@ -58,7 +57,7 @@ public class MpaService {
 
         List<AccountResponse> ret = new ArrayList<>();
 
-        for (Account account : getAccountMapper().getAccounts()) {
+        for (Account account : accountMapper.getAccounts()) {
             AccountResponse accountResponse = new AccountResponse();
             BeanUtils.copyProperties(account, accountResponse);
             ret.add(accountResponse);
@@ -70,7 +69,7 @@ public class MpaService {
     public AccountResponse getAccountById(long id) {
         AccountResponse ret = new AccountResponse();
 
-        Account account = getAccountMapper().getAccountById(id);
+        Account account = accountMapper.getAccountById(id);
         if (account != null)
             BeanUtils.copyProperties(account, ret);
         else
@@ -82,9 +81,9 @@ public class MpaService {
     //@Transactional
     public Account updateAcount(Account account) throws LineNotUpdatedException, DuplicatedNameException {
         try {
-            if (getAccountMapper().updateAccount(account) != 1)
+            if (accountMapper.updateAccount(account) != 1)
                 throw new LineNotUpdatedException();
-            account = getAccountMapper().getAccountById(account.getId());
+            account = accountMapper.getAccountById(account.getId());
         } catch (DuplicateKeyException e) {
             throw new DuplicatedNameException();
         }
@@ -107,7 +106,7 @@ public class MpaService {
 
     public AccountResponse deleteAccount(long id) throws LineNotDeletedException {
 
-        if (getAccountMapper().deleteAccount(id) != 1)
+        if (accountMapper.deleteAccount(id) != 1)
             throw new LineNotDeletedException();
 
         AccountResponse accountResponse = new AccountResponse();
