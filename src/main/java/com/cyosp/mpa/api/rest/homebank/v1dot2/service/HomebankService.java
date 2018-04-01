@@ -76,10 +76,10 @@ public class HomebankService {
     }
 
     private String formatAmount(BigDecimal amount, Currency currency) {
-        String pattern = "#,##0.";
+        StringBuilder pattern = new StringBuilder("#,##0.");
         for (int i = 0; i < currency.getFrac(); i++)
-            pattern += "0";
-        DecimalFormat df = new DecimalFormat(pattern);
+            pattern.append("0");
+        DecimalFormat df = new DecimalFormat(pattern.toString());
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator(currency.getGchar());
         symbols.setDecimalSeparator(currency.getDchar());

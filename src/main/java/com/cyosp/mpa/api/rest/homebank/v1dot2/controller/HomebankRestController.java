@@ -8,7 +8,6 @@ import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.OperationRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.service.HomebankService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
