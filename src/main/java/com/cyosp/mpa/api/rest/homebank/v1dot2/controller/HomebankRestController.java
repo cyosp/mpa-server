@@ -22,12 +22,11 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping(CommonController.COMMON_API_PATH + HomebankRestController.SUB_PATH)
-@Getter
 public class HomebankRestController {
 
     public static final String SUB_PATH = "/homebank/v1.2";
 
-    private final HomebankService homebankService;
+    final HomebankService homebankService;
 
     @Autowired
     public HomebankRestController(HomebankService homebankService) {
@@ -36,7 +35,7 @@ public class HomebankRestController {
 
     @GetMapping("/reload")
     public void reload() {
-        getHomebankService().reload();
+        homebankService.reload();
     }
 
     @GetMapping("/payment-modes")
@@ -46,12 +45,12 @@ public class HomebankRestController {
 
     @GetMapping("/infos")
     public InfosResponse getInfos() {
-        return getHomebankService().getInfos();
+        return homebankService.getInfos();
     }
 
     @GetMapping("/properties")
     public PropertiesResponse getProperties() {
-        return getHomebankService().getProperties();
+        return homebankService.getProperties();
     }
 
     //
@@ -63,7 +62,7 @@ public class HomebankRestController {
         AccountResponse ret = new AccountResponse();
 
         try {
-            ret = getHomebankService().addAccount(accountRequest);
+            ret = homebankService.addAccount(accountRequest);
         } catch (DataNotSavedException e) {
             ret.setKey(RootResponse.KEY_DATA_NOT_SAVED);
         } catch (DuplicatedNameException e) {
@@ -75,22 +74,22 @@ public class HomebankRestController {
 
     @GetMapping("/accounts")
     public List<AccountResponse> getAccounts() {
-        return getHomebankService().getAccounts();
+        return homebankService.getAccounts();
     }
 
     @GetMapping("/accounts/{id}/operations")
     public List<OperationResponse> getOperationsByAccount(@PathVariable int id) {
-        return getHomebankService().getOperationsByAccount(id);
+        return homebankService.getOperationsByAccount(id);
     }
 
     @GetMapping("/accounts/{id}/categories")
     public List<CategoryResponse> getCategoriesByAccount(@PathVariable int id) {
-        return getHomebankService().getCategoriesByAccount(id);
+        return homebankService.getCategoriesByAccount(id);
     }
 
     @GetMapping("/accounts/{id}/payees")
     public List<PayeeResponse> getPayeesByAccount(@PathVariable int id) {
-        return getHomebankService().getPayeesByAccount(id);
+        return homebankService.getPayeesByAccount(id);
     }
 
     @PostMapping("/accounts/{id}/operations/add")
@@ -108,7 +107,7 @@ public class HomebankRestController {
             stringJoiner.add(operationRequest.getWording());
             System.out.println(stringJoiner);
 
-            ret = getHomebankService().addOperationByAccount(id, operationRequest);
+            ret = homebankService.addOperationByAccount(id, operationRequest);
 
 
         } catch (DataNotSavedException e) {
@@ -124,7 +123,7 @@ public class HomebankRestController {
 
     @GetMapping("/currencies")
     public List<CurrencyResponse> getCurrencies() {
-        return getHomebankService().getCurrencies();
+        return homebankService.getCurrencies();
     }
 
     //
@@ -133,7 +132,7 @@ public class HomebankRestController {
 
     @GetMapping("/favorites")
     public List<FavoriteResponse> getFavorites() {
-        return getHomebankService().getFavorites();
+        return homebankService.getFavorites();
     }
 
     //
@@ -142,7 +141,7 @@ public class HomebankRestController {
 
     @GetMapping("/operations")
     public List<OperationResponse> getOperations() {
-        return getHomebankService().getOperations();
+        return homebankService.getOperations();
     }
 
     //
@@ -151,6 +150,6 @@ public class HomebankRestController {
 
     @GetMapping("/tags")
     public List<TagResponse> getTags() {
-        return getHomebankService().getTags();
+        return homebankService.getTags();
     }
 }
