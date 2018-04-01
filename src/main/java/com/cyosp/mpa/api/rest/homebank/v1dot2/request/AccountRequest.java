@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
 
 /**
  * Created by CYOSP on 2017-07-14.

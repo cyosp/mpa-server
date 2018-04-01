@@ -4,8 +4,6 @@ import com.cyosp.mpa.api.rest.homebank.v1dot2.model.Currency;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 /**
  * Created by CYOSP on 2017-07-26.
  */

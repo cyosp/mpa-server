@@ -3,7 +3,6 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.model;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
