@@ -8,7 +8,6 @@ import com.cyosp.mpa.api.rest.core.v1.mapper.AccountMapper;
 import com.cyosp.mpa.api.rest.core.v1.model.Account;
 import com.cyosp.mpa.api.rest.core.v1.request.AccountRequest;
 import com.cyosp.mpa.api.rest.core.v1.response.AccountResponse;
-import lombok.Getter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -24,8 +23,12 @@ import java.util.List;
 @Service
 public class MpaService {
 
+    final AccountMapper accountMapper;
+
     @Autowired
-    AccountMapper accountMapper;
+    public MpaService(AccountMapper accountMapper) {
+        this.accountMapper = accountMapper;
+    }
 
     //Transactional
     public Account addAcount(Account account) throws LineNotInsertedException, DuplicatedNameException {

@@ -30,8 +30,12 @@ public class HomebankService {
 
     public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
+    private final XmlMapper xmlMapper;
+
     @Autowired
-    private XmlMapper xmlMapper;
+    public HomebankService(XmlMapper xmlMapper) {
+        this.xmlMapper = xmlMapper;
+    }
 
     public void reload() {
         getXmlMapper().loadXmlFile();

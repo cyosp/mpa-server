@@ -27,8 +27,12 @@ public class HomebankRestController {
 
     public static final String SUB_PATH = "/homebank/v1.2";
 
+    private final HomebankService homebankService;
+
     @Autowired
-    private HomebankService homebankService;
+    public HomebankRestController(HomebankService homebankService) {
+        this.homebankService = homebankService;
+    }
 
     @GetMapping("/reload")
     public void reload() {

@@ -8,7 +8,6 @@ import com.cyosp.mpa.api.rest.common.exception.LineNotUpdatedException;
 import com.cyosp.mpa.api.rest.core.v1.request.AccountRequest;
 import com.cyosp.mpa.api.rest.core.v1.response.AccountResponse;
 import com.cyosp.mpa.api.rest.core.v1.service.MpaService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +23,12 @@ public class MpaRestController {
 
     public static final String SUB_PATH = "/core/v1";
 
+    final MpaService mpaService;
+
     @Autowired
-    MpaService mpaService;
+    public MpaRestController(MpaService mpaService) {
+        this.mpaService = mpaService;
+    }
 
     @PostMapping("/accounts/add")
     public AccountResponse addAccount(@Validated @RequestBody AccountRequest accountRequest) {
