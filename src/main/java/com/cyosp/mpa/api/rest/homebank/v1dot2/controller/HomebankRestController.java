@@ -8,6 +8,8 @@ import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.OperationRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.*;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.service.HomebankService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(CommonController.COMMON_API_PATH + HomebankRestController.SUB_PATH)
 public class HomebankRestController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public static final String SUB_PATH = "/homebank/v1.2";
 
@@ -73,7 +77,9 @@ public class HomebankRestController {
 
     @GetMapping("/accounts")
     public List<AccountResponse> getAccounts() {
-        return homebankService.getAccounts();
+        List<AccountResponse> accounts = homebankService.getAccounts();
+        logger.info("Accounts: " + accounts);
+        return accounts;
     }
 
     @GetMapping("/accounts/{id}/operations")
