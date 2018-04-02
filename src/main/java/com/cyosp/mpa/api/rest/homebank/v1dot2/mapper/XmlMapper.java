@@ -92,7 +92,7 @@ public class XmlMapper implements HomebankRepository {
 
     @PostConstruct
     @Override
-    public void loadXmlFile() {
+    public void load() {
         try {
             homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
             getHomeBank().checkVersion();

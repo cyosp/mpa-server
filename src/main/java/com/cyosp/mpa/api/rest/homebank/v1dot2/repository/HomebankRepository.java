@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface HomebankRepository {
 
-    void loadXmlFile();
+    void load();
 
     HomeBank getInfos();
 

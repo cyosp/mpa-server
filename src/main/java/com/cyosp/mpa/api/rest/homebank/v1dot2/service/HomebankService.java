@@ -34,7 +34,7 @@ public class HomebankService {
     }
 
     public void reload() {
-        homebankRepository.loadXmlFile();
+        homebankRepository.load();
     }
 
     public InfosResponse getInfos() {
