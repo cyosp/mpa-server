@@ -3,6 +3,7 @@ package com.cyosp.mpa.api.rest.homebank.v1dot2.mapper;
 import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.*;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.repository.HomebankRepository;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.OperationRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.OperationResponse;
 import com.thoughtworks.xstream.XStream;
@@ -12,8 +13,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
@@ -27,9 +29,10 @@ import java.util.List;
 /**
  * Created by CYOSP on 2017-07-14.
  */
-@Configuration
+@Repository
+@Primary
 @Getter
-public class XmlMapper {
+public class XmlMapper implements HomebankRepository {
 
     private static final int DEFAULT_KEY = 0;
     private static final int DEFAULT_CURRENCY_KEY = 1;
@@ -48,8 +51,7 @@ public class XmlMapper {
     @Getter
     private static XStream xstream;
 
-    @Autowired
-    DbMapper dbMapper;
+    final DbMapper dbMapper;
 
     static {
 
@@ -83,7 +85,13 @@ public class XmlMapper {
         getXstream().processAnnotations(HomeBank.class);
     }
 
+    @Autowired
+    public XmlMapper(DbMapper dbMapper) {
+        this.dbMapper = dbMapper;
+    }
+
     @PostConstruct
+    @Override
     public void loadXmlFile() {
         try {
             homeBank = (HomeBank) getXstream().fromXML(getHomebankFilePath());
@@ -176,10 +184,12 @@ public class XmlMapper {
         }
     }
 
+    @Override
     public HomeBank getInfos() {
         return getDbMapper().getHomebank();
     }
 
+    @Override
     public Properties getProperties() {
         return getDbMapper().getProperties();
     }
@@ -188,24 +198,29 @@ public class XmlMapper {
     // Accounts
     //
 
+    @Override
     public List<Account> getAccounts() {
         return getDbMapper().getAccounts();
     }
 
+    @Override
     @Transactional(value = HomebankDatasourceConfig.TX_MANAGER)
     public List<Operation> getOperationsByAccount(int id) {
         getDbMapper().setBalanceVariable(id);
         return getDbMapper().getOperationsByAccount(id);
     }
 
+    @Override
     public List<Category> getCategoriesByAccount(int id) {
         return getDbMapper().getCategoriesByAccount(id);
     }
 
+    @Override
     public List<Payee> getPayeesByAccount(int id) {
         return getDbMapper().getPayeesByAccount(id);
     }
 
+    @Override
     @Transactional(value = HomebankDatasourceConfig.TX_MANAGER)
     public OperationResponse addOperationByAccount(int id, OperationRequest operationRequest) throws DataNotSavedException {
 
@@ -252,6 +267,7 @@ public class XmlMapper {
         return ret;
     }
 
+    @Override
     public int addAccount(Account account) throws DuplicatedNameException, DataNotSavedException {
         int ret = -1;
 
@@ -274,6 +290,7 @@ public class XmlMapper {
     // Currencies
     //
 
+    @Override
     public List<Currency> getCurrencies() {
         return getDbMapper().getCurrencies();
     }
@@ -282,6 +299,7 @@ public class XmlMapper {
     // Favorites
     //
 
+    @Override
     public List<Favorite> getFavorites() {
         return getDbMapper().getFavorites();
     }
@@ -290,6 +308,7 @@ public class XmlMapper {
     // Operations
     //
 
+    @Override
     public List<Operation> getOperations() {
         return getDbMapper().getOperations();
     }
@@ -298,6 +317,7 @@ public class XmlMapper {
     // Tags
     //
 
+    @Override
     public List<Tag> getTags() {
         return getDbMapper().getTags();
     }

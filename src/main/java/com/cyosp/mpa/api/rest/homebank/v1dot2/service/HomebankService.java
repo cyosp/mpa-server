@@ -4,13 +4,12 @@ import com.cyosp.mpa.api.rest.common.exception.DataNotSavedException;
 import com.cyosp.mpa.api.rest.common.exception.DuplicatedNameException;
 import com.cyosp.mpa.api.rest.common.exception.LineNotDeletedException;
 import com.cyosp.mpa.api.rest.common.exception.LineNotUpdatedException;
-import com.cyosp.mpa.api.rest.homebank.v1dot2.mapper.XmlMapper;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.model.*;
+import com.cyosp.mpa.api.rest.homebank.v1dot2.repository.HomebankRepository;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.AccountRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.request.OperationRequest;
 import com.cyosp.mpa.api.rest.homebank.v1dot2.response.*;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -28,22 +27,21 @@ public class HomebankService {
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
-    private final XmlMapper xmlMapper;
+    private final HomebankRepository homebankRepository;
 
-    @Autowired
-    public HomebankService(XmlMapper xmlMapper) {
-        this.xmlMapper = xmlMapper;
+    public HomebankService(HomebankRepository homebankRepository) {
+        this.homebankRepository = homebankRepository;
     }
 
     public void reload() {
-        xmlMapper.loadXmlFile();
+        homebankRepository.loadXmlFile();
     }
 
     public InfosResponse getInfos() {
 
         InfosResponse ret = new InfosResponse();
 
-        HomeBank homeBank = xmlMapper.getInfos();
+        HomeBank homeBank = homebankRepository.getInfos();
         ret.setV(homeBank.getV());
         ret.setD(homeBank.getD());
 
@@ -53,7 +51,7 @@ public class HomebankService {
     public PropertiesResponse getProperties() {
         PropertiesResponse ret = new PropertiesResponse();
 
-        Properties properties = xmlMapper.getProperties();
+        Properties properties = homebankRepository.getProperties();
         BeanUtils.copyProperties(properties, ret);
 
         return ret;
@@ -67,7 +65,7 @@ public class HomebankService {
         Account account = new Account();
         account.setName(accountRequest.getName());
 
-        xmlMapper.addAccount(account);
+        homebankRepository.addAccount(account);
 
         AccountResponse accountResponse = new AccountResponse();
         BeanUtils.copyProperties(account, accountResponse);
@@ -94,7 +92,7 @@ public class HomebankService {
 
         List<AccountResponse> ret = new ArrayList<>();
 
-        for (Account account : xmlMapper.getAccounts()) {
+        for (Account account : homebankRepository.getAccounts()) {
             Options options = new Options();
             if (account.getFlags() != null) options.setOptions(account.getFlags());
 
@@ -118,7 +116,7 @@ public class HomebankService {
 
         List<OperationResponse> ret = new ArrayList<>();
 
-        for (Operation operation : xmlMapper.getOperationsByAccount(id)) {
+        for (Operation operation : homebankRepository.getOperationsByAccount(id)) {
             operation.convertJulianToDate();
             OperationResponse operationResponse = new OperationResponse();
             BeanUtils.copyProperties(operation, operationResponse);
@@ -142,7 +140,7 @@ public class HomebankService {
 
         List<CategoryResponse> ret = new ArrayList<>();
 
-        for (Category category : xmlMapper.getCategoriesByAccount(id)) {
+        for (Category category : homebankRepository.getCategoriesByAccount(id)) {
             CategoryResponse categoryResponse = new CategoryResponse();
             BeanUtils.copyProperties(category, categoryResponse);
             categoryResponse.setBalance(formatAmount(category.getBalance(), category.getCurrency()));
@@ -156,7 +154,7 @@ public class HomebankService {
 
         List<PayeeResponse> ret = new ArrayList<>();
 
-        for (Payee payee : xmlMapper.getPayeesByAccount(id)) {
+        for (Payee payee : homebankRepository.getPayeesByAccount(id)) {
             PayeeResponse payeeResponse = new PayeeResponse();
             BeanUtils.copyProperties(payee, payeeResponse);
             payeeResponse.setBalance(formatAmount(payee.getBalance(), payee.getCurrency()));
@@ -167,7 +165,7 @@ public class HomebankService {
     }
 
     public OperationResponse addOperationByAccount(int id, OperationRequest operationRequest) throws DataNotSavedException {
-        return xmlMapper.addOperationByAccount(id, operationRequest);
+        return homebankRepository.addOperationByAccount(id, operationRequest);
     }
 
     public AccountResponse getAccountById(long id) {
@@ -189,7 +187,7 @@ public class HomebankService {
     public List<CurrencyResponse> getCurrencies() {
         List<CurrencyResponse> ret = new ArrayList<>();
 
-        for (Currency currency : xmlMapper.getCurrencies()) {
+        for (Currency currency : homebankRepository.getCurrencies()) {
             CurrencyResponse currencyResponse = new CurrencyResponse();
             BeanUtils.copyProperties(currency, currencyResponse);
             ret.add(currencyResponse);
@@ -205,7 +203,7 @@ public class HomebankService {
     public List<FavoriteResponse> getFavorites() {
         List<FavoriteResponse> ret = new ArrayList<>();
 
-        for (Favorite favorite : xmlMapper.getFavorites()) {
+        for (Favorite favorite : homebankRepository.getFavorites()) {
             FavoriteResponse favoriteResponse = new FavoriteResponse();
             BeanUtils.copyProperties(favorite, favoriteResponse);
             ret.add(favoriteResponse);
@@ -221,7 +219,7 @@ public class HomebankService {
     public List<OperationResponse> getOperations() {
         List<OperationResponse> ret = new ArrayList<>();
 
-        for (Operation operation : xmlMapper.getOperations()) {
+        for (Operation operation : homebankRepository.getOperations()) {
             operation.convertJulianToDate();
             OperationResponse operationResponse = new OperationResponse();
             BeanUtils.copyProperties(operation, operationResponse);
@@ -240,7 +238,7 @@ public class HomebankService {
     public List<TagResponse> getTags() {
         List<TagResponse> ret = new ArrayList<>();
 
-        for (Tag tag : xmlMapper.getTags()) {
+        for (Tag tag : homebankRepository.getTags()) {
             TagResponse tagResponse = new TagResponse();
             BeanUtils.copyProperties(tag, tagResponse);
             ret.add(tagResponse);
